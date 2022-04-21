@@ -7,15 +7,13 @@ class ButtonConfirm extends StatefulWidget {
   final Color color;
   final Color colorText;
   final double width;
-  final double elevation;
   // ignore: use_key_in_widget_constructors
   const ButtonConfirm(
       {required this.textButton,
       required this.onPressed,
       this.color = onTapColor,
       this.width = 125,
-      this.colorText = Colors.black,
-      this.elevation = 0.0});
+      this.colorText = Colors.white});
   @override
   _ButtonConfirmState createState() => _ButtonConfirmState();
 }
@@ -43,15 +41,15 @@ class _ButtonConfirmState extends State<ButtonConfirm>
           overlayColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
             if (states.contains(MaterialState.focused)) {
-              return onTapColor;
+              return primaryColor;
             }
             if (states.contains(MaterialState.hovered)) {
-              return onTapColor;
+              return primaryColor;
             }
             if (states.contains(MaterialState.pressed)) {
-              return onTapColor;
+              return primaryColor;
             }
-            return onTapColor;
+            return primaryColor;
             // Defer to the widget's default.
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -63,17 +61,19 @@ class _ButtonConfirmState extends State<ButtonConfirm>
         ),
         child: Container(
           alignment: Alignment.center,
-          width: widget.width,
+          width: widget.width == 125
+              ? MediaQuery.of(context).size.width / 2 * 0.8
+              : widget.width,
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
           child: Text(widget.textButton,
               style: TextStyle(
-                  fontFamily: "Work Sans",
+                  fontFamily: "Poppins",
                   color: widget.colorText,
                   fontWeight: FontWeight.w500,
-                  fontSize: fontSizeSmall)),
+                  fontSize: fontSizeMedium)),
         ));
   }
 }

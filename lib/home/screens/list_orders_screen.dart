@@ -1,8 +1,7 @@
-import 'package:app_restaurant_management/order/widgets/button_confirm.dart';
-import 'package:app_restaurant_management/order/widgets/card_order.dart';
+import 'package:app_restaurant_management/home/widgets/button_tap_bar.dart';
+import 'package:app_restaurant_management/home/widgets/card_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../constans.dart';
 
 class ListOrdersScreen extends StatefulWidget {
@@ -72,11 +71,11 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
   }
 
   // Button Tab Bar
-  ButtonConfirm buttonStatusOrder(
+  ButtonTabBar buttonStatusOrder(
       {required String text,
       required bool status,
       required void Function() function}) {
-    return ButtonConfirm(
+    return ButtonTabBar(
         textButton: text,
         colorText: status ? Colors.white : onTapColor,
         color: status ? onTapColor : tapColor,
