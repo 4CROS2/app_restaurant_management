@@ -103,6 +103,7 @@ const textStyleTotalBs = TextStyle(
     fontSize: fontSizeTitle,
     fontWeight: FontWeight.w600,
     color: fontRed);
+// TextStyle Modal Confirm
 
 /// Divider
 const divider = Divider(
