@@ -40,44 +40,47 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 ButtonCancel(
-                    textButton: 'Rechazar',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            child: ModalConfirm(
-                                height: 165,
-                                message: '¿Esta seguro de rechazar el pedido?',
-                                textButtonConfirm: 'Si',
-                                textButtonCancel: 'No',
-                                onPressConfirm: () {},
-                                onPressCancel: () {
-                                  Navigator.pop(context);
-                                }),
-                          );
-                        },
-                      );
-                    }),
-                ButtonConfirm(
-                    textButton: 'En curso',
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Dialog(
-                            child: ModalConfirm(
-                              message: 'Confirmar preparación',
-                              image: 'assets/img/confirm-preparation.svg',
+                  textButton: 'Rechazar',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          insetPadding:
+                              const EdgeInsets.only(right: 10, left: 10),
+                          child: ModalConfirm(
+                              message: '¿Esta seguro de rechazar el pedido?',
+                              textButtonConfirm: 'Si',
+                              textButtonCancel: 'No',
                               onPressConfirm: () {},
                               onPressCancel: () {
                                 Navigator.pop(context);
-                              },
-                            ),
-                          );
-                        },
-                      );
-                    }),
+                              }),
+                        );
+                      },
+                    );
+                  },
+                ),
+                ButtonConfirm(
+                  textButton: 'En curso',
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Dialog(
+                          child: ModalConfirm(
+                            message: 'Confirmar preparación',
+                            image: 'assets/img/confirm-preparation.svg',
+                            onPressConfirm: () {},
+                            onPressCancel: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),

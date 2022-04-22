@@ -83,6 +83,31 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
         onPressed: function);
   }
 
+  /// Float Button Agregar Orden
+  Widget floatButton() => Container(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        width: MediaQuery.of(context).size.width / 1,
+        height: 40,
+        child: FloatingActionButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            isExtended: true,
+            backgroundColor: primaryColor,
+            child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: const Text(
+                  "NUEVA ORDEN",
+                  style: textStyleButton,
+                  textAlign: TextAlign.center,
+                )),
+            onPressed: () {
+              // Navigator.of(context).push(CupertinoPageRoute(
+              //     builder: (_) => GetPremium(from: 'signup')));
+            }),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,39 +117,10 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
           tapBar(),
           Expanded(
             child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  if (pending) {
-                    return const CardOrder(
-                      id: 'Orden #001',
-                      price: 'Bs. 48',
-                      name: 'Adela Canedo',
-                      labelState: 'Hace 10 min',
-                      colorState: redColor,
-                      description: '1x Tablita',
-                    );
-                  }
-                  if (inprogress) {
-                    return const CardOrder(
-                      id: 'Orden #001',
-                      price: 'Bs. 48',
-                      name: 'Adela Canedo',
-                      labelState: 'Hace 10 min',
-                      colorState: yellowColor,
-                      description: '1x Tablita',
-                    );
-                  }
-                  if (send) {
-                    return const CardOrder(
-                      id: 'Orden #001',
-                      price: 'Bs. 48',
-                      name: 'Adela Canedo',
-                      labelState: 'Hace 10 min',
-                      colorState: greenColor,
-                      description: '1x Tablita',
-                    );
-                  }
+              padding: const EdgeInsets.all(10),
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                if (pending) {
                   return const CardOrder(
                     id: 'Orden #001',
                     price: 'Bs. 48',
@@ -133,10 +129,42 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
                     colorState: redColor,
                     description: '1x Tablita',
                   );
-                }),
+                }
+                if (inprogress) {
+                  return const CardOrder(
+                    id: 'Orden #001',
+                    price: 'Bs. 48',
+                    name: 'Adela Canedo',
+                    labelState: 'Hace 10 min',
+                    colorState: yellowColor,
+                    description: '1x Tablita',
+                  );
+                }
+                if (send) {
+                  return const CardOrder(
+                    id: 'Orden #001',
+                    price: 'Bs. 48',
+                    name: 'Adela Canedo',
+                    labelState: 'Hace 10 min',
+                    colorState: greenColor,
+                    description: '1x Tablita',
+                  );
+                }
+                return const CardOrder(
+                  id: 'Orden #001',
+                  price: 'Bs. 48',
+                  name: 'Adela Canedo',
+                  labelState: 'Hace 10 min',
+                  colorState: redColor,
+                  description: '1x Tablita',
+                );
+              },
+            ),
           ),
         ],
       ),
+      floatingActionButton: floatButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
