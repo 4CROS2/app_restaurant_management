@@ -92,20 +92,18 @@ class _CardConfirmState extends State<CardConfirm> {
             alignment: Alignment.topLeft,
             width: MediaQuery.of(context).size.width / 2 * 0.5,
             margin: const EdgeInsets.only(right: 5),
-            child: Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('Tablita con queso carne y aderezos',
-                      style: textStyleItem,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2),
-                  Text(
-                    'Bs. 24',
-                    style: textStyleSubItem,
-                  ),
-                ],
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: const [
+                Text('Tablita con queso carne y aderezos',
+                    style: textStyleItem,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2),
+                Text(
+                  'Bs. 24',
+                  style: textStyleSubItem,
+                ),
+              ],
             ),
           ),
           SizedBox(

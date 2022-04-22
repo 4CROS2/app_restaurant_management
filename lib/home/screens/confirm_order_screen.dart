@@ -1,6 +1,7 @@
 import 'package:app_restaurant_management/home/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/home/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/home/widgets/card_confirm_order.dart';
+import 'package:app_restaurant_management/home/widgets/modal_confirm.dart';
 import 'package:flutter/material.dart';
 import '../../constans.dart';
 
@@ -38,8 +39,45 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ButtonCancel(textButton: 'Rechazar', onPressed: () {}),
-                ButtonConfirm(textButton: 'En curso', onPressed: () {}),
+                ButtonCancel(
+                    textButton: 'Rechazar',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: ModalConfirm(
+                                height: 165,
+                                message: '¿Esta seguro de rechazar el pedido?',
+                                textButtonConfirm: 'Si',
+                                textButtonCancel: 'No',
+                                onPressConfirm: () {},
+                                onPressCancel: () {
+                                  Navigator.pop(context);
+                                }),
+                          );
+                        },
+                      );
+                    }),
+                ButtonConfirm(
+                    textButton: 'En curso',
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            child: ModalConfirm(
+                              message: 'Confirmar preparación',
+                              image: 'assets/img/confirm-preparation.svg',
+                              onPressConfirm: () {},
+                              onPressCancel: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    }),
               ],
             ),
           ),
