@@ -27,56 +27,50 @@ class ModalConfirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.white,
-      padding: const EdgeInsets.all(15),
-      width: MediaQuery.of(context).size.width / 1 * 0.9,
-      height: height,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 15),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                  letterSpacing: 0.25,
-                  fontFamily: "Poppins",
-                  fontSize: fontSizeMedium,
-                  fontWeight: FontWeight.w500),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(bottom: 15, top: 15),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                letterSpacing: 0.25,
+                fontFamily: "Poppins",
+                fontSize: fontSizeMedium,
+                fontWeight: FontWeight.w500),
           ),
-          Visibility(
-              visible: image != '',
-              child: Container(
-                  margin: const EdgeInsets.only(bottom: 15),
-                  child: SvgPicture.asset(image,
-                      width: MediaQuery.of(context).size.width / 3 * 1.2))),
-          Container(
-            margin: const EdgeInsets.only(bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ButtonCancel(
-                    width: MediaQuery.of(context).size.width / 4 * 1.3,
-                    textButton: textButtonCancel,
-                    onPressed: () {
-                      onPressCancel();
-                    }),
-                ButtonConfirm(
-                    width: MediaQuery.of(context).size.width / 4 * 1.3,
-                    textButton: textButtonConfirm,
-                    onPressed: () {
-                      onPressConfirm();
-                    }),
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+        Visibility(
+            visible: image != '',
+            child: Container(
+                margin: const EdgeInsets.only(bottom: 15),
+                child: SvgPicture.asset(image,
+                    width: MediaQuery.of(context).size.width / 3 * 1.2))),
+        Container(
+          margin: const EdgeInsets.only(bottom: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ButtonCancel(
+                  width: MediaQuery.of(context).size.width / 4 * 1.3,
+                  textButton: textButtonCancel,
+                  onPressed: () {
+                    onPressCancel();
+                  }),
+              ButtonConfirm(
+                  width: MediaQuery.of(context).size.width / 4 * 1.3,
+                  textButton: textButtonConfirm,
+                  onPressed: () {
+                    onPressConfirm();
+                  }),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

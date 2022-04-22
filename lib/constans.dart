@@ -103,7 +103,11 @@ const textStyleTotalBs = TextStyle(
     fontSize: fontSizeTitle,
     fontWeight: FontWeight.w600,
     color: fontRed);
-// TextStyle Modal Confirm
+const textStyleButton = TextStyle(
+    fontFamily: 'Work Sans',
+    fontSize: fontSizeMedium,
+    fontWeight: FontWeight.w600,
+    color: Colors.white);
 
 /// Divider
 const divider = Divider(
