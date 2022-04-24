@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:app_restaurant_management/home/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/home/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/home/widgets/card_confirm_order.dart';
 import 'package:app_restaurant_management/home/widgets/modal_confirm.dart';
+import 'package:app_restaurant_management/home/widgets/modal_order_cancel.dart';
+import 'package:app_restaurant_management/home/widgets/modal_status.dart';
 import 'package:flutter/material.dart';
 import '../../constans.dart';
 
@@ -41,37 +45,45 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
               children: [
                 ButtonCancel(
                   textButton: 'Rechazar',
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    var res = await showDialog(
                       context: context,
+                      barrierDismissible: false,
                       builder: (BuildContext context) {
-                        return Dialog(
-                          insetPadding:
-                              const EdgeInsets.only(right: 10, left: 10),
-                          child: ModalConfirm(
-                              message: '¿Esta seguro de rechazar el pedido?',
-                              textButtonConfirm: 'Si',
-                              textButtonCancel: 'No',
-                              onPressConfirm: () {},
-                              onPressCancel: () {
-                                Navigator.pop(context);
-                              }),
-                        );
+                        return const ModalStatus();
                       },
                     );
+                    if (res != null) {
+                      ///Evaluar
+                      print(res);
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          Future.delayed(const Duration(seconds: 3), () {
+                            Navigator.of(context).pop();
+                          });
+                          return const ModalOrderCancel(
+                              message: 'Orden #001 rechazado',
+                              image: 'assets/img/order-cancel.svg');
+                        },
+                      );
+                      Navigator.of(context).pop(true);
+                    }
                   },
                 ),
                 ButtonConfirm(
                   textButton: 'En curso',
-                  onPressed: () {
-                    showDialog(
+                  onPressed: () async {
+                    var res = await showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return Dialog(
                           child: ModalConfirm(
                             message: 'Confirmar preparación',
                             image: 'assets/img/confirm-preparation.svg',
-                            onPressConfirm: () {},
+                            onPressConfirm: () async {
+                              Navigator.of(context).pop('confirmar');
+                            },
                             onPressCancel: () {
                               Navigator.pop(context);
                             },
@@ -79,6 +91,22 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                         );
                       },
                     );
+                    if (res != null) {
+                      ///Evaluar
+                      print(res);
+                      await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          Future.delayed(const Duration(seconds: 3), () {
+                            Navigator.of(context).pop();
+                          });
+                          return const ModalOrderCancel(
+                            message: 'Orden #001 en preparación',
+                          );
+                        },
+                      );
+                      Navigator.of(context).pop(true);
+                    }
                   },
                 ),
               ],
