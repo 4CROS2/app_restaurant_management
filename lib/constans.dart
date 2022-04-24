@@ -92,22 +92,32 @@ const textStyleSubTotal = TextStyle(
     fontWeight: FontWeight.w400,
     color: fontGris);
 const textStyleTotal = TextStyle(
-    letterSpacing: 0.25,
-    fontFamily: 'Poppins',
-    fontSize: fontSizeSubtitle,
-    fontWeight: FontWeight.w600,
-    color: fontRed);
+  letterSpacing: 0.25,
+  fontFamily: 'Poppins',
+  fontSize: fontSizeSubtitle,
+  fontWeight: FontWeight.w600,
+  color: fontRed,
+);
 const textStyleTotalBs = TextStyle(
-    letterSpacing: 0.75,
-    fontFamily: 'Poppins',
-    fontSize: fontSizeTitle,
-    fontWeight: FontWeight.w600,
-    color: fontRed);
+  letterSpacing: 0.75,
+  fontFamily: 'Poppins',
+  fontSize: fontSizeTitle,
+  fontWeight: FontWeight.w600,
+  color: fontRed,
+);
+
+///Modal Confirm Text Style
 const textStyleButton = TextStyle(
-    fontFamily: 'Work Sans',
+  fontFamily: 'Work Sans',
+  fontSize: fontSizeMedium,
+  fontWeight: FontWeight.w600,
+  color: Colors.white,
+);
+const textStyleMessage = TextStyle(
+    letterSpacing: 0.25,
+    fontFamily: "Poppins",
     fontSize: fontSizeMedium,
-    fontWeight: FontWeight.w600,
-    color: Colors.white);
+    fontWeight: FontWeight.w500);
 
 /// Divider
 const divider = Divider(

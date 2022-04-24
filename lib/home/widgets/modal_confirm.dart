@@ -9,21 +9,21 @@ class ModalConfirm extends StatelessWidget {
   const ModalConfirm({
     Key? key,
     required this.message,
+    this.secondMessage,
     this.image = '',
     this.textButtonConfirm = 'Confirmar',
     this.textButtonCancel = 'Cancelar',
     required this.onPressConfirm,
     required this.onPressCancel,
-    this.height = 310,
   }) : super(key: key);
 
   final String message;
+  final Widget? secondMessage;
   final String image;
   final String textButtonConfirm;
   final String textButtonCancel;
   final VoidCallback onPressConfirm;
   final VoidCallback onPressCancel;
-  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +37,19 @@ class ModalConfirm extends StatelessWidget {
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-                letterSpacing: 0.25,
-                fontFamily: "Poppins",
-                fontSize: fontSizeMedium,
-                fontWeight: FontWeight.w500),
+            style: textStyleMessage,
           ),
         ),
         Visibility(
+          visible: secondMessage != null,
+          child: Container(child: secondMessage),
+        ),
+        Visibility(
             visible: image != '',
-            child: Container(
-                margin: const EdgeInsets.only(bottom: 15),
-                child: SvgPicture.asset(image,
-                    width: MediaQuery.of(context).size.width / 3 * 1.2))),
+            child: SvgPicture.asset(image,
+                width: MediaQuery.of(context).size.width / 3 * 1.2)),
         Container(
-          margin: const EdgeInsets.only(bottom: 20),
+          margin: const EdgeInsets.only(bottom: 20, top: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
