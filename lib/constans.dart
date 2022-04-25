@@ -20,8 +20,8 @@ const Color yellowColor = Color(0xFFF2C94C);
 const Color greenColor = Color(0xFF219653);
 
 /// Taps Colors
-const Color onTapColor = Color(0xFF000000);
-const Color tapColor = Color(0xFFFFFFFF);
+const Color focusColor = Color(0xFF000000);
+const Color unSelectColor = Color(0xFFFFFFFF);
 
 /// Buttons colors
 const Color buttonRed = Color(0xFFE50019);
@@ -78,6 +78,20 @@ const textStyleLabelRed = TextStyle(
   fontWeight: FontWeight.w400,
   fontSize: fontSizeSmall,
   color: redColor,
+);
+const textStyleLabelYellow = TextStyle(
+  letterSpacing: 0.25,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w400,
+  fontSize: fontSizeSmall,
+  color: yellowColor,
+);
+const textStyleLabelGreen = TextStyle(
+  letterSpacing: 0.25,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w400,
+  fontSize: fontSizeSmall,
+  color: greenColor,
 );
 const textStyleQuantity = TextStyle(
   letterSpacing: 0.25,

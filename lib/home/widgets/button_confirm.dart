@@ -11,7 +11,7 @@ class ButtonConfirm extends StatefulWidget {
   const ButtonConfirm(
       {required this.textButton,
       required this.onPressed,
-      this.color = onTapColor,
+      this.color = focusColor,
       this.width = 125,
       this.colorText = Colors.white});
   @override
@@ -54,7 +54,7 @@ class _ButtonConfirmState extends State<ButtonConfirm>
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              side: const BorderSide(width: 1, color: onTapColor),
+              side: const BorderSide(width: 1, color: focusColor),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),

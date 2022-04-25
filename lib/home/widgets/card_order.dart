@@ -1,4 +1,6 @@
-import 'package:app_restaurant_management/home/screens/confirm_order_screen.dart';
+import 'package:app_restaurant_management/home/screens/confirm_in_progress_order.dart';
+import 'package:app_restaurant_management/home/screens/confirm_pending_order.dart';
+import 'package:app_restaurant_management/home/widgets/modal_order.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../constans.dart';
@@ -10,6 +12,7 @@ class CardOrder extends StatelessWidget {
   final Color colorState;
   final String labelState;
   final String description;
+  final String statusOrder;
   const CardOrder(
       {Key? key,
       required this.id,
@@ -17,7 +20,8 @@ class CardOrder extends StatelessWidget {
       required this.name,
       required this.colorState,
       required this.labelState,
-      required this.description})
+      required this.description,
+      required this.statusOrder})
       : super(key: key);
 
   @override
@@ -28,8 +32,26 @@ class CardOrder extends StatelessWidget {
       decoration: boxShadow,
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(CupertinoPageRoute(
-              builder: (context) => const ConfirmOrderScreen()));
+          if (statusOrder == 'pending') {
+            Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) =>
+                    ConfirmOrderScreen(statusOrder: statusOrder)));
+          }
+          if (statusOrder == 'inprogress') {
+            Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) =>
+                    ConfirmOrderInProgressScreen(statusOrder: statusOrder)));
+          }
+          if (statusOrder == 'send') {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const ModalOrder(
+                    message: 'Orden #001 entregada',
+                    image: 'assets/img/order-send.svg');
+              },
+            );
+          }
         },
         child: Column(
           children: [
