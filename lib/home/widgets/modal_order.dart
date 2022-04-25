@@ -2,8 +2,8 @@ import 'package:app_restaurant_management/constans.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ModalOrderCancel extends StatelessWidget {
-  const ModalOrderCancel({
+class ModalOrder extends StatelessWidget {
+  const ModalOrder({
     Key? key,
     required this.message,
     this.image = '',

@@ -11,7 +11,7 @@ class ButtonCancel extends StatefulWidget {
   const ButtonCancel({
     required this.textButton,
     required this.onPressed,
-    this.color = tapColor,
+    this.color = unSelectColor,
     this.width = 125,
     this.colorText = Colors.black,
   });
@@ -55,7 +55,7 @@ class _ButtonCancelState extends State<ButtonCancel>
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              side: const BorderSide(width: 1, color: onTapColor),
+              side: const BorderSide(width: 1, color: focusColor),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),

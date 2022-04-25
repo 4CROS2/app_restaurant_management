@@ -11,7 +11,7 @@ class ButtonTabBar extends StatefulWidget {
   const ButtonTabBar({
     required this.textButton,
     required this.onPressed,
-    this.color = onTapColor,
+    this.color = focusColor,
     this.width = 125,
     this.colorText = Colors.black,
   });
@@ -42,20 +42,20 @@ class _ButtonTabBarState extends State<ButtonTabBar>
           overlayColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
             if (states.contains(MaterialState.focused)) {
-              return onTapColor;
+              return focusColor;
             }
             if (states.contains(MaterialState.hovered)) {
-              return onTapColor;
+              return focusColor;
             }
             if (states.contains(MaterialState.pressed)) {
-              return onTapColor;
+              return focusColor;
             }
-            return onTapColor;
+            return focusColor;
             // Defer to the widget's default.
           }),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              side: const BorderSide(width: 1, color: onTapColor),
+              side: const BorderSide(width: 1, color: focusColor),
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),

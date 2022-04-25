@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import '../../constans.dart';
 
 class CardConfirm extends StatefulWidget {
+  final String statusOrder;
   const CardConfirm({
     Key? key,
+    required this.statusOrder,
   }) : super(key: key);
 
   @override
@@ -14,20 +16,45 @@ class _CardConfirmState extends State<CardConfirm> {
   /// Info Client and hour
   Row infoClient() {
     return Row(
-      children: const [
-        Icon(Icons.perm_identity, color: fontGris, size: 24),
-        SizedBox(width: 8),
-        Text(
-          "Adela Canedo",
-          style: TextStyle(color: fontGris, fontSize: fontSizeSmall),
-        ),
-        Spacer(),
-        Icon(Icons.schedule, size: 22, color: redColor),
-        SizedBox(width: 5),
-        Text(
-          "Hace 10 min",
-          style: textStyleLabelRed,
-        ),
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width / 2 * 0.7,
+            child: Row(
+              children: const [
+                Icon(Icons.perm_identity, color: fontGris, size: 24),
+                SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    "Adela Canedo Rodriguez Moscoso",
+                    style: TextStyle(color: fontGris, fontSize: fontSizeSmall),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            )),
+        SizedBox(
+            child: Row(
+          children: [
+            Icon(
+              Icons.schedule,
+              size: 22,
+              color: widget.statusOrder == 'pending' ? redColor : yellowColor,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              widget.statusOrder == 'pending'
+                  ? 'Hace 10 min - Pendiente'
+                  : 'Hace 10 min - En Curso',
+              style: widget.statusOrder == 'pending'
+                  ? textStyleLabelRed
+                  : textStyleLabelYellow,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        )),
       ],
     );
   }
