@@ -1,9 +1,11 @@
-import 'package:app_restaurant_management/home/screens/list_in_progress_screen.dart';
-import 'package:app_restaurant_management/home/screens/list_pending_screen.dart';
-import 'package:app_restaurant_management/home/screens/list_send_screen.dart';
+import 'package:app_restaurant_management/home/screens/list_order/list_in_progress_screen.dart';
+import 'package:app_restaurant_management/home/screens/list_order/list_pending_screen.dart';
+import 'package:app_restaurant_management/home/screens/list_order/list_send_screen.dart';
+import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../constans.dart';
+import '../../../constans.dart';
 
 class ListOrdersScreen extends StatefulWidget {
   const ListOrdersScreen({Key? key}) : super(key: key);
@@ -62,8 +64,8 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
                   textAlign: TextAlign.center,
                 )),
             onPressed: () {
-              // Navigator.of(context).push(CupertinoPageRoute(
-              //     builder: (_) => GetPremium(from: 'signup')));
+              Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => const NewOrderScreen()));
             }),
       );
 

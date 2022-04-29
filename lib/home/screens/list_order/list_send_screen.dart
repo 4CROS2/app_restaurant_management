@@ -1,15 +1,15 @@
-import 'package:app_restaurant_management/home/widgets/card_order.dart';
+import 'package:app_restaurant_management/home/widgets/orders/card_order.dart';
 import 'package:flutter/material.dart';
-import '../../constans.dart';
+import '../../../constans.dart';
 
-class PendingScreen extends StatefulWidget {
-  const PendingScreen({Key? key}) : super(key: key);
+class SendScreen extends StatefulWidget {
+  const SendScreen({Key? key}) : super(key: key);
 
   @override
-  _PendingScreenState createState() => _PendingScreenState();
+  _SendScreenState createState() => _SendScreenState();
 }
 
-class _PendingScreenState extends State<PendingScreen> {
+class _SendScreenState extends State<SendScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -21,9 +21,9 @@ class _PendingScreenState extends State<PendingScreen> {
           price: 'Bs. 48',
           name: 'Adela Canedo',
           labelState: 'Hace 10 min',
-          colorState: redColor,
+          colorState: greenColor,
           description: '1x Tablita',
-          statusOrder: 'pending',
+          statusOrder: 'send',
         );
       },
     );

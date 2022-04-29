@@ -44,9 +44,24 @@ const fontSizeSmall = 13.0;
 
 /// TextStyle
 const textStyleTitle = TextStyle(
+  letterSpacing: 0.75,
   fontFamily: "Poppins",
   fontWeight: FontWeight.w700,
   fontSize: fontSizeTitle,
+  color: fontBlack,
+);
+const textStyleSpinBoxNumber = TextStyle(
+  letterSpacing: 0.75,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w400,
+  fontSize: fontSizeTitle,
+  color: fontBlack,
+);
+const textStylePrizeItem = TextStyle(
+  fontFamily: "Work Sans",
+  fontWeight: FontWeight.w700,
+  fontSize: fontSizeTitle,
+  color: primaryColor,
 );
 const textStyleSubtitle = TextStyle(
   letterSpacing: 0.25,
@@ -186,3 +201,11 @@ Decoration boxShadow = BoxDecoration(
     ),
   ],
 );
+
+// SpinBox Style
+InputDecoration decorationSpinBox = InputDecoration(
+    enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(color: primaryColor, width: 1),
+        borderRadius: BorderRadius.circular(10.0)),
+    border: const OutlineInputBorder(),
+    contentPadding: const EdgeInsets.all(0));

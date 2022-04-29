@@ -1,13 +1,13 @@
 // ignore_for_file: avoid_print
 
-import 'package:app_restaurant_management/home/widgets/button_cancel.dart';
-import 'package:app_restaurant_management/home/widgets/button_confirm.dart';
-import 'package:app_restaurant_management/home/widgets/card_confirm_order.dart';
-import 'package:app_restaurant_management/home/widgets/modal_confirm.dart';
-import 'package:app_restaurant_management/home/widgets/modal_order.dart';
-import 'package:app_restaurant_management/home/widgets/modal_status.dart';
+import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
+import 'package:app_restaurant_management/home/widgets/orders/modal_status.dart';
+import 'package:app_restaurant_management/widgets/button_cancel.dart';
+import 'package:app_restaurant_management/widgets/button_confirm.dart';
+import 'package:app_restaurant_management/home/widgets/orders/card_confirm_order.dart';
+import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
-import '../../constans.dart';
+import '../../../constans.dart';
 
 class ConfirmOrderScreen extends StatefulWidget {
   final String statusOrder;

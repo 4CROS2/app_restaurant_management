@@ -1,5 +1,5 @@
+import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:flutter/material.dart';
-import 'package:app_restaurant_management/home/widgets/modal_confirm.dart';
 
 enum SingingCharacter { agotado, cerrado, nodisponible }
 

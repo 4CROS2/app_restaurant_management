@@ -1,9 +1,8 @@
-import 'package:app_restaurant_management/home/widgets/button_cancel.dart';
-import 'package:app_restaurant_management/home/widgets/button_confirm.dart';
+import 'package:app_restaurant_management/constans.dart';
+import 'package:app_restaurant_management/widgets/button_cancel.dart';
+import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../constans.dart';
 
 class ModalConfirm extends StatelessWidget {
   const ModalConfirm({

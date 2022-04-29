@@ -1,6 +1,6 @@
-import 'package:app_restaurant_management/home/widgets/card_order.dart';
+import 'package:app_restaurant_management/home/widgets/orders/card_order.dart';
 import 'package:flutter/material.dart';
-import '../../constans.dart';
+import '../../../constans.dart';
 
 class InProgressScreen extends StatefulWidget {
   const InProgressScreen({Key? key}) : super(key: key);

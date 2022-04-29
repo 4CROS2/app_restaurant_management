@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constans.dart';
+import '../constans.dart';
 
 class ButtonCancel extends StatefulWidget {
   final String textButton;
