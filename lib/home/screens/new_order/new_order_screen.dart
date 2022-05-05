@@ -1,4 +1,6 @@
+import 'package:app_restaurant_management/home/screens/new_order/detail_order_screen.dart';
 import 'package:app_restaurant_management/home/screens/new_order/products_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
@@ -49,8 +51,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                   textAlign: TextAlign.center,
                 )),
             onPressed: () {
-              // Navigator.of(context).push(CupertinoPageRoute(
-              //     builder: (_) => GetPremium(from: 'signup')));
+              Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => const DetailOrderScreen()));
             }),
       );
 
