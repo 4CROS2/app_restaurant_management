@@ -37,23 +37,27 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
         width: MediaQuery.of(context).size.width / 1,
         height: 40,
         child: FloatingActionButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            isExtended: true,
-            backgroundColor: primaryColor,
-            child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: const Text(
-                  "PEDIR ORDEN Bs. 40",
-                  style: textStyleButton,
-                  textAlign: TextAlign.center,
-                )),
-            onPressed: () {
-              Navigator.of(context).push(CupertinoPageRoute(
-                  builder: (context) => const DetailOrderScreen()));
-            }),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          isExtended: true,
+          backgroundColor: primaryColor,
+          child: Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: const Text(
+                "PEDIR ORDEN Bs. 40",
+                style: textStyleButton,
+                textAlign: TextAlign.center,
+              )),
+          onPressed: () async {
+            var res = await Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) => const DetailOrderScreen()));
+            if (res == true) {
+              Navigator.of(context).pop(true);
+            }
+          },
+        ),
       );
 
   @override

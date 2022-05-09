@@ -7,10 +7,12 @@ class ModalOrder extends StatelessWidget {
     Key? key,
     required this.message,
     this.image = '',
+    this.secondMessage = '',
   }) : super(key: key);
 
   final String message;
   final String image;
+  final String secondMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,24 @@ class ModalOrder extends StatelessWidget {
           ),
         ),
         Visibility(
-            visible: image != '',
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              child: SvgPicture.asset(image,
-                  width: MediaQuery.of(context).size.width / 3 * 1.2),
-            )),
+          visible: image != '',
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 15),
+            child: SvgPicture.asset(image,
+                width: MediaQuery.of(context).size.width / 3 * 1.2),
+          ),
+        ),
+        Visibility(
+          visible: secondMessage != '',
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 15, top: 15),
+            child: Text(
+              secondMessage,
+              textAlign: TextAlign.center,
+              style: textStyleMessage,
+            ),
+          ),
+        ),
       ],
     ));
   }

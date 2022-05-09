@@ -63,8 +63,8 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
                   style: textStyleButton,
                   textAlign: TextAlign.center,
                 )),
-            onPressed: () {
-              Navigator.of(context).push(CupertinoPageRoute(
+            onPressed: () async {
+              await Navigator.of(context).push(CupertinoPageRoute(
                   builder: (context) => const NewOrderScreen()));
             }),
       );

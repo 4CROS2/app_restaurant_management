@@ -68,12 +68,14 @@ const textStyleSubtitle = TextStyle(
   fontFamily: "Poppins",
   fontWeight: FontWeight.w500,
   fontSize: fontSizeMin,
+  color: fontBlack,
 );
 const textStyleItem = TextStyle(
   letterSpacing: 0.25,
   fontFamily: 'Poppins',
   fontWeight: FontWeight.w400,
   fontSize: fontSizeMedium,
+  color: fontBlack,
 );
 const textStyleSubItem = TextStyle(
   letterSpacing: 0.75,
