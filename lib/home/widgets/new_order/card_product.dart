@@ -42,12 +42,13 @@ class _SectionCardProductState extends State<SectionCardProduct> {
             child: FadeInImage(
               // height: (sizeW / 2) + ((sizeW / 2) * 0.2),
               width: sizeW / 3 * 1.6,
-              fit: BoxFit.fill,
-              placeholder: const AssetImage("assets/img/placeholshder-img.png"),
+              height: (sizeW / 3) - 3,
+              fit: BoxFit.scaleDown,
+              placeholder: const AssetImage("assets/img/background.png"),
               image: const NetworkImage(
                   "https://locosxlaparrilla.com/wp-content/uploads/2015/02/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-churrascos-parrilla-churrascos-parrilla-receta-churrascos-churrascos-2-1.jpg"),
               imageErrorBuilder: (context, error, stackTrace) {
-                return Image.asset("assets/img/placeholder-img.png", width: 50);
+                return Image.asset("assets/img/background.png", width: 50);
               },
             ),
           ),
