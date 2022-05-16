@@ -17,10 +17,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
     return Tab(
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: focusColor, width: 1),
+          border: Border.all(color: focusColor),
         ),
         child: Text(text,
             style: const TextStyle(
@@ -78,9 +78,10 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
               textAlign: TextAlign.left,
             ),
             bottom: TabBar(
+              indicatorWeight: 0,
               padding: const EdgeInsets.only(bottom: 5),
               unselectedLabelColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorSize: TabBarIndicatorSize.label,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: focusColor,

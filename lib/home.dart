@@ -1,3 +1,4 @@
+import 'package:app_restaurant_management/menu/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'constans.dart';
 import 'home/screens/list_order/home_orders_screen.dart';
@@ -18,10 +19,7 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _widgetOptions = [
     ListOrdersScreen(),
-    Text(
-      'Index 1: Menú',
-      style: optionStyle,
-    ),
+    MenuScreen(),
     Text(
       'Index 2: Ventas',
       style: optionStyle,
