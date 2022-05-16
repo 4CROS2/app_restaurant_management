@@ -30,10 +30,10 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
     return Tab(
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: focusColor, width: 1),
+          border: Border.all(color: focusColor),
         ),
         child: Text(text,
             style: const TextStyle(
@@ -82,9 +82,10 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
             backgroundColor: backgroundColor,
             title: banner(),
             bottom: TabBar(
+              indicatorWeight: 0,
               padding: const EdgeInsets.only(bottom: 5),
               unselectedLabelColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorSize: TabBarIndicatorSize.label,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: focusColor,

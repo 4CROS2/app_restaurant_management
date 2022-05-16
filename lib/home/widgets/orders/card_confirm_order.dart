@@ -107,9 +107,9 @@ class _CardConfirmState extends State<CardConfirm> {
               width: MediaQuery.of(context).size.width / 2 * 0.33,
               height: 70,
               fit: BoxFit.cover,
-              placeholder: const AssetImage("assets/img/placeholder-img.png"),
+              placeholder: const AssetImage("assets/img/background.png"),
               imageErrorBuilder: (context, error, stackTrace) {
-                return Image.asset("assets/img/placeholder-img.png");
+                return Image.asset("assets/img/background.png");
               },
               image: const NetworkImage(
                   'https://images.unsplash.com/photo-1612871689353-cccf581d667b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),

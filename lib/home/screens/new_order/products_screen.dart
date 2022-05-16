@@ -14,6 +14,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     final double sw = MediaQuery.of(context).size.width;
     return ListView(
+      padding: const EdgeInsets.only(bottom: 40),
       shrinkWrap: true,
       physics: const ScrollPhysics(),
       children: [

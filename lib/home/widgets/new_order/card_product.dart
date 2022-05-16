@@ -40,7 +40,6 @@ class _SectionCardProductState extends State<SectionCardProduct> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: FadeInImage(
-              // height: (sizeW / 2) + ((sizeW / 2) * 0.2),
               width: sizeW / 3 * 1.6,
               height: (sizeW / 3) - 3,
               fit: BoxFit.scaleDown,
