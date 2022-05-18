@@ -160,49 +160,52 @@ const divider = Divider(
 Decoration boxShadow = BoxDecoration(
   color: cardColor,
   borderRadius: BorderRadius.circular(16),
-  boxShadow: [
-    // BoxShadow(
-    //   color: Colors.grey.withOpacity(0.05),
-    //   blurRadius: 8,
-    //   offset: const Offset(0, 100), // changes position of shadow
-    // ),
-    // BoxShadow(
-    //   color: Colors.grey.withOpacity(0.038),
-    //   blurRadius: 4,
-    //   offset: const Offset(0, 50.05), // changes position of shadow
-    // ),
-    // BoxShadow(
-    //   color: Colors.grey.withOpacity(0.0326),
-    //   blurRadius: 2.4,
-    //   offset: const Offset(0, 30.15), // changes position of shadow
-    // ),
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.0285),
-      blurRadius: 1.5,
-      offset: const Offset(0, 19.32), // changes position of shadow
-    ),
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.025),
-      blurRadius: 1.002,
-      offset: const Offset(0, 12.52), // changes position of shadow
-    ),
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.021),
-      blurRadius: 0.6,
-      offset: const Offset(0, 7.88), // changes position of shadow
-    ),
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.0174),
-      blurRadius: 0.36,
-      offset: const Offset(0, 4.53), // changes position of shadow
-    ),
-    BoxShadow(
-      color: Colors.grey.withOpacity(0.012),
-      blurRadius: 0.15,
-      offset: const Offset(0, 1.99), // changes position of shadow
-    ),
-  ],
+  boxShadow: listBoxShadow,
 );
+
+/// List Box Shadows
+List<BoxShadow> listBoxShadow = [
+  // BoxShadow(
+  //   color: Colors.grey.withOpacity(0.05),
+  //   blurRadius: 8,
+  //   offset: const Offset(0, 100), // changes position of shadow
+  // ),
+  // BoxShadow(
+  //   color: Colors.grey.withOpacity(0.038),
+  //   blurRadius: 4,
+  //   offset: const Offset(0, 50.05), // changes position of shadow
+  // ),
+  // BoxShadow(
+  //   color: Colors.grey.withOpacity(0.0326),
+  //   blurRadius: 2.4,
+  //   offset: const Offset(0, 30.15), // changes position of shadow
+  // ),
+  BoxShadow(
+    color: Colors.grey.withOpacity(0.0285),
+    blurRadius: 1.5,
+    offset: const Offset(0, 19.32), // changes position of shadow
+  ),
+  BoxShadow(
+    color: Colors.grey.withOpacity(0.025),
+    blurRadius: 1.002,
+    offset: const Offset(0, 12.52), // changes position of shadow
+  ),
+  BoxShadow(
+    color: Colors.grey.withOpacity(0.021),
+    blurRadius: 0.6,
+    offset: const Offset(0, 7.88), // changes position of shadow
+  ),
+  BoxShadow(
+    color: Colors.grey.withOpacity(0.0174),
+    blurRadius: 0.36,
+    offset: const Offset(0, 4.53), // changes position of shadow
+  ),
+  BoxShadow(
+    color: Colors.grey.withOpacity(0.012),
+    blurRadius: 0.15,
+    offset: const Offset(0, 1.99), // changes position of shadow
+  ),
+];
 
 // SpinBox Style
 InputDecoration decorationSpinBox = InputDecoration(
