@@ -1,4 +1,5 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
+import 'package:app_restaurant_management/menu/screens/new_category.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,21 +24,21 @@ class _MenuScreenState extends State<MenuScreen> {
         alignment: Alignment.center,
         margin: EdgeInsets.only(right: marginRight),
         padding:
-            const EdgeInsets.only(bottom: 10, left: 10, top: 10, right: 10),
+            const EdgeInsets.only(right: 15, left: 15, top: 10, bottom: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: focusColor, width: 1),
         ),
         child: Row(
           children: [
-            Image.asset(img, height: 24, width: 24),
-            const SizedBox(width: 10),
+            // Image.asset(img, height: 24, width: 24),
+            // const SizedBox(width: 10),
             Text(
               text,
               style: const TextStyle(
                   fontFamily: "Work Sans",
                   fontWeight: FontWeight.w500,
-                  fontSize: fontSizeSmall),
+                  fontSize: fontSizeRegular),
             ),
           ],
         ),
@@ -133,7 +134,10 @@ class _MenuScreenState extends State<MenuScreen> {
                     color: redColor,
                     boxShadow: listBoxShadow),
                 child: IconButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await Navigator.of(context).push(CupertinoPageRoute(
+                          builder: (context) => const NewCategoryScreen()));
+                    },
                     icon: const Icon(Icons.add, color: Colors.white, size: 30)),
               )
             ],
