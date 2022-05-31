@@ -11,37 +11,38 @@ class SalesScreen extends StatefulWidget {
 }
 
 class _SalesScreenState extends State<SalesScreen> {
-  // var current = DateFormat("dd MMM yyyy", 'es_ES')
-  //     .format(DateTime.parse(DateTime.now().toString()))
-  //     .replaceAll(".", "");
-  // final TextEditingController _dateController = TextEditingController();
-
-  void getNacionalByDate(BuildContext context, String date) {
-    // final provider = Provider.of<ArchivosWebProvider>(context, listen: false);
-    // provider.date = int.parse(_convertToIntDate(date)).toString();
-    // provider.loadSections();
+  @override
+  void initState() {
+    super.initState();
   }
+
+  final TextEditingController _dateController = TextEditingController();
+
+  // void getNacionalByDate(BuildContext context, String date) {
+  //   // final provider = Provider.of<ArchivosWebProvider>(context, listen: false);
+  //   // provider.date = int.parse(_convertToIntDate(date)).toString();
+  //   // provider.loadSections();
+  // }
 
   Future<dynamic> fechaModal(BuildContext context) async {
     return await showDatePicker(
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime.now(),
-        builder: (context, child) => Theme(
-              data: ThemeData().copyWith(
-                cardColor: cardColor,
-                dialogBackgroundColor: cardColor,
-                colorScheme: const ColorScheme.dark(
-                  primary: focusColor,
-                  surface: cardColor,
-                  // onPrimary: fontColordark,
-                  // onSurface: dark ? fontColordark : fontColor,
-                ),
-              ),
-              child: child!,
-            ));
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+      builder: (context, child) => Theme(
+        data: ThemeData().copyWith(
+          colorScheme: const ColorScheme.dark(
+            primary: primaryColor,
+            surface: primaryColor,
+            onPrimary: Colors.white,
+            onSurface: Colors.black,
+          ),
+        ),
+        child: child!,
+      ),
+    );
   }
 
   //Tab Bar
@@ -65,6 +66,9 @@ class _SalesScreenState extends State<SalesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String current = DateFormat('dd-MM-yyyy').format(now);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -83,45 +87,49 @@ class _SalesScreenState extends State<SalesScreen> {
                   style: textStyleTitle,
                   textAlign: TextAlign.left,
                 ),
-                // SizedBox(
-                //   width: MediaQuery.of(context).size.width * 0.4,
-                //   child: TextFormField(
-                //     onTap: () async {
-                //       await fechaModal(context).then((value) {
-                //         if (value != null) {
-                //           setState(() {
-                //             _dateController.text =
-                //                 DateFormat("dd MMM yyyy", 'es_ES')
-                //                     .format(DateTime.parse(value.toString()))
-                //                     .replaceAll(".", "");
-                //           });
-                //           getNacionalByDate(context, value.toString());
-                //         }
-                //       });
-                //     },
-                //     style: const TextStyle(
-                //       fontFamily: "Lato",
-                //       fontSize: fontSizeSmall,
-                //     ),
-                //     controller: _dateController,
-                //     readOnly: true,
-                //     textAlign: TextAlign.center,
-                //     keyboardType: TextInputType.datetime,
-                //     decoration: InputDecoration(
-                //       suffixIcon: Container(
-                //           padding: const EdgeInsets.all(10),
-                //           child: const Icon(Icons.calendar_today)),
-                //       enabledBorder: InputBorder.none,
-                //       focusedBorder: InputBorder.none,
-                //       contentPadding: const EdgeInsets.only(top: 15),
-                //       hintText: current,
-                //       hintStyle: const TextStyle(
-                //           fontFamily: "Lato", fontSize: fontSizeSmall),
-                //       border: const UnderlineInputBorder(
-                //           borderSide: BorderSide.none),
-                //     ),
-                //   ),
-                // ),
+                const Spacer(),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  child: TextFormField(
+                    onTap: () async {
+                      await fechaModal(context).then((value) {
+                        if (value != null) {
+                          setState(() {
+                            _dateController.text =
+                                DateFormat('dd-MM-yyyy').format(value);
+                          });
+                          //     // getNacionalByDate(context, value.toString());
+                        }
+                      });
+                    },
+                    style: const TextStyle(
+                      fontFamily: "Poppins",
+                      fontSize: fontSizeRegular,
+                      color: Colors.white,
+                    ),
+                    controller: _dateController,
+                    readOnly: true,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.datetime,
+                    decoration: InputDecoration(
+                      fillColor: Colors.black,
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.all(10),
+                        child: const Icon(Icons.calendar_today,
+                            size: 20, color: Colors.white),
+                      ),
+                      focusedBorder: InputBorder.none,
+                      contentPadding: const EdgeInsets.only(top: 15, right: 10),
+                      filled: true,
+                      isDense: true,
+                      hintText: current,
+                      hintStyle: const TextStyle(
+                          fontFamily: "Poppins",
+                          fontSize: fontSizeRegular,
+                          color: Colors.white),
+                    ),
+                  ),
+                ),
               ],
             ),
             bottom: TabBar(
