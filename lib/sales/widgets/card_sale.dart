@@ -1,3 +1,5 @@
+import 'package:app_restaurant_management/sales/screens/detail_sale_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
@@ -23,7 +25,12 @@ class CardSale extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 15),
       decoration: boxShadow,
       child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(CupertinoPageRoute(
+                builder: (context) => const DetailSaleScreen(
+                      typeSale: 'purchase',
+                    )));
+          },
           child: Column(
             children: [
               Visibility(
