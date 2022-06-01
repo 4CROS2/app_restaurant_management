@@ -18,6 +18,7 @@ const thirdColor = Color(0xFF455A64);
 const Color redColor = Color(0xFFEB5757);
 const Color yellowColor = Color(0xFFF2C94C);
 const Color greenColor = Color(0xFF219653);
+const Color orangeColor = Color(0xFFEB996E);
 
 /// Taps Colors
 const Color focusColor = Color(0xFF000000);
@@ -48,6 +49,13 @@ const textStyleTitle = TextStyle(
   fontFamily: "Poppins",
   fontWeight: FontWeight.w700,
   fontSize: fontSizeTitle,
+  color: fontBlack,
+);
+const textStyleSubTitle = TextStyle(
+  letterSpacing: 0.25,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w700,
+  fontSize: fontSizeSubtitle,
   color: fontBlack,
 );
 const textStyleSpinBoxNumber = TextStyle(
@@ -135,6 +143,16 @@ const textStyleTotalBs = TextStyle(
   fontSize: fontSizeTitle,
   fontWeight: FontWeight.w600,
   color: fontRed,
+);
+const textStyleCancelTotalBs = TextStyle(
+  letterSpacing: 0.75,
+  fontFamily: 'Poppins',
+  fontSize: fontSizeTitle,
+  fontWeight: FontWeight.w600,
+  color: fontRed,
+  decorationColor: Colors.red,
+  decorationStyle: TextDecorationStyle.solid,
+  decoration: TextDecoration.lineThrough,
 );
 
 ///Modal Confirm Text Style
