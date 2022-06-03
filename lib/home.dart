@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/menu/screens/menu_screen.dart';
 import 'package:app_restaurant_management/sales/screens/sales_sreen.dart';
+import 'package:app_restaurant_management/stock/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'constans.dart';
 import 'home/screens/list_order/home_orders_screen.dart';
@@ -22,10 +23,7 @@ class _HomeState extends State<Home> {
     ListOrdersScreen(),
     MenuScreen(),
     SalesScreen(),
-    Text(
-      'Index 4: Inventario',
-      style: optionStyle,
-    ),
+    StockScreen(),
     Text(
       'Index 5: Ajustes',
       style: optionStyle,

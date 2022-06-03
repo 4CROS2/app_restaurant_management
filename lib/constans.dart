@@ -51,6 +51,13 @@ const textStyleTitle = TextStyle(
   fontSize: fontSizeTitle,
   color: fontBlack,
 );
+const textStyleTitleSecond = TextStyle(
+  letterSpacing: 0.75,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w600,
+  fontSize: fontSizeSubtitle,
+  color: fontBlack,
+);
 const textStyleSubTitle = TextStyle(
   letterSpacing: 0.25,
   fontFamily: "Poppins",

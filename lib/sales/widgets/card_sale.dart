@@ -79,6 +79,8 @@ class CardSale extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontSize: fontSizeRegular,
                             color: fontGris),
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
@@ -90,22 +92,30 @@ class CardSale extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Text(
-                      nameSale,
-                      style: const TextStyle(
-                          letterSpacing: 0.75,
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w600,
-                          fontSize: fontSizeRegular,
-                          color: redColor),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2 * 1.2 - 15,
+                      child: Text(
+                        nameSale,
+                        style: const TextStyle(
+                            letterSpacing: 0.75,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w600,
+                            fontSize: fontSizeRegular,
+                            color: redColor),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    Text(
-                      '- Bs. ' + total,
-                      style: const TextStyle(
-                          fontFamily: "Work Sans",
-                          fontWeight: FontWeight.w700,
-                          fontSize: fontSizeTitle,
-                          color: redColor),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 4,
+                      child: Text(
+                        '- Bs. ' + total,
+                        style: const TextStyle(
+                            fontFamily: "Work Sans",
+                            fontWeight: FontWeight.w700,
+                            fontSize: fontSizeTitle,
+                            color: redColor),
+                      ),
                     ),
                   ],
                 ),
