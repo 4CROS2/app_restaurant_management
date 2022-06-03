@@ -1,18 +1,18 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
-import 'package:app_restaurant_management/stock/widgets/card_form_category.dart';
+import 'package:app_restaurant_management/stock/widgets/card_form_product_stock.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
-class NewCategoryStockScreen extends StatefulWidget {
-  const NewCategoryStockScreen({Key? key}) : super(key: key);
+class NewProductStockScreen extends StatefulWidget {
+  const NewProductStockScreen({Key? key}) : super(key: key);
 
   @override
-  _NewCategoryStockScreenState createState() => _NewCategoryStockScreenState();
+  _NewProductStockScreenState createState() => _NewProductStockScreenState();
 }
 
-class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
+class _NewProductStockScreenState extends State<NewProductStockScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +21,7 @@ class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
         elevation: 0,
         backgroundColor: backgroundColor,
         title: const Text(
-          "Nueva Categoría",
+          "Nuevo Producto Comprado",
           style: TextStyle(
             letterSpacing: 0.75,
             fontFamily: "Poppins",
@@ -34,7 +34,7 @@ class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
       body: ListView(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
         children: [
-          const CardFormCategoryStock(),
+          const CardFormProductStock(),
           const SizedBox(height: 10),
           ButtonConfirm(
             width: MediaQuery.of(context).size.width,
@@ -46,7 +46,7 @@ class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
                 builder: (BuildContext context) {
                   return Dialog(
                     child: ModalConfirm(
-                      message: '¿Agregar categoría al inventario?',
+                      message: '¿Agregar producto al inventario?',
                       onPressConfirm: () async {
                         Navigator.of(context).pop('confirmar');
                       },

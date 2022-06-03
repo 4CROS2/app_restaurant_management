@@ -141,7 +141,7 @@ class _CardFormCategoryState extends State<CardFormCategory> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           nameCategory(),
-          description(),
+          // description(),
           status(),
         ],
       ),
