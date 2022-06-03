@@ -141,7 +141,7 @@ class _CardFormCategoryStockState extends State<CardFormCategoryStock> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           nameCategory(),
-          description(),
+          // description(),
           status(),
         ],
       ),
