@@ -1,4 +1,6 @@
 // import 'package:flutter/cupertino.dart';
+import 'package:app_restaurant_management/menu/screens/detail_product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
@@ -25,9 +27,8 @@ class CardProduct extends StatelessWidget {
       decoration: boxShadow,
       child: InkWell(
         onTap: () {
-          // Navigator.of(context).push(CupertinoPageRoute(
-          //     builder: (context) =>
-          //         ConfirmOrderScreen(statusOrder: statusOrder)));
+          Navigator.of(context).push(CupertinoPageRoute(
+              builder: (context) => const DetailProductScreen()));
         },
         child: Row(
           children: [
