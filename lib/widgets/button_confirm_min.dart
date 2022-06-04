@@ -68,12 +68,14 @@ class _ButtonConfirmMinState extends State<ButtonConfirmMin>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Text(widget.textButton,
-                style: TextStyle(
-                    fontFamily: "Poppins",
-                    color: widget.colorText,
-                    fontWeight: FontWeight.w400,
-                    fontSize: fontSizeSmall)),
+            child: Text(
+              widget.textButton,
+              style: TextStyle(
+                  fontFamily: "Poppins",
+                  color: widget.colorText,
+                  fontWeight: FontWeight.w400,
+                  fontSize: fontSizeSmall),
+            ),
           )),
     );
   }

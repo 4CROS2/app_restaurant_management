@@ -7,13 +7,17 @@ class ButtonConfirm extends StatefulWidget {
   final Color color;
   final Color colorText;
   final double width;
+  final IconData? icon;
+
   // ignore: use_key_in_widget_constructors
-  const ButtonConfirm(
-      {required this.textButton,
-      required this.onPressed,
-      this.color = focusColor,
-      this.width = 125,
-      this.colorText = Colors.white});
+  const ButtonConfirm({
+    required this.textButton,
+    required this.onPressed,
+    this.color = focusColor,
+    this.width = 125,
+    this.colorText = Colors.white,
+    this.icon,
+  });
   @override
   _ButtonConfirmState createState() => _ButtonConfirmState();
 }
@@ -68,12 +72,29 @@ class _ButtonConfirmState extends State<ButtonConfirm>
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
           ),
-          child: Text(widget.textButton,
-              style: TextStyle(
-                  fontFamily: "Poppins",
-                  color: widget.colorText,
-                  fontWeight: FontWeight.w500,
-                  fontSize: fontSizeMedium)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Visibility(
+                visible: widget.icon != null,
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  child: Icon(
+                    widget.icon,
+                    color: widget.colorText,
+                  ),
+                ),
+              ),
+              Text(
+                widget.textButton,
+                style: TextStyle(
+                    fontFamily: "Poppins",
+                    color: widget.colorText,
+                    fontWeight: FontWeight.w500,
+                    fontSize: fontSizeMedium),
+              ),
+            ],
+          ),
         ));
   }
 }
