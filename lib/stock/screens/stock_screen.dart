@@ -1,5 +1,4 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
-import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/stock/screens/new_category_stock.dart';
 import 'package:app_restaurant_management/stock/screens/new_product_stock_screen.dart';
 import 'package:app_restaurant_management/stock/screens/products_stock_screen.dart';

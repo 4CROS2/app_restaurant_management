@@ -23,7 +23,8 @@ class ModalOrder extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          margin: const EdgeInsets.only(bottom: 15, top: 15),
+          margin:
+              const EdgeInsets.only(bottom: 15, top: 15, right: 10, left: 10),
           child: Text(
             message,
             textAlign: TextAlign.center,
