@@ -1,21 +1,19 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
-import 'package:app_restaurant_management/menu/screens/edit_product.dart';
-import 'package:app_restaurant_management/menu/widgets/card_detail_product.dart';
+import 'package:app_restaurant_management/menu/widgets/card_edit_product.dart';
 import 'package:app_restaurant_management/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
-class DetailProductScreen extends StatefulWidget {
-  const DetailProductScreen({Key? key}) : super(key: key);
+class EditProductScreen extends StatefulWidget {
+  const EditProductScreen({Key? key}) : super(key: key);
 
   @override
-  _DetailProductScreenState createState() => _DetailProductScreenState();
+  _EditProductScreenState createState() => _EditProductScreenState();
 }
 
-class _DetailProductScreenState extends State<DetailProductScreen> {
+class _EditProductScreenState extends State<EditProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +22,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         elevation: 0,
         backgroundColor: backgroundColor,
         title: const Text(
-          "Detalle",
+          "Editar Producto",
           style: TextStyle(
             letterSpacing: 0.75,
             fontFamily: "Poppins",
@@ -35,14 +33,24 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
         ),
       ),
       body: ListView(
-        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 30),
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
         children: [
-          const CardDetailProduct(),
-          Column(
+          const CardEditProduct(),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              ///Functionality button cancel
               ButtonCancel(
-                textButton: "Eliminar",
-                icon: Icons.delete_outline_outlined,
+                textButton: 'Cancelar',
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+
+              ///Functionality button confirm
+              ButtonConfirm(
+                textButton: 'Guardar',
                 onPressed: () async {
                   var res = await showDialog(
                     context: context,
@@ -51,7 +59,8 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                       return Dialog(
                         child: ModalConfirm(
                           message:
-                              '¿Seguro que quieres eliminar este producto del menu?',
+                              '¿Seguro qué quiere guardar los cambios realizados?',
+                          textButtonConfirm: 'Guardar',
                           onPressConfirm: () async {
                             Navigator.of(context).pop('confirmar');
                           },
@@ -74,22 +83,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                           },
                         );
                         return const ModalOrder(
-                          message: 'Se eliminó el producto del Menú',
-                          image: 'assets/img/delete-product.svg',
+                          message: 'Cambios guardados exitosamente',
+                          image: 'assets/img/confirm-product.svg',
                         );
                       },
                     );
                     Navigator.of(context).pop(true);
                   }
-                },
-              ),
-              const SizedBox(height: 15),
-              ButtonConfirm(
-                textButton: "Editar",
-                icon: Icons.edit,
-                onPressed: () async {
-                  await Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const EditProductScreen()));
                 },
               ),
             ],
