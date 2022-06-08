@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../constans.dart';
 
 enum SingingCharacter { disponible, nodisponible }
@@ -15,6 +18,8 @@ class CardFormProduct extends StatefulWidget {
 class _CardFormProductState extends State<CardFormProduct> {
   String dropdownValue = 'Platos';
   SingingCharacter? _character = SingingCharacter.disponible;
+  File? _image;
+  final ImagePicker _picker = ImagePicker();
 
   /// Subtitle Forms
   Container titleCardForm(String text) {
@@ -99,6 +104,28 @@ class _CardFormProductState extends State<CardFormProduct> {
     );
   }
 
+  /// Funcionalidad camara
+  _imgFromCamera() async {
+    try {
+      var image = await _picker.pickImage(
+          source: ImageSource.camera,
+          imageQuality: 100,
+          maxWidth: 1280,
+          maxHeight: 720);
+      if (image != null) {
+        setState(() {
+          _image = File(image.path);
+        });
+        // currentCutProvider.listImage.add(File(image.path));
+      }
+    } on Exception catch (e) {
+      // ignore: avoid_print
+      print("Fallo al sacar foto");
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
   /// Foto del Producto
   Column photoProduct() {
     return Column(
@@ -106,15 +133,24 @@ class _CardFormProductState extends State<CardFormProduct> {
       children: [
         titleCardForm('Foto del Producto'),
         InkWell(
+          onTap: () async {
+            await _imgFromCamera();
+          },
           child: Container(
-              width: MediaQuery.of(context).size.width / 3 * 1.3,
-              height: MediaQuery.of(context).size.width / 3 * 1.4,
-              margin: const EdgeInsets.only(bottom: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: secondColor),
-              ),
-              child: const Icon(Icons.add_photo_alternate_rounded, size: 50)),
+            width: MediaQuery.of(context).size.width / 3 * 1.3,
+            height: MediaQuery.of(context).size.width / 3 * 1.4,
+            margin: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: secondColor),
+            ),
+            child: _image != null
+                ? Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(Icons.add_photo_alternate_rounded, size: 50),
+          ),
         ),
       ],
     );
