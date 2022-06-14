@@ -1,3 +1,5 @@
+import 'package:app_restaurant_management/stock/screens/detail_stock.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
@@ -18,13 +20,10 @@ class CardStock extends StatelessWidget {
       decoration: boxShadow,
       child: InkWell(
           onTap: () {
-            // Navigator.of(context).push(
-            //   CupertinoPageRoute(
-            //     builder: (context) => const DetailSaleScreen(
-            //       typeSale: 'purchase',
-            //     ),
-            //   ),
-            // );
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                  builder: (context) => const DetailStockScreen()),
+            );
           },
           child: Column(
             children: [
