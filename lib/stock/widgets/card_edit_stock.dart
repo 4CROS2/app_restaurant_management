@@ -1,22 +1,20 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../../constans.dart';
 
-class CardFormProductStock extends StatefulWidget {
-  const CardFormProductStock({
+enum SingingCharacter { disponible, nodisponible }
+
+class CardEditStock extends StatefulWidget {
+  const CardEditStock({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CardFormProductStock> createState() => _CardFormProductStockState();
+  State<CardEditStock> createState() => _CardEditStockState();
 }
 
-class _CardFormProductStockState extends State<CardFormProductStock> {
-  String dropdownValue = 'Alimentos';
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
+class _CardEditStockState extends State<CardEditStock> {
+  String dropdownValue = 'Platos';
+  SingingCharacter? _character = SingingCharacter.disponible;
 
   /// Subtitle Forms
   Container titleCardForm(String text) {
@@ -35,10 +33,11 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        titleCardForm('Nombre del Producto Comprado'),
+        titleCardForm('Nombre del Producto'),
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
+            initialValue: 'Carne (200g)',
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
@@ -68,7 +67,7 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
                 dropdownValue = newValue!;
               });
             },
-            items: <String>['Alimentos', 'Limpieza']
+            items: <String>['Platos', 'Bebidas']
                 .map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
@@ -90,6 +89,7 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
+            initialValue: 'Carne de res',
             maxLines: 3,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -101,28 +101,6 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
     );
   }
 
-  /// Funcionalidad camara
-  _imgFromCamera() async {
-    try {
-      var image = await _picker.pickImage(
-          source: ImageSource.camera,
-          imageQuality: 100,
-          maxWidth: 1280,
-          maxHeight: 720);
-      if (image != null) {
-        setState(() {
-          _image = File(image.path);
-        });
-        // currentCutProvider.listImage.add(File(image.path));
-      }
-    } on Exception catch (e) {
-      // ignore: avoid_print
-      print("Fallo al sacar foto");
-      // ignore: avoid_print
-      print(e);
-    }
-  }
-
   /// Foto del Producto
   Column photoProduct() {
     return Column(
@@ -130,23 +108,15 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
       children: [
         titleCardForm('Foto del Producto'),
         InkWell(
-          onTap: () async {
-            await _imgFromCamera();
-          },
           child: Container(
               width: MediaQuery.of(context).size.width / 3 * 1.3,
               height: MediaQuery.of(context).size.width / 3 * 1.4,
               margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
-                // borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: secondColor),
               ),
-              child: _image != null
-                  ? Image.file(
-                      _image!,
-                      fit: BoxFit.cover,
-                    )
-                  : const Icon(Icons.add_photo_alternate_rounded, size: 50)),
+              child: const Icon(Icons.add_photo_alternate_rounded, size: 50)),
         ),
       ],
     );
@@ -163,6 +133,7 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: TextFormField(
+              initialValue: '48',
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -192,6 +163,7 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: TextFormField(
+              initialValue: '10',
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: const InputDecoration(
