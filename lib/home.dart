@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/menu/screens/menu_screen.dart';
 import 'package:app_restaurant_management/sales/screens/sales_sreen.dart';
+import 'package:app_restaurant_management/settings/screen/settings_screen.dart';
 import 'package:app_restaurant_management/stock/screens/stock_screen.dart';
 import 'package:flutter/material.dart';
 import 'constans.dart';
@@ -24,10 +25,7 @@ class _HomeState extends State<Home> {
     MenuScreen(),
     SalesScreen(),
     StockScreen(),
-    Text(
-      'Index 5: Ajustes',
-      style: optionStyle,
-    ),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

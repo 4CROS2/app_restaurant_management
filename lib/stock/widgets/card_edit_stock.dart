@@ -14,7 +14,6 @@ class CardEditStock extends StatefulWidget {
 
 class _CardEditStockState extends State<CardEditStock> {
   String dropdownValue = 'Platos';
-  SingingCharacter? _character = SingingCharacter.disponible;
 
   /// Subtitle Forms
   Container titleCardForm(String text) {
