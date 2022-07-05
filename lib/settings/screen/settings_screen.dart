@@ -1,5 +1,7 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
+import 'package:app_restaurant_management/settings/screen/business_screen.dart';
 import 'package:app_restaurant_management/settings/widgets/perfil_section.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
@@ -36,23 +38,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
         children: [
           const PerfilSection(),
           const SizedBox(height: 40),
-          function(text: 'Administración de negocio', icon: Icons.business),
+          function(
+              text: 'Administración de negocio',
+              icon: Icons.business,
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => const BusinessInfoScreen()));
+              }),
           const Divider(),
           function(
-              text: 'Administracion de empleados', icon: Icons.perm_identity),
+              text: 'Administracion de empleados',
+              icon: Icons.perm_identity,
+              onPressed: () {}),
           const Divider(),
-          function(text: 'Cerrar Sesión', icon: Icons.logout, arrow: false),
+          function(
+              text: 'Cerrar Sesión',
+              icon: Icons.logout,
+              arrow: false,
+              onPressed: () {}),
         ],
       ),
     );
   }
 
   // Row functions
-  function({required String text, required IconData icon, bool arrow = true}) {
+  function(
+      {required String text,
+      required IconData icon,
+      bool arrow = true,
+      required VoidCallback onPressed}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       child: InkWell(
-        onTap: () {},
+        onTap: onPressed,
         child: Row(
           children: [
             Icon(icon),
