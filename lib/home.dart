@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
           bottomItem(context, Icons.home, 'Inicio'),
           bottomItem(context, Icons.local_dining, 'Menú'),
           bottomItem(context, Icons.assessment, 'Ventas'),
-          bottomItem(context, Icons.assignment, 'Inventario'),
+          bottomItem(context, Icons.assignment, 'Gastos'),
           bottomItem(context, Icons.settings, 'Ajustes'),
         ],
         currentIndex: _selectedIndex,
