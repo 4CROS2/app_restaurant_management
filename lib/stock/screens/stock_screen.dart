@@ -53,7 +53,7 @@ class _StockScreenState extends State<StockScreen> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: const Text(
-                  "AGREGAR PRODUCTO",
+                  "AGREGAR GASTO",
                   style: textStyleButton,
                   textAlign: TextAlign.center,
                 )),
@@ -82,7 +82,7 @@ class _StockScreenState extends State<StockScreen> {
                     SvgPicture.asset('assets/img/inventario.svg'),
                     const SizedBox(width: 10),
                     const Text(
-                      'Inventario',
+                      'Gastos',
                       style: textStyleTitle,
                       textAlign: TextAlign.left,
                     )
