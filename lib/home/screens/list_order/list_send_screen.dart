@@ -18,6 +18,7 @@ class _SendScreenState extends State<SendScreen> {
       itemBuilder: (context, index) {
         return const CardOrder(
           id: 'Orden #001',
+          typeOrder: "o",
           price: 'Bs. 48',
           name: 'Adela Canedo',
           labelState: 'Hace 10 min',

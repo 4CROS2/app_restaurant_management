@@ -1,8 +1,7 @@
 import 'package:app_restaurant_management/home/screens/list_order/list_in_progress_screen.dart';
 import 'package:app_restaurant_management/home/screens/list_order/list_pending_screen.dart';
 import 'package:app_restaurant_management/home/screens/list_order/list_send_screen.dart';
-import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_restaurant_management/home/widgets/home/float_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../constans.dart';
@@ -45,29 +44,6 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
   }
 
   // Float Button Agregar Orden
-  Widget floatButton() => Container(
-        padding: const EdgeInsets.only(left: 10, right: 10),
-        width: MediaQuery.of(context).size.width / 1,
-        height: 40,
-        child: FloatingActionButton(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            isExtended: true,
-            backgroundColor: primaryColor,
-            child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: const Text(
-                  "NUEVA ORDEN",
-                  style: textStyleButton,
-                  textAlign: TextAlign.center,
-                )),
-            onPressed: () async {
-              await Navigator.of(context).push(CupertinoPageRoute(
-                  builder: (context) => const NewOrderScreen()));
-            }),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +82,7 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
             SendScreen(),
           ],
         ),
-        floatingActionButton: floatButton(),
+        floatingActionButton: const FloatButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );

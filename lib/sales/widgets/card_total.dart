@@ -10,7 +10,7 @@ class CardTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 80,
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(5),
       margin: const EdgeInsets.only(bottom: 15),
       decoration: boxShadow,
       child: Row(

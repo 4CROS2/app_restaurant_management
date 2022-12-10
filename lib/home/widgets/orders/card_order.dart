@@ -7,6 +7,7 @@ import '../../../constans.dart';
 
 class CardOrder extends StatelessWidget {
   final String id;
+  final String typeOrder;
   final String price;
   final String name;
   final Color colorState;
@@ -16,6 +17,7 @@ class CardOrder extends StatelessWidget {
   const CardOrder(
       {Key? key,
       required this.id,
+      required this.typeOrder,
       required this.price,
       required this.name,
       required this.colorState,
@@ -61,13 +63,21 @@ class CardOrder extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Text(
-                    id,
-                    style: const TextStyle(
-                        letterSpacing: 0.75,
-                        fontFamily: "Poppins",
-                        fontWeight: FontWeight.w600,
-                        fontSize: fontSizeRegular),
+                  Row(
+                    children: [
+                      Icon(typeOrder == "d"
+                          ? Icons.delivery_dining
+                          : Icons.restaurant),
+                      const SizedBox(width: 5),
+                      Text(
+                        id,
+                        style: const TextStyle(
+                            letterSpacing: 0.75,
+                            fontFamily: "Poppins",
+                            fontWeight: FontWeight.w600,
+                            fontSize: fontSizeRegular),
+                      ),
+                    ],
                   ),
                   Text(
                     price,
