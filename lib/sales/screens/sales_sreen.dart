@@ -1,3 +1,4 @@
+import 'package:app_restaurant_management/sales/widgets/date_picker.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 import 'list_sales_screen.dart';
@@ -68,94 +69,119 @@ class _SalesScreenState extends State<SalesScreen> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String current = DateFormat('dd-MM-yyyy').format(now);
-
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize:
-              const Size.fromHeight(120.0), // here the desired height
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: backgroundColor,
-            title: Row(
-              children: [
-                Image.asset('assets/img/sale.png'),
-                const SizedBox(width: 10),
-                const Text(
-                  'Ventas',
-                  style: textStyleTitle,
-                  textAlign: TextAlign.left,
-                ),
-                const Spacer(),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: TextFormField(
-                    onTap: () async {
-                      await fechaModal(context).then((value) {
-                        if (value != null) {
-                          setState(() {
-                            _dateController.text =
-                                DateFormat('dd-MM-yyyy').format(value);
-                          });
-                          //     // getNacionalByDate(context, value.toString());
-                        }
-                      });
-                    },
-                    style: const TextStyle(
-                      fontFamily: "Poppins",
-                      fontSize: fontSizeRegular,
-                      color: Colors.white,
-                    ),
-                    controller: _dateController,
-                    readOnly: true,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.datetime,
-                    decoration: InputDecoration(
-                      fillColor: Colors.black,
-                      prefixIcon: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Icon(Icons.calendar_today,
-                            size: 20, color: Colors.white),
-                      ),
-                      focusedBorder: InputBorder.none,
-                      contentPadding: const EdgeInsets.only(top: 15, right: 10),
-                      filled: true,
-                      isDense: true,
-                      hintText: current,
-                      hintStyle: const TextStyle(
-                          fontFamily: "Poppins",
-                          fontSize: fontSizeRegular,
-                          color: Colors.white),
-                    ),
-                  ),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: backgroundColor,
+        title: Row(
+          children: [
+            Image.asset('assets/img/sale.png'),
+            const SizedBox(width: 10),
+            const Text(
+              'Ventas',
+              style: textStyleTitle,
+              textAlign: TextAlign.left,
             ),
-            bottom: TabBar(
-              indicatorWeight: 0,
-              padding: const EdgeInsets.only(bottom: 5),
-              unselectedLabelColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.label,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: focusColor,
-              ),
-              tabs: [
-                tabBarValue(text: 'Diario'),
-                tabBarValue(text: 'Semanal'),
-                tabBarValue(text: 'Mensual'),
-              ],
-            ),
-          ),
-        ),
-        // ignore: prefer_const_constructors
-        body: TabBarView(
-          children: const [
-            ListSalesScreen(),
-            ListSalesScreen(),
-            ListSalesScreen(),
+            const Spacer(),
           ],
+        ),
+      ),
+      body: ListView(
+        children: const [
+          DatePicker(),
+          // Row(
+          //   children: [
+          //     // calendar(current),
+          //     Container(
+          //       margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+          //       width: MediaQuery.of(context).size.width * 0.4,
+          //       child: TextFormField(
+          //         onTap: () async {
+          //           await fechaModal(context).then((value) {
+          //             if (value != null) {
+          //               setState(() {
+          //                 _dateController.text =
+          //                     DateFormat('dd-MM-yyyy').format(value);
+          //               });
+          //               //     // getNacionalByDate(context, value.toString());
+          //             }
+          //           });
+          //         },
+          //         style: const TextStyle(
+          //           fontFamily: "Poppins",
+          //           fontSize: fontSizeRegular,
+          //           color: Colors.white,
+          //         ),
+          //         controller: _dateController,
+          //         readOnly: true,
+          //         textAlign: TextAlign.center,
+          //         keyboardType: TextInputType.datetime,
+          //         decoration: InputDecoration(
+          //           fillColor: Colors.black,
+          //           prefixIcon: Container(
+          //             padding: const EdgeInsets.all(10),
+          //             child: const Icon(Icons.calendar_today,
+          //                 size: 20, color: Colors.white),
+          //           ),
+          //           focusedBorder: InputBorder.none,
+          //           contentPadding: const EdgeInsets.only(top: 15, right: 10),
+          //           filled: true,
+          //           isDense: true,
+          //           hintText: current,
+          //           hintStyle: const TextStyle(
+          //               fontFamily: "Poppins",
+          //               fontSize: fontSizeRegular,
+          //               color: Colors.white),
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+          const ListSalesScreen(),
+        ],
+      ),
+    );
+  }
+
+  Future calendar(String current) async {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: TextFormField(
+        onTap: () async {
+          await fechaModal(context).then((value) {
+            if (value != null) {
+              setState(() {
+                _dateController.text = DateFormat('dd-MM-yyyy').format(value);
+              });
+              //     // getNacionalByDate(context, value.toString());
+            }
+          });
+        },
+        style: const TextStyle(
+          fontFamily: "Poppins",
+          fontSize: fontSizeRegular,
+          color: Colors.white,
+        ),
+        controller: _dateController,
+        readOnly: true,
+        textAlign: TextAlign.center,
+        keyboardType: TextInputType.datetime,
+        decoration: InputDecoration(
+          fillColor: Colors.black,
+          prefixIcon: Container(
+            padding: const EdgeInsets.all(10),
+            child:
+                const Icon(Icons.calendar_today, size: 20, color: Colors.white),
+          ),
+          focusedBorder: InputBorder.none,
+          contentPadding: const EdgeInsets.only(top: 15, right: 10),
+          filled: true,
+          isDense: true,
+          hintText: current,
+          hintStyle: const TextStyle(
+              fontFamily: "Poppins",
+              fontSize: fontSizeRegular,
+              color: Colors.white),
         ),
       ),
     );

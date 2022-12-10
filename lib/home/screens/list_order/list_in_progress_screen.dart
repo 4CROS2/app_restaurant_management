@@ -18,6 +18,7 @@ class _InProgressScreenState extends State<InProgressScreen> {
       itemBuilder: (context, index) {
         return const CardOrder(
           id: 'Orden #001',
+          typeOrder: "d",
           price: 'Bs. 48',
           name: 'Adela Canedo',
           labelState: 'Hace 10 min',

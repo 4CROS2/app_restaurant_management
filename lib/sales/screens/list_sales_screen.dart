@@ -1,3 +1,4 @@
+import 'package:app_restaurant_management/constans.dart';
 import 'package:app_restaurant_management/sales/widgets/card_sale.dart';
 import 'package:app_restaurant_management/sales/widgets/card_total.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +14,20 @@ class _ListSalesScreenState extends State<ListSalesScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.all(10),
+      physics: const ScrollPhysics(),
+      shrinkWrap: true,
       children: [
         const CardTotal(),
+        Container(
+            margin: const EdgeInsets.all(10),
+            child: const Text(
+              'Hoy',
+              style: TextStyle(fontSize: 16, color: fontGris),
+            )),
         ListView.builder(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          padding: const EdgeInsets.all(10),
           itemCount: 10,
           itemBuilder: (context, index) {
             return const CardSale(

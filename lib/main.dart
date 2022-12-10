@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'App Restaurant Management',
       theme: ThemeData(
         primarySwatch: Colors.red,
+        // inputDecorationTheme:const InputDecorationTheme(),
       ),
       home: const Login(),
     );

@@ -68,8 +68,15 @@ class _CardFormProductStockState extends State<CardFormProductStock> {
                 dropdownValue = newValue!;
               });
             },
-            items: <String>['Alimentos', 'Limpieza']
-                .map<DropdownMenuItem<String>>((String value) {
+            items: <String>[
+              'Alimentos',
+              'Limpieza',
+              'Alquiler',
+              'Servicios Básicos',
+              'Gastos administrativos',
+              'Publicidad y mercadeo',
+              'Transporte'
+            ].map<DropdownMenuItem<String>>((String value) {
               return DropdownMenuItem<String>(
                 value: value,
                 child: Text(value),

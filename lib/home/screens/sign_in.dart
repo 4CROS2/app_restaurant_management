@@ -16,6 +16,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool loading = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -25,40 +29,105 @@ class _LoginState extends State<Login> {
         body: ListView(
           // padding: const EdgeInsets.only(, right: 20, bottom: 10),
           children: [
-            Container(
-              padding: const EdgeInsets.only(bottom: 10),
-              width: MediaQuery.of(context).size.width,
-              child: SvgPicture.asset(
-                "assets/img/welcome.svg",
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                  bottom: 20, top: 10, right: 20, left: 20),
-              child: const Text(
-                "Quieres que tu negocio de comida crezca , utiliza nuestra app para mejorar tu rendimiento y administrar tu negocio de forma sencilla.",
-                textAlign: TextAlign.center,
-                style: textStyleItem,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 10),
-              height: MediaQuery.of(context).size.height / 2 * 0.7,
-              child: SvgPicture.asset(
-                "assets/img/portada.svg",
-              ),
-            ),
+            topImage(context),
+            message(),
+            image(context),
             if (loading)
               const Center(
                 child: CircularProgressIndicator(),
               ),
+            emailForm(),
+            passwordForm(),
             buttonSignIn(
               // provider,
-              'Ingresar con Google',
+              'Ingresar',
             )
           ],
         ),
       ),
+    );
+  }
+
+  Container emailForm() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 10),
+      child: Column(
+        children: [
+          Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.only(right: 5, bottom: 5),
+              child: const Text(
+                'Correo Electrónico:',
+                style: textStyleSubtitle,
+              )),
+          TextFormField(
+            decoration: const InputDecoration(border: OutlineInputBorder()),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container passwordForm() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 10),
+      child: Column(
+        children: [
+          Container(
+              alignment: Alignment.topLeft,
+              margin: const EdgeInsets.only(right: 5, bottom: 5),
+              child: const Text(
+                'Correo Electrónico:',
+                style: textStyleSubtitle,
+              )),
+          TextFormField(
+            controller: passController,
+            obscureText: !_passwordVisible,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              border: const OutlineInputBorder(),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Theme.of(context).primaryColorDark,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _passwordVisible = !_passwordVisible;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container image(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 0),
+      height: MediaQuery.of(context).size.height / 2 * 0.7,
+      child: SvgPicture.asset(
+        "assets/img/portada.svg",
+      ),
+    );
+  }
+
+  Container message() {
+    return Container(
+      margin: const EdgeInsets.only(right: 10, left: 10, top: 5),
+      child: const Text(
+        "Mejora tu rendimiento y administra tu negocio de forma sencilla.",
+        textAlign: TextAlign.center,
+        style: textStyleItem,
+      ),
+    );
+  }
+
+  topImage(BuildContext context) {
+    return SvgPicture.asset(
+      "assets/img/welcome.svg",
     );
   }
 
@@ -68,7 +137,7 @@ class _LoginState extends State<Login> {
   ) {
     return Container(
       alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 30),
+      margin: const EdgeInsets.only(top: 10),
       child: TextButton(
         onPressed: () async {
           Navigator.pushReplacement(
@@ -94,7 +163,6 @@ class _LoginState extends State<Login> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SvgPicture.asset('assets/img/google-icon.svg', width: 30),
               Text(text,
                   style: const TextStyle(
                     letterSpacing: 0.25,
