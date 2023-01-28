@@ -1,5 +1,6 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
 import 'package:app_restaurant_management/settings/screen/business_screen.dart';
+import 'package:app_restaurant_management/settings/screen/employee/employees_screen.dart';
 import 'package:app_restaurant_management/settings/widgets/perfil_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           function(
               text: 'Administracion de empleados',
               icon: Icons.perm_identity,
-              onPressed: () {}),
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => const EmployeesScreen()));
+              }),
           const Divider(),
           function(
               text: 'Cerrar Sesión',
