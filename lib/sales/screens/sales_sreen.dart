@@ -67,8 +67,8 @@ class _SalesScreenState extends State<SalesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String current = DateFormat('dd-MM-yyyy').format(now);
+    // DateTime now = DateTime.now();
+    // String current = DateFormat('dd-MM-yyyy').format(now);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -137,7 +137,7 @@ class _SalesScreenState extends State<SalesScreen> {
           //     )
           //   ],
           // ),
-          const ListSalesScreen(),
+          ListSalesScreen(),
         ],
       ),
     );
