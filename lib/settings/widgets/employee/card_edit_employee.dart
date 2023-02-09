@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
-class CardFormNewEmployee extends StatefulWidget {
-  const CardFormNewEmployee({
+class CardFormEditEmployee extends StatefulWidget {
+  const CardFormEditEmployee({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<CardFormNewEmployee> createState() => _CardFormNewEmployeeState();
+  State<CardFormEditEmployee> createState() => _CardFormEditEmployeeState();
 }
 
-class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
+class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
   String dropdownValue = 'Cajero';
   String imageLink = 'assets/img/cajero.png';
   bool valueStatus = false;

@@ -1,3 +1,5 @@
+import 'package:app_restaurant_management/settings/screen/employee/detail_employee.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
@@ -18,10 +20,10 @@ class CardEmployee extends StatelessWidget {
       decoration: boxShadow,
       child: InkWell(
           onTap: () {
-            // Navigator.of(context).push(
-            //   CupertinoPageRoute(
-            //       builder: (context) => const DetailStockScreen()),
-            // );
+            Navigator.of(context).push(
+              CupertinoPageRoute(
+                  builder: (context) => const DetailEmployeeScreen()),
+            );
           },
           child: Column(
             children: [

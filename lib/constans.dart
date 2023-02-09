@@ -128,8 +128,8 @@ const textStyleLabelGreen = TextStyle(
 const textStyleLabelOrange = TextStyle(
   letterSpacing: 0.25,
   fontFamily: "Poppins",
-  fontWeight: FontWeight.w400,
-  fontSize: fontSizeSmall,
+  fontWeight: FontWeight.w500,
+  fontSize: fontSizeMin,
   color: orangeColor,
 );
 const textStyleQuantity = TextStyle(

@@ -1,4 +1,4 @@
-import 'package:app_restaurant_management/settings/widgets/employee/card_employment.dart';
+import 'package:app_restaurant_management/settings/widgets/employee/card_employee.dart';
 import 'package:flutter/material.dart';
 
 class ListEmploymentsScreen extends StatefulWidget {
