@@ -10,14 +10,18 @@ class DatePicker extends StatefulWidget implements PreferredSizeWidget {
 
   @override
   final Size preferredSize;
+
   @override
-  _DatePickerState createState() => _DatePickerState();
+  State<DatePicker> createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<DatePicker> {
   GlobalKey<FormState> keyForm = GlobalKey();
+
   TextEditingController dateStart = TextEditingController();
+
   TextEditingController dateEnd = TextEditingController();
+
   DateTime limitDate = DateTime.now();
 
   @override
@@ -64,7 +68,6 @@ class _DatePickerState extends State<DatePicker> {
       changedFunction: (value) {
         if (value != null) {
           // String valor = value.toString().substring(0, 10);
-
         }
       },
       showPickerFunction: (context, currentValue) {
@@ -88,7 +91,6 @@ class _DatePickerState extends State<DatePicker> {
       changedFunction: (value) {
         if (value != null) {
           // String valor = value.toString().substring(0, 10);
-
         }
       },
       showPickerFunction: (context, currentValue) {

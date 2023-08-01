@@ -8,7 +8,7 @@ class NewEmployeeScreen extends StatefulWidget {
   const NewEmployeeScreen({Key? key}) : super(key: key);
 
   @override
-  _NewEmployeeScreenState createState() => _NewEmployeeScreenState();
+  State<NewEmployeeScreen> createState() => _NewEmployeeScreenState();
 }
 
 class _NewEmployeeScreenState extends State<NewEmployeeScreen> {
@@ -39,7 +39,7 @@ class _NewEmployeeScreenState extends State<NewEmployeeScreen> {
               width: MediaQuery.of(context).size.width,
               textButton: 'Agregar',
               onPressed: () async {
-                await showDialog(
+                showDialog(
                   context: context,
                   barrierDismissible: false,
                   builder: (BuildContext context) {

@@ -8,7 +8,7 @@ class NewOrderScreen extends StatefulWidget {
   const NewOrderScreen({Key? key}) : super(key: key);
 
   @override
-  _NewOrderScreenState createState() => _NewOrderScreenState();
+  State<NewOrderScreen> createState() => _NewOrderScreenState();
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
@@ -54,7 +54,9 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
             var res = await Navigator.of(context).push(CupertinoPageRoute(
                 builder: (context) => const DetailOrderScreen()));
             if (res == true) {
-              Navigator.of(context).pop(true);
+              if (context.mounted) {
+                Navigator.of(context).pop(true);
+              }
             }
           },
         ),

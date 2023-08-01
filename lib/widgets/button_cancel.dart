@@ -17,8 +17,9 @@ class ButtonCancel extends StatefulWidget {
     this.colorText = Colors.black,
     this.icon,
   });
+
   @override
-  _ButtonCancelState createState() => _ButtonCancelState();
+  State<ButtonCancel> createState() => _ButtonCancelState();
 }
 
 class _ButtonCancelState extends State<ButtonCancel>
@@ -26,11 +27,6 @@ class _ButtonCancelState extends State<ButtonCancel>
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

@@ -43,7 +43,7 @@ class CardStock extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      'Bs. ' + total,
+                      'Bs. $total',
                       style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w700,

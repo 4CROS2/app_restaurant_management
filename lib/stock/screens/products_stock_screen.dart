@@ -5,7 +5,7 @@ class ProductsStockScreen extends StatefulWidget {
   const ProductsStockScreen({Key? key}) : super(key: key);
 
   @override
-  _ProductsStockScreenState createState() => _ProductsStockScreenState();
+  State<ProductsStockScreen> createState() => _ProductsStockScreenState();
 }
 
 class _ProductsStockScreenState extends State<ProductsStockScreen> {

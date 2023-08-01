@@ -8,7 +8,7 @@ class EmployeesScreen extends StatefulWidget {
   const EmployeesScreen({Key? key}) : super(key: key);
 
   @override
-  _EmployeesScreenState createState() => _EmployeesScreenState();
+  State<EmployeesScreen> createState() => _EmployeesScreenState();
 }
 
 class _EmployeesScreenState extends State<EmployeesScreen> {

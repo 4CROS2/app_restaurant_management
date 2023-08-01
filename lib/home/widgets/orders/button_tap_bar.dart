@@ -15,8 +15,9 @@ class ButtonTabBar extends StatefulWidget {
     this.width = 125,
     this.colorText = Colors.black,
   });
+
   @override
-  _ButtonTabBarState createState() => _ButtonTabBarState();
+  State<ButtonTabBar> createState() => _ButtonTabBarState();
 }
 
 class _ButtonTabBarState extends State<ButtonTabBar>
@@ -24,11 +25,6 @@ class _ButtonTabBarState extends State<ButtonTabBar>
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

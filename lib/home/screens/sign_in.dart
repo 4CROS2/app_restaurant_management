@@ -1,10 +1,12 @@
 import 'package:app_restaurant_management/constans.dart';
 import 'package:app_restaurant_management/home.dart';
+import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:flutter/cupertino.dart';
 // import 'package:app_restaurant_management/home.dart';
 // import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 // import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -23,7 +25,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // final provider = Provider.of<SignInSocialNetworkInProvider>(context);
+    final auth = Provider.of<SignInSocialNetworkInProvider>(context);
     return SafeArea(
       child: Scaffold(
         body: ListView(
@@ -39,7 +41,7 @@ class _LoginState extends State<Login> {
             emailForm(),
             passwordForm(),
             buttonSignIn(
-              // provider,
+              auth,
               'Ingresar',
             )
           ],
@@ -61,6 +63,7 @@ class _LoginState extends State<Login> {
                 style: textStyleSubtitle,
               )),
           TextFormField(
+            controller: emailController,
             decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
         ],
@@ -132,7 +135,7 @@ class _LoginState extends State<Login> {
   }
 
   Widget buttonSignIn(
-    // SignInSocialNetworkInProvider provider,
+    SignInSocialNetworkInProvider provider,
     String text,
   ) {
     return Container(
@@ -140,13 +143,21 @@ class _LoginState extends State<Login> {
       margin: const EdgeInsets.only(top: 10),
       child: TextButton(
         onPressed: () async {
-          Navigator.pushReplacement(
-              context, CupertinoPageRoute(builder: (context) => const Home()));
-          // await provider.googleAuth();
-          // if (provider.isAuth) {
-          //   Navigator.pushReplacement(
-          //       context, CupertinoPageRoute(builder: (context) => const Home()));
-          // }
+          // Navigator.pushReplacement(
+          //     context, CupertinoPageRoute(builder: (context) => const Home()));
+          await provider.emailAuth(emailController.text, passController.text);
+          if (provider.isAuth) {
+            if (context.mounted) {
+              Navigator.pushReplacement(context,
+                  CupertinoPageRoute(builder: (context) => const Home()));
+            }
+          } else {
+            // print("Usuario incorrecto");
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Correo/contraseña incorrecta")));
+            }
+          }
         },
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(primaryColor),

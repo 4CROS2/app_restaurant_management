@@ -46,47 +46,6 @@ class _CardFormCategoryState extends State<CardFormCategory> {
     );
   }
 
-  /// Descripción
-  Column description() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        titleCardForm('Descripción'),
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          child: TextFormField(
-            maxLines: 3,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // /// Foto del Producto
-  // Column photoProduct() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       titleCardForm('Foto del Producto'),
-  //       InkWell(
-  //         child: Container(
-  //             width: MediaQuery.of(context).size.width / 3 * 1.3,
-  //             height: MediaQuery.of(context).size.width / 3 * 1.4,
-  //             margin: const EdgeInsets.only(bottom: 10),
-  //             decoration: BoxDecoration(
-  //               borderRadius: BorderRadius.circular(10),
-  //               border: Border.all(color: secondColor),
-  //             ),
-  //             child: const Icon(Icons.add_photo_alternate_rounded, size: 50)),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   /// Estado
   Container status() {
     return Container(
@@ -141,7 +100,6 @@ class _CardFormCategoryState extends State<CardFormCategory> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           nameCategory(),
-          // description(),
           status(),
         ],
       ),

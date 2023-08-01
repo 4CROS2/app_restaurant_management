@@ -12,7 +12,7 @@ class DetailEmployeeScreen extends StatefulWidget {
   const DetailEmployeeScreen({Key? key}) : super(key: key);
 
   @override
-  _DetailEmployeeScreenState createState() => _DetailEmployeeScreenState();
+  State<DetailEmployeeScreen> createState() => _DetailEmployeeScreenState();
 }
 
 class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
@@ -62,23 +62,27 @@ class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
                     },
                   );
                   if (res != null) {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        Future.delayed(
-                          const Duration(seconds: 3),
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
-                        return const ModalOrder(
-                          message: 'Se eliminó el empleado',
-                          image: 'assets/img/delete-product.svg',
-                        );
-                      },
-                    );
-                    Navigator.of(context).pop(true);
+                    if (context.mounted) {
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          Future.delayed(
+                            const Duration(seconds: 3),
+                            () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                          return const ModalOrder(
+                            message: 'Se eliminó el empleado',
+                            image: 'assets/img/delete-product.svg',
+                          );
+                        },
+                      );
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop(true);
+                    }
                   }
                 },
               ),

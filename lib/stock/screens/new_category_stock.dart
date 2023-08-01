@@ -9,7 +9,7 @@ class NewCategoryStockScreen extends StatefulWidget {
   const NewCategoryStockScreen({Key? key}) : super(key: key);
 
   @override
-  _NewCategoryStockScreenState createState() => _NewCategoryStockScreenState();
+  State<NewCategoryStockScreen> createState() => _NewCategoryStockScreenState();
 }
 
 class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
@@ -58,23 +58,27 @@ class _NewCategoryStockScreenState extends State<NewCategoryStockScreen> {
                 },
               );
               if (res != null) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                    return const ModalOrder(
-                        message:
-                            'Se agrego correctamente a la lista del Inventario',
-                        image: 'assets/img/confirm-product.svg');
-                  },
-                );
-                Navigator.of(context).pop(true);
+                if (context.mounted) {
+                  await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                      return const ModalOrder(
+                          message:
+                              'Se agrego correctamente a la lista del Inventario',
+                          image: 'assets/img/confirm-product.svg');
+                    },
+                  );
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop(true);
+                }
               }
             },
           ),

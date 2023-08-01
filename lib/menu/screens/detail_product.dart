@@ -12,7 +12,7 @@ class DetailProductScreen extends StatefulWidget {
   const DetailProductScreen({Key? key}) : super(key: key);
 
   @override
-  _DetailProductScreenState createState() => _DetailProductScreenState();
+  State<DetailProductScreen> createState() => _DetailProductScreenState();
 }
 
 class _DetailProductScreenState extends State<DetailProductScreen> {
@@ -63,23 +63,27 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     },
                   );
                   if (res != null) {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        Future.delayed(
-                          const Duration(seconds: 3),
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
-                        return const ModalOrder(
-                          message: 'Se eliminó el producto del Menú',
-                          image: 'assets/img/delete-product.svg',
-                        );
-                      },
-                    );
-                    Navigator.of(context).pop(true);
+                    if (context.mounted) {
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          Future.delayed(
+                            const Duration(seconds: 3),
+                            () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                          return const ModalOrder(
+                            message: 'Se eliminó el producto del Menú',
+                            image: 'assets/img/delete-product.svg',
+                          );
+                        },
+                      );
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop(true);
+                    }
                   }
                 },
               ),

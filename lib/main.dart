@@ -1,8 +1,11 @@
 // import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
+import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:app_restaurant_management/home/screens/sign_in.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter/services.dart';
 // import 'package:provider/provider.dart';
 // import 'home.dart';
@@ -15,17 +18,50 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+  OutlineInputBorder borderInput({Color color = Colors.black}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: color),
+    );
+  }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'App Restaurant Management',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        // inputDecorationTheme:const InputDecorationTheme(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            create: (context) => SignInSocialNetworkInProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider())
+      ],
+      child: MaterialApp(
+        title: 'App Restaurant Management',
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+          inputDecorationTheme: InputDecorationTheme(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.all(9),
+            fillColor: Colors.white,
+            filled: true,
+            enabledBorder: borderInput(),
+            focusedErrorBorder: borderInput(),
+            focusedBorder: borderInput(),
+            errorBorder: borderInput(color: Colors.red),
+          ),
+          dropdownMenuTheme: DropdownMenuThemeData(
+              inputDecorationTheme: InputDecorationTheme(
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.all(9),
+            fillColor: Colors.white,
+            filled: true,
+            enabledBorder: borderInput(),
+            focusedErrorBorder: borderInput(),
+            focusedBorder: borderInput(),
+            errorBorder: borderInput(color: Colors.red),
+          )),
+        ),
+        home: const Login(),
       ),
-      home: const Login(),
     );
   }
 }

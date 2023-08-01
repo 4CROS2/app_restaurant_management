@@ -10,7 +10,7 @@ class EditProductStockScreen extends StatefulWidget {
   const EditProductStockScreen({Key? key}) : super(key: key);
 
   @override
-  _EditProductStockScreenState createState() => _EditProductStockScreenState();
+  State<EditProductStockScreen> createState() => _EditProductStockScreenState();
 }
 
 class _EditProductStockScreenState extends State<EditProductStockScreen> {
@@ -72,23 +72,27 @@ class _EditProductStockScreenState extends State<EditProductStockScreen> {
                     },
                   );
                   if (res != null) {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        Future.delayed(
-                          const Duration(seconds: 3),
-                          () {
-                            Navigator.of(context).pop();
-                          },
-                        );
-                        return const ModalOrder(
-                          message: 'Cambios guardados exitosamente',
-                          image: 'assets/img/confirm-product.svg',
-                        );
-                      },
-                    );
-                    Navigator.of(context).pop(true);
+                    if (context.mounted) {
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          Future.delayed(
+                            const Duration(seconds: 3),
+                            () {
+                              Navigator.of(context).pop();
+                            },
+                          );
+                          return const ModalOrder(
+                            message: 'Cambios guardados exitosamente',
+                            image: 'assets/img/confirm-product.svg',
+                          );
+                        },
+                      );
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop(true);
+                    }
                   }
                 },
               ),

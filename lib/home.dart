@@ -11,13 +11,6 @@ class Home extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-
   static const List<Widget> _widgetOptions = [
     ListOrdersScreen(),
     MenuScreen(),
@@ -25,6 +18,13 @@ class _HomeState extends State<Home> {
     StockScreen(),
     SettingsScreen(),
   ];
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -36,7 +36,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: Home._widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

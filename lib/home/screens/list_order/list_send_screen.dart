@@ -6,7 +6,7 @@ class SendScreen extends StatefulWidget {
   const SendScreen({Key? key}) : super(key: key);
 
   @override
-  _SendScreenState createState() => _SendScreenState();
+  State<SendScreen> createState() => _SendScreenState();
 }
 
 class _SendScreenState extends State<SendScreen> {

@@ -15,7 +15,7 @@ class ConfirmOrderScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ConfirmOrderScreenState createState() => _ConfirmOrderScreenState();
+  State<ConfirmOrderScreen> createState() => _ConfirmOrderScreenState();
 }
 
 class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
@@ -59,22 +59,26 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                     if (res != null) {
                       ///Evaluar
                       print(res);
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                              message: 'Orden #001 rechazado',
-                              image: 'assets/img/order-cancel.svg');
-                        },
-                      );
-                      Navigator.of(context).pop(true);
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                            return const ModalOrder(
+                                message: 'Orden #001 rechazado',
+                                image: 'assets/img/order-cancel.svg');
+                          },
+                        );
+                      }
+                      if (context.mounted) {
+                        Navigator.of(context).pop(true);
+                      }
                     }
                   },
                 ),
@@ -103,23 +107,27 @@ class _ConfirmOrderScreenState extends State<ConfirmOrderScreen> {
                     if (res != null) {
                       ///Evaluar
                       print(res);
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                            message: 'Orden #001 en preparación',
-                            image: 'assets/img/confirm-inprogress.svg',
-                          );
-                        },
-                      );
-                      Navigator.of(context).pop(true);
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                            return const ModalOrder(
+                              message: 'Orden #001 en preparación',
+                              image: 'assets/img/confirm-inprogress.svg',
+                            );
+                          },
+                        );
+                      }
+                      if (context.mounted) {
+                        Navigator.of(context).pop(true);
+                      }
                     }
                   },
                 ),

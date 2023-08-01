@@ -8,7 +8,7 @@ class EditEmployeeScreen extends StatefulWidget {
   const EditEmployeeScreen({Key? key}) : super(key: key);
 
   @override
-  _EditEmployeeScreenState createState() => _EditEmployeeScreenState();
+  State<EditEmployeeScreen> createState() => _EditEmployeeScreenState();
 }
 
 class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
@@ -54,7 +54,9 @@ class _EditEmployeeScreenState extends State<EditEmployeeScreen> {
                         image: 'assets/img/confirm-product.svg');
                   },
                 );
-                Navigator.of(context).pop();
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               }),
         ],
       ),

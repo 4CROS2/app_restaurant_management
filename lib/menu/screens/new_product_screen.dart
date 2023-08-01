@@ -9,7 +9,7 @@ class NewProductScreen extends StatefulWidget {
   const NewProductScreen({Key? key}) : super(key: key);
 
   @override
-  _NewProductScreenState createState() => _NewProductScreenState();
+  State<NewProductScreen> createState() => _NewProductScreenState();
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
@@ -58,22 +58,27 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 },
               );
               if (res != null) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                    return const ModalOrder(
-                        message: 'Se agrego correctamente a la lista del Menú',
-                        image: 'assets/img/confirm-product.svg');
-                  },
-                );
-                Navigator.of(context).pop(true);
+                if (context.mounted) {
+                  await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                      return const ModalOrder(
+                          message:
+                              'Se agrego correctamente a la lista del Menú',
+                          image: 'assets/img/confirm-product.svg');
+                    },
+                  );
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop(true);
+                }
               }
             },
           ),

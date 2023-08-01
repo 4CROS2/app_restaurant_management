@@ -9,7 +9,7 @@ class NewProductStockScreen extends StatefulWidget {
   const NewProductStockScreen({Key? key}) : super(key: key);
 
   @override
-  _NewProductStockScreenState createState() => _NewProductStockScreenState();
+  State<NewProductStockScreen> createState() => _NewProductStockScreenState();
 }
 
 class _NewProductStockScreenState extends State<NewProductStockScreen> {
@@ -58,23 +58,27 @@ class _NewProductStockScreenState extends State<NewProductStockScreen> {
                 },
               );
               if (res != null) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                    return const ModalOrder(
-                        message:
-                            'Se agrego correctamente a la lista del Inventario',
-                        image: 'assets/img/confirm-product.svg');
-                  },
-                );
-                Navigator.of(context).pop(true);
+                if (context.mounted) {
+                  await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                      return const ModalOrder(
+                          message:
+                              'Se agrego correctamente a la lista del Inventario',
+                          image: 'assets/img/confirm-product.svg');
+                    },
+                  );
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop(true);
+                }
               }
             },
           ),

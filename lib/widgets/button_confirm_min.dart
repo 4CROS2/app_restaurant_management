@@ -14,8 +14,9 @@ class ButtonConfirmMin extends StatefulWidget {
       this.color = focusColor,
       this.padding = 20,
       this.colorText = Colors.white});
+
   @override
-  _ButtonConfirmMinState createState() => _ButtonConfirmMinState();
+  State<ButtonConfirmMin> createState() => _ButtonConfirmMinState();
 }
 
 class _ButtonConfirmMinState extends State<ButtonConfirmMin>
@@ -23,11 +24,6 @@ class _ButtonConfirmMinState extends State<ButtonConfirmMin>
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

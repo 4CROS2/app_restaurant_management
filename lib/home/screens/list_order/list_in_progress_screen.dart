@@ -6,7 +6,7 @@ class InProgressScreen extends StatefulWidget {
   const InProgressScreen({Key? key}) : super(key: key);
 
   @override
-  _InProgressScreenState createState() => _InProgressScreenState();
+  State<InProgressScreen> createState() => _InProgressScreenState();
 }
 
 class _InProgressScreenState extends State<InProgressScreen> {

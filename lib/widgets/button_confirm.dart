@@ -18,8 +18,9 @@ class ButtonConfirm extends StatefulWidget {
     this.colorText = Colors.white,
     this.icon,
   });
+
   @override
-  _ButtonConfirmState createState() => _ButtonConfirmState();
+  State<ButtonConfirm> createState() => _ButtonConfirmState();
 }
 
 class _ButtonConfirmState extends State<ButtonConfirm>
@@ -27,11 +28,6 @@ class _ButtonConfirmState extends State<ButtonConfirm>
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override

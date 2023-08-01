@@ -8,7 +8,7 @@ class SalesScreen extends StatefulWidget {
   const SalesScreen({Key? key}) : super(key: key);
 
   @override
-  _SalesScreenState createState() => _SalesScreenState();
+  State<SalesScreen> createState() => _SalesScreenState();
 }
 
 class _SalesScreenState extends State<SalesScreen> {
@@ -20,11 +20,6 @@ class _SalesScreenState extends State<SalesScreen> {
   final TextEditingController _dateController = TextEditingController();
 
   // void getNacionalByDate(BuildContext context, String date) {
-  //   // final provider = Provider.of<ArchivosWebProvider>(context, listen: false);
-  //   // provider.date = int.parse(_convertToIntDate(date)).toString();
-  //   // provider.loadSections();
-  // }
-
   Future<dynamic> fechaModal(BuildContext context) async {
     return await showDatePicker(
       initialEntryMode: DatePickerEntryMode.calendarOnly,

@@ -5,7 +5,7 @@ class ListEmploymentsScreen extends StatefulWidget {
   const ListEmploymentsScreen({Key? key}) : super(key: key);
 
   @override
-  _ListEmploymentsScreenState createState() => _ListEmploymentsScreenState();
+  State<ListEmploymentsScreen> createState() => _ListEmploymentsScreenState();
 }
 
 class _ListEmploymentsScreenState extends State<ListEmploymentsScreen> {
