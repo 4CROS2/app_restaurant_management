@@ -158,7 +158,7 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
             onChanged: (String? newValue) {
               setState(() {
                 dropdownValue = newValue!;
-                imageLink = ('assets/img/' + newValue + '.png').toLowerCase();
+                imageLink = ('assets/img/$newValue.png').toLowerCase();
               });
             },
             items: <String>['Cajero', 'Cocinero', 'Repartidor', 'Administrador']

@@ -8,7 +8,7 @@ class SectionCardProduct extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SectionCardProductState createState() => _SectionCardProductState();
+  State<SectionCardProduct> createState() => _SectionCardProductState();
 }
 
 class _SectionCardProductState extends State<SectionCardProduct> {

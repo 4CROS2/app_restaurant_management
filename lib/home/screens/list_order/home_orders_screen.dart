@@ -10,7 +10,7 @@ class ListOrdersScreen extends StatefulWidget {
   const ListOrdersScreen({Key? key}) : super(key: key);
 
   @override
-  _ListOrdersScreenState createState() => _ListOrdersScreenState();
+  State<ListOrdersScreen> createState() => _ListOrdersScreenState();
 }
 
 class _ListOrdersScreenState extends State<ListOrdersScreen> {
@@ -44,7 +44,6 @@ class _ListOrdersScreenState extends State<ListOrdersScreen> {
   }
 
   // Float Button Agregar Orden
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

@@ -44,7 +44,7 @@ class CardSale extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Orden #' + id,
+                            'Orden #$id',
                             style: const TextStyle(
                               letterSpacing: 0.75,
                               fontFamily: "Poppins",
@@ -54,7 +54,7 @@ class CardSale extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '+ Bs. ' + total,
+                            '+ Bs. $total',
                             style: const TextStyle(
                               fontFamily: "Work Sans",
                               fontWeight: FontWeight.w700,
@@ -109,7 +109,7 @@ class CardSale extends StatelessWidget {
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 4,
                       child: Text(
-                        '- Bs. ' + total,
+                        '- Bs. $total',
                         style: const TextStyle(
                             fontFamily: "Work Sans",
                             fontWeight: FontWeight.w700,

@@ -1,5 +1,6 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
 import 'package:app_restaurant_management/settings/screen/business_screen.dart';
+import 'package:app_restaurant_management/settings/screen/category/category_screen.dart';
 import 'package:app_restaurant_management/settings/screen/employee/employees_screen.dart';
 import 'package:app_restaurant_management/settings/widgets/perfil_section.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,7 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
@@ -50,6 +51,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           function(
               text: 'Administracion de empleados',
               icon: Icons.perm_identity,
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => const EmployeesScreen()));
+              }),
+          const Divider(),
+          function(
+              text: 'Administracion de categorías',
+              icon: Icons.dashboard,
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(
+                    builder: (context) => const CategoryScreen()));
+              }),
+          const Divider(),
+          function(
+              text: 'Ordenes canceladas',
+              icon: Icons.do_disturb,
               onPressed: () {
                 Navigator.of(context).push(CupertinoPageRoute(
                     builder: (context) => const EmployeesScreen()));

@@ -14,7 +14,7 @@ class DetailOrderScreen extends StatefulWidget {
   const DetailOrderScreen({Key? key}) : super(key: key);
 
   @override
-  _DetailOrderScreenState createState() => _DetailOrderScreenState();
+  State<DetailOrderScreen> createState() => _DetailOrderScreenState();
 }
 
 class _DetailOrderScreenState extends State<DetailOrderScreen> {
@@ -118,7 +118,9 @@ class _DetailOrderScreenState extends State<DetailOrderScreen> {
               var res = await Navigator.of(context).push(CupertinoPageRoute(
                   builder: (context) => const FormClienScreen()));
               if (res == true) {
-                Navigator.of(context).pop(true);
+                if (context.mounted) {
+                  Navigator.of(context).pop(true);
+                }
               }
             },
           ),

@@ -14,7 +14,7 @@ class ConfirmOrderInProgressScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ConfirmOrderInProgressScreenState createState() =>
+  State<ConfirmOrderInProgressScreen> createState() =>
       _ConfirmOrderInProgressScreenState();
 }
 
@@ -55,22 +55,26 @@ class _ConfirmOrderInProgressScreenState
                     if (res != null) {
                       ///Evaluar
                       print(res);
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                              message: 'Orden #001 rechazado',
-                              image: 'assets/img/order-cancel.svg');
-                        },
-                      );
-                      Navigator.of(context).pop(true);
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                            return const ModalOrder(
+                                message: 'Orden #001 rechazado',
+                                image: 'assets/img/order-cancel.svg');
+                          },
+                        );
+                        if (context.mounted) {
+                          Navigator.of(context).pop(true);
+                        }
+                      }
                     }
                   },
                 ),
@@ -99,23 +103,27 @@ class _ConfirmOrderInProgressScreenState
                     if (res != null) {
                       ///Evaluar
                       print(res);
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                            message: 'Orden #001 entregada',
-                            image: 'assets/img/confirm-send.svg',
-                          );
-                        },
-                      );
-                      Navigator.of(context).pop(true);
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                            return const ModalOrder(
+                              message: 'Orden #001 entregada',
+                              image: 'assets/img/confirm-send.svg',
+                            );
+                          },
+                        );
+                      }
+                      if (context.mounted) {
+                        Navigator.of(context).pop(true);
+                      }
                     }
                   },
                 ),

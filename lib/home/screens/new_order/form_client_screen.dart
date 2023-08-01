@@ -9,7 +9,7 @@ class FormClienScreen extends StatefulWidget {
   const FormClienScreen({Key? key}) : super(key: key);
 
   @override
-  _FormClienScreenState createState() => _FormClienScreenState();
+  State<FormClienScreen> createState() => _FormClienScreenState();
 }
 
 class _FormClienScreenState extends State<FormClienScreen> {
@@ -58,24 +58,28 @@ class _FormClienScreenState extends State<FormClienScreen> {
                 },
               );
               if (res != null) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                    return const ModalOrder(
-                        message: 'Ordén registrada exitosamente',
-                        image: 'assets/img/order-confirm.svg',
-                        secondMessage:
-                            'Revisa la orden en la lista de pendientes');
-                  },
-                );
-                Navigator.of(context).pop(true);
+                if (context.mounted) {
+                  await showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      Future.delayed(
+                        const Duration(seconds: 3),
+                        () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                      return const ModalOrder(
+                          message: 'Ordén registrada exitosamente',
+                          image: 'assets/img/order-confirm.svg',
+                          secondMessage:
+                              'Revisa la orden en la lista de pendientes');
+                    },
+                  );
+                }
+                if (context.mounted) {
+                  Navigator.of(context).pop(true);
+                }
               }
             },
           ),
