@@ -1,4 +1,4 @@
-import 'package:app_restaurant_management/settings/screen/category/list_categories.dart';
+import 'package:app_restaurant_management/settings/screen/canceled%20orders/list_canceled_orders.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../constans.dart';
 
@@ -26,7 +26,7 @@ class _CanceledOrdersScreenState extends State<CanceledOrdersScreen> {
           ),
         ),
         // ignore: prefer_const_constructors
-        body: ListCategoriesScreen(),
+        body: ListCanceledOrdersScreen(),
       ),
     );
   }

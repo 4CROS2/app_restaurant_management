@@ -1,4 +1,5 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
+import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/settings/screen/category/edit_category.dart';
 import 'package:app_restaurant_management/settings/widgets/category/card_detail_category.dart';
 import 'package:app_restaurant_management/widgets/button_cancel.dart';
@@ -8,14 +9,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
-class DetailCategoryScreen extends StatefulWidget {
-  const DetailCategoryScreen({Key? key}) : super(key: key);
+class DetailCategoryScreen extends StatelessWidget {
+  final CategoryModel category;
+  const DetailCategoryScreen({Key? key, required this.category})
+      : super(key: key);
 
-  @override
-  State<DetailCategoryScreen> createState() => _DetailCategoryScreenState();
-}
-
-class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +34,9 @@ class _DetailCategoryScreenState extends State<DetailCategoryScreen> {
       ),
       body: ListView(
         children: [
-          const CardDetailCategory(),
+          CardDetailCategory(
+            category: category,
+          ),
           Column(
             children: [
               ButtonCancel(

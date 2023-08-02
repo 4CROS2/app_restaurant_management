@@ -1,4 +1,4 @@
-import 'package:app_restaurant_management/menu/widgets/card_form_category.dart';
+import 'package:app_restaurant_management/settings/widgets/category/card_form_category.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';

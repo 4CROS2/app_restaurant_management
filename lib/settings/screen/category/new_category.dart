@@ -1,11 +1,11 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
-import 'package:app_restaurant_management/menu/widgets/card_form_category.dart';
+import 'package:app_restaurant_management/settings/widgets/category/card_form_category.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../constans.dart';
+import '../../../../constans.dart';
 
 class NewCategoryScreen extends StatefulWidget {
   const NewCategoryScreen({Key? key}) : super(key: key);
@@ -119,6 +119,7 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
               if (res != null) {
                 await provider.addCategory(nameCategory.text,
                     (_character == SingingCharacter.disponible));
+                await provider.getAllCategories();
                 if (context.mounted) {
                   await showDialog(
                     context: context,

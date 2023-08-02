@@ -4,12 +4,12 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+// import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class SignInSocialNetworkInProvider extends ChangeNotifier {
-  final _googleSignIn = GoogleSignIn();
+  // final _googleSignIn = GoogleSignIn();
   bool _isAuth = false;
   bool _loadingAuth = false;
   bool _loadingValidate = true;
@@ -68,34 +68,34 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> googleAuth() async {
-    try {
-      loadingAuth = true;
-      var googleUser = await _googleSignIn.signIn();
-      if (googleUser != null) {
-        var googleAuth = await googleUser.authentication;
+  // Future<void> googleAuth() async {
+  //   try {
+  //     loadingAuth = true;
+  //     var googleUser = await _googleSignIn.signIn();
+  //     if (googleUser != null) {
+  //       var googleAuth = await googleUser.authentication;
 
-        var credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        var resInfo = await _auth.signInWithCredential(credential);
-        var storage = await SharedPreferences.getInstance();
-        storage.setString('uid_user', resInfo.user!.uid);
-        isAuth = true;
-      }
-      loadingAuth = false;
-    } on PlatformException catch (e) {
-      loadingAuth = false;
-      if (kDebugMode) {
-        print(e);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-  }
+  //       var credential = GoogleAuthProvider.credential(
+  //         accessToken: googleAuth.accessToken,
+  //         idToken: googleAuth.idToken,
+  //       );
+  //       var resInfo = await _auth.signInWithCredential(credential);
+  //       var storage = await SharedPreferences.getInstance();
+  //       storage.setString('uid_user', resInfo.user!.uid);
+  //       isAuth = true;
+  //     }
+  //     loadingAuth = false;
+  //   } on PlatformException catch (e) {
+  //     loadingAuth = false;
+  //     if (kDebugMode) {
+  //       print(e);
+  //     }
+  //   } catch (e) {
+  //     if (kDebugMode) {
+  //       print(e);
+  //     }
+  //   }
+  // }
 
   Future<void> emailAuth(String emailAddress, String password) async {
     try {
@@ -103,9 +103,7 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
 
       final credential = await _auth.signInWithEmailAndPassword(
           email: emailAddress, password: password);
-      print((credential.user != null));
       if (credential.user != null) {
-        print(credential);
         var storage = await SharedPreferences.getInstance();
         storage.setString('uid_user', credential.user!.uid);
         isAuth = true;
@@ -113,13 +111,11 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
 
       loadingAuth = false;
     } on PlatformException catch (e) {
-      print('FALLA AL EJECUTAR FIREBASE');
       loadingAuth = false;
       if (kDebugMode) {
         print(e);
       }
     } catch (e) {
-      print('FALLA AL EJECUTAR FIREBASE');
       if (kDebugMode) {
         print(e);
       }
@@ -141,49 +137,49 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
     return digest.toString();
   }
 
-  Future<void> appleAuth() async {
-    // To prevent replay attacks with the credential returned from Apple, we
-    // include a nonce in the credential request. When signing in with
-    // Firebase, the nonce in the id token returned by Apple, is expected to
-    // match the sha256 hash of `rawNonce`.
-    try {
-      final rawNonce = generateNonce();
-      final nonce = sha256ofString(rawNonce);
+  // Future<void> appleAuth() async {
+  //   // To prevent replay attacks with the credential returned from Apple, we
+  //   // include a nonce in the credential request. When signing in with
+  //   // Firebase, the nonce in the id token returned by Apple, is expected to
+  //   // match the sha256 hash of `rawNonce`.
+  //   try {
+  //     final rawNonce = generateNonce();
+  //     final nonce = sha256ofString(rawNonce);
 
-      // Request credential for the currently signed in Apple account.
-      final appleCredential = await SignInWithApple.getAppleIDCredential(
-        scopes: [
-          AppleIDAuthorizationScopes.email,
-          AppleIDAuthorizationScopes.fullName,
-        ],
-        nonce: nonce,
-      );
+  //     // Request credential for the currently signed in Apple account.
+  //     final appleCredential = await SignInWithApple.getAppleIDCredential(
+  //       scopes: [
+  //         AppleIDAuthorizationScopes.email,
+  //         AppleIDAuthorizationScopes.fullName,
+  //       ],
+  //       nonce: nonce,
+  //     );
 
-      // Create an `OAuthCredential` from the credential returned by Apple.
-      final oauthCredential = OAuthProvider("apple.com").credential(
-        idToken: appleCredential.identityToken,
-        rawNonce: rawNonce,
-      );
+  //     // Create an `OAuthCredential` from the credential returned by Apple.
+  //     final oauthCredential = OAuthProvider("apple.com").credential(
+  //       idToken: appleCredential.identityToken,
+  //       rawNonce: rawNonce,
+  //     );
 
-      // Sign in the user with Firebase. If the nonce we generated earlier does
-      // not match the nonce in `appleCredential.identityToken`, sign in will fail.
-      var resInfo = await _auth.signInWithCredential(oauthCredential);
-      var storage = await SharedPreferences.getInstance();
-      storage.setString('uid_user', resInfo.user!.uid);
-      isAuth = true;
-      loadingAuth = false;
-    } on FirebaseAuthException catch (e) {
-      loadingAuth = false;
-      if (kDebugMode) {
-        print(e);
-      }
-    } catch (e) {
-      loadingAuth = false;
-    }
-  }
+  //     // Sign in the user with Firebase. If the nonce we generated earlier does
+  //     // not match the nonce in `appleCredential.identityToken`, sign in will fail.
+  //     var resInfo = await _auth.signInWithCredential(oauthCredential);
+  //     var storage = await SharedPreferences.getInstance();
+  //     storage.setString('uid_user', resInfo.user!.uid);
+  //     isAuth = true;
+  //     loadingAuth = false;
+  //   } on FirebaseAuthException catch (e) {
+  //     loadingAuth = false;
+  //     if (kDebugMode) {
+  //       print(e);
+  //     }
+  //   } catch (e) {
+  //     loadingAuth = false;
+  //   }
+  // }
 
   Future<void> logOut() async {
-    await _googleSignIn.signOut();
+    // await _googleSignIn.signOut();
     var storage = await SharedPreferences.getInstance();
     await storage.clear();
     await FirebaseAuth.instance.signOut();

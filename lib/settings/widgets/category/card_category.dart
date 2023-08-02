@@ -1,15 +1,14 @@
+import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/settings/screen/category/detail_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
 class CardCategory extends StatelessWidget {
-  final String nameCategory;
-  final String status;
+  final CategoryModel category;
   const CardCategory({
     Key? key,
-    required this.nameCategory,
-    required this.status,
+    required this.category,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,8 @@ class CardCategory extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
-                  builder: (context) => const DetailCategoryScreen()),
+                  builder: (context) =>
+                      DetailCategoryScreen(category: category)),
             );
           },
           child: Column(
@@ -34,7 +34,7 @@ class CardCategory extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(left: 5),
                     child: Text(
-                      nameCategory,
+                      category.name,
                       style: textStyleItem,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -43,12 +43,12 @@ class CardCategory extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(right: 5),
                     child: Text(
-                      status,
+                      category.status ? 'Activo' : 'Inactivo',
                       style: TextStyle(
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w600,
                         fontSize: fontSizeRegular,
-                        color: status == 'Activo' ? greenColor : fontBlack,
+                        color: category.status ? greenColor : redColor,
                       ),
                     ),
                   ),

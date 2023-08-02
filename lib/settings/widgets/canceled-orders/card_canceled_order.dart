@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
-class CardOrder extends StatelessWidget {
+class CardOrderCancelled extends StatelessWidget {
   final String id;
   final String typeOrder;
   final String price;
@@ -14,7 +14,7 @@ class CardOrder extends StatelessWidget {
   final String labelState;
   final String description;
   final String statusOrder;
-  const CardOrder(
+  const CardOrderCancelled(
       {Key? key,
       required this.id,
       required this.typeOrder,

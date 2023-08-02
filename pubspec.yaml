@@ -46,6 +46,7 @@ dependencies:
   firebase_auth: ^4.2.2
   crypto: ^3.0.2
   cloud_firestore: ^4.8.4
+  flutter_phoenix: ^1.1.0
 
 dev_dependencies:
   flutter_test:
