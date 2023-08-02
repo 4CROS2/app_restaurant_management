@@ -1,21 +1,19 @@
+import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
-class CardDetailCategory extends StatefulWidget {
+class CardDetailCategory extends StatelessWidget {
+  final CategoryModel category;
   const CardDetailCategory({
     Key? key,
+    required this.category,
   }) : super(key: key);
 
-  @override
-  State<CardDetailCategory> createState() => _CardDetailCategoryState();
-}
-
-class _CardDetailCategoryState extends State<CardDetailCategory> {
   Container nameCategory() {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      child: const Text(
-        'Alimentos',
+      child: Text(
+        category.name,
         style: textStyleItem,
         textAlign: TextAlign.center,
       ),
@@ -26,9 +24,9 @@ class _CardDetailCategoryState extends State<CardDetailCategory> {
     return Container(
       alignment: Alignment.topRight,
       margin: const EdgeInsets.only(bottom: 5, right: 15),
-      child: const Text(
-        'Activo',
-        style: textStyleLabelGreen,
+      child: Text(
+        category.status ? 'Activo' : 'Inactivo',
+        style: category.status ? textStyleLabelGreen : textStyleLabelRed,
         textAlign: TextAlign.right,
       ),
     );

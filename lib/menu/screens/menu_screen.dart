@@ -1,5 +1,5 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
-import 'package:app_restaurant_management/menu/screens/new_category.dart';
+import 'package:app_restaurant_management/settings/screen/category/new_category.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
 import 'package:flutter/cupertino.dart';

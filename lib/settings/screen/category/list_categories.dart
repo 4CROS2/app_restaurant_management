@@ -1,8 +1,11 @@
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/widgets/category/card_category.dart';
 import 'package:flutter/material.dart';
 
 class ListCategoriesScreen extends StatefulWidget {
-  const ListCategoriesScreen({Key? key}) : super(key: key);
+  final SettingsProvider category;
+  const ListCategoriesScreen({Key? key, required this.category})
+      : super(key: key);
 
   @override
   State<ListCategoriesScreen> createState() => _ListCategoriesScreenState();
@@ -19,10 +22,9 @@ class _ListCategoriesScreenState extends State<ListCategoriesScreen> {
         ListView.builder(
           shrinkWrap: true,
           physics: const ScrollPhysics(),
-          itemCount: 4,
+          itemCount: widget.category.listCategory.length,
           itemBuilder: (context, index) {
-            return const CardCategory(
-                nameCategory: 'Alimentos', status: 'Activo');
+            return CardCategory(category: widget.category.listCategory[index]);
           },
         ),
       ],

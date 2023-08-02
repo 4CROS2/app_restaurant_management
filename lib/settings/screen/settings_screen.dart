@@ -1,10 +1,14 @@
 // import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
+import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
+import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/settings/screen/business_screen.dart';
 import 'package:app_restaurant_management/settings/screen/category/category_screen.dart';
 import 'package:app_restaurant_management/settings/screen/employee/employees_screen.dart';
 import 'package:app_restaurant_management/settings/widgets/perfil_section.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -17,6 +21,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<SignInSocialNetworkInProvider>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -73,10 +78,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
               }),
           const Divider(),
           function(
-              text: 'Cerrar Sesión',
-              icon: Icons.logout,
-              arrow: false,
-              onPressed: () {}),
+            text: 'Cerrar Sesión',
+            icon: Icons.logout,
+            arrow: false,
+            onPressed: () async {
+              var res = await showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    child: ModalConfirm(
+                      message: '¿Seguro que quieres cerrar sesión?',
+                      onPressConfirm: () async {
+                        Navigator.of(context).pop('confirmar');
+                      },
+                      onPressCancel: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                },
+              );
+              if (res != null) {
+                await auth.logOut();
+                if (context.mounted) {
+                  Phoenix.rebirth(context);
+                }
+              }
+            },
+          ),
         ],
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:app_restaurant_management/settings/widgets/category/card_category.dart';
+import 'package:app_restaurant_management/settings/widgets/canceled-orders/card_canceled_order.dart';
 import 'package:flutter/material.dart';
 
 class ListCanceledOrdersScreen extends StatefulWidget {
@@ -22,8 +22,15 @@ class _ListCanceledOrdersScreenState extends State<ListCanceledOrdersScreen> {
           physics: const ScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) {
-            return const CardCategory(
-                nameCategory: 'Alimentos', status: 'Activo');
+            return const CardOrderCancelled(
+                id: '1',
+                typeOrder: 'typeOrder',
+                price: '12',
+                name: 'Jugo',
+                colorState: Colors.green,
+                labelState: 'Cancelado',
+                description: 'description',
+                statusOrder: 'statusOrder');
           },
         ),
       ],

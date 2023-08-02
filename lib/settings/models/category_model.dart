@@ -4,33 +4,34 @@
 
 import 'dart:convert';
 
-Category categoryFromJson(String str) => Category.fromJson(json.decode(str));
+CategoryModel categoryFromJson(String str) =>
+    CategoryModel.fromJson(json.decode(str));
 
-String categoryToJson(Category data) => json.encode(data.toJson());
+String categoryToJson(CategoryModel data) => json.encode(data.toJson());
 
-class Category {
+class CategoryModel {
   int id;
   String name;
   bool status;
 
-  Category({
+  CategoryModel({
     required this.id,
     required this.name,
     required this.status,
   });
 
-  Category copyWith({
+  CategoryModel copyWith({
     int? id,
     String? name,
     bool? status,
   }) =>
-      Category(
+      CategoryModel(
         id: id ?? this.id,
         name: name ?? this.name,
         status: status ?? this.status,
       );
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json["id"],
         name: json["name"],
         status: json["status"],
