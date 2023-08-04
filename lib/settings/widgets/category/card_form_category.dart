@@ -15,7 +15,6 @@ class CardFormCategory extends StatefulWidget {
 }
 
 class _CardFormCategoryState extends State<CardFormCategory> {
-  String dropdownValue = 'Platos';
   SingingCharacter? _character = SingingCharacter.disponible;
 
   /// Subtitle Forms
