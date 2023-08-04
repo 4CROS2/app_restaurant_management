@@ -53,43 +53,63 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
       body: ListView(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
         children: [
-          TextFormField(controller: nameCategory),
           Container(
-            width: MediaQuery.of(context).size.width / 2 * 0.8,
-            margin: const EdgeInsets.only(bottom: 10, top: 10),
+            alignment: Alignment.topLeft,
+            padding:
+                const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+            margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
+            decoration: boxShadow,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                titleCardForm('Estado'),
-                RadioListTile<SingingCharacter>(
-                  contentPadding: const EdgeInsets.all(0),
-                  visualDensity: const VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
+                Container(
+                  alignment: Alignment.topLeft,
+                  margin: const EdgeInsets.only(right: 5, bottom: 5),
+                  child: const Text(
+                    'Nombre de la Categoría',
+                    style: textStyleSubtitle,
                   ),
-                  title: const Text('Disponible'),
-                  value: SingingCharacter.disponible,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
                 ),
-                RadioListTile<SingingCharacter>(
-                  contentPadding: const EdgeInsets.all(0),
-                  visualDensity: const VisualDensity(
-                    horizontal: VisualDensity.minimumDensity,
-                    vertical: VisualDensity.minimumDensity,
+                TextFormField(controller: nameCategory),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2 * 0.8,
+                  margin: const EdgeInsets.only(bottom: 10, top: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      titleCardForm('Estado'),
+                      RadioListTile<SingingCharacter>(
+                        contentPadding: const EdgeInsets.all(0),
+                        visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity,
+                          vertical: VisualDensity.minimumDensity,
+                        ),
+                        title: const Text('Disponible'),
+                        value: SingingCharacter.disponible,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter? value) {
+                          setState(() {
+                            _character = value;
+                          });
+                        },
+                      ),
+                      RadioListTile<SingingCharacter>(
+                        contentPadding: const EdgeInsets.all(0),
+                        visualDensity: const VisualDensity(
+                          horizontal: VisualDensity.minimumDensity,
+                          vertical: VisualDensity.minimumDensity,
+                        ),
+                        title: const Text('No Disponible'),
+                        value: SingingCharacter.nodisponible,
+                        groupValue: _character,
+                        onChanged: (SingingCharacter? value) {
+                          setState(() {
+                            _character = value;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                  title: const Text('No Disponible'),
-                  value: SingingCharacter.nodisponible,
-                  groupValue: _character,
-                  onChanged: (SingingCharacter? value) {
-                    setState(() {
-                      _character = value;
-                    });
-                  },
                 ),
               ],
             ),

@@ -4,8 +4,10 @@ import '../../../../constans.dart';
 enum SingingCharacter { disponible, nodisponible }
 
 class CardFormCategory extends StatefulWidget {
+  final TextEditingController nameCategory;
   const CardFormCategory({
     Key? key,
+    required this.nameCategory,
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class _CardFormCategoryState extends State<CardFormCategory> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
+            controller: widget.nameCategory,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),

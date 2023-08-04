@@ -25,12 +25,12 @@ class SettingsProvider with ChangeNotifier {
 
   //metodo para crear una nueva categoria
   Future<void> addCategory(String name, bool status) async {
+    var uuid = DateTime.now().microsecondsSinceEpoch.toString();
     try {
-      await _db.collection("Categories").doc().set(CategoryModel(
-              id: DateTime.now().microsecondsSinceEpoch,
-              name: name,
-              status: status)
-          .toJson());
+      await _db
+          .collection("Categories")
+          .doc(uuid)
+          .set(CategoryModel(id: uuid, name: name, status: status).toJson());
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -46,6 +46,18 @@ class SettingsProvider with ChangeNotifier {
       var info = res.docs.map((e) => CategoryModel.fromJson(e.data())).toList();
       listCategory = info;
       loadingCategories = false;
+    } on Exception catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  //metodo para eliminar categoria
+  Future<void> deleteCategory(var id) async {
+    try {
+      loadingCategories = true;
+      _db.collection('Categories').doc(id).delete();
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);
