@@ -10,7 +10,7 @@ CategoryModel categoryFromJson(String str) =>
 String categoryToJson(CategoryModel data) => json.encode(data.toJson());
 
 class CategoryModel {
-  int id;
+  String id;
   String name;
   bool status;
 
@@ -21,7 +21,7 @@ class CategoryModel {
   });
 
   CategoryModel copyWith({
-    int? id,
+    String? id,
     String? name,
     bool? status,
   }) =>

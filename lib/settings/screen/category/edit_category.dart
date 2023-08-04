@@ -12,6 +12,8 @@ class EditCategoryScreen extends StatefulWidget {
 }
 
 class _EditCategoryScreenState extends State<EditCategoryScreen> {
+  final TextEditingController nameCategory = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,9 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
       body: ListView(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
         children: [
-          const CardFormCategory(),
+          CardFormCategory(
+            nameCategory: nameCategory,
+          ),
           const SizedBox(height: 10),
           ButtonConfirm(
             width: MediaQuery.of(context).size.width,

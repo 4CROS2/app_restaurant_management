@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
           inputDecorationTheme: InputDecorationTheme(
-            border: InputBorder.none,
+            border: const OutlineInputBorder(),
             contentPadding: const EdgeInsets.all(9),
             fillColor: Colors.white,
             filled: true,
@@ -60,6 +60,12 @@ class MyApp extends StatelessWidget {
             focusedBorder: borderInput(),
             errorBorder: borderInput(color: Colors.red),
           )),
+          // radioTheme: const RadioThemeData(
+          //   visualDensity: VisualDensity(
+          //     horizontal: VisualDensity.minimumDensity,
+          //     vertical: VisualDensity.minimumDensity,
+          //   ),
+          // ),
         ),
         home: const Login(),
       ),

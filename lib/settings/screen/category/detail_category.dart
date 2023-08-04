@@ -1,4 +1,5 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/settings/screen/category/edit_category.dart';
 import 'package:app_restaurant_management/settings/widgets/category/card_detail_category.dart';
@@ -7,6 +8,7 @@ import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class DetailCategoryScreen extends StatelessWidget {
@@ -16,6 +18,7 @@ class DetailCategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SettingsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: fontBlack,
@@ -63,22 +66,26 @@ class DetailCategoryScreen extends StatelessWidget {
                   );
                   if (res != null) {
                     if (context.mounted) {
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                            message: 'Se eliminó la categoría',
-                            image: 'assets/img/delete-product.svg',
-                          );
-                        },
-                      );
+                      await provider.deleteCategory(category.id);
+                      await provider.getAllCategories();
+                      if (context.mounted) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            Future.delayed(
+                              const Duration(seconds: 3),
+                              () {
+                                Navigator.of(context).pop();
+                              },
+                            );
+                            return const ModalOrder(
+                              message: 'Se eliminó la categoría',
+                              image: 'assets/img/delete-product.svg',
+                            );
+                          },
+                        );
+                      }
                     }
                     if (context.mounted) {
                       Navigator.of(context).pop(true);
