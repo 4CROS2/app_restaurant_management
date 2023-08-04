@@ -53,6 +53,20 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
+  //metodo para actualizar una nueva categoria
+  Future<void> updateCategory(String id, String name, bool status) async {
+    try {
+      await _db
+          .collection("Categories")
+          .doc(id)
+          .update(CategoryModel(id: id, name: name, status: status).toJson());
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
   //metodo para eliminar categoria
   Future<void> deleteCategory(var id) async {
     try {

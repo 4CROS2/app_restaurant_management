@@ -14,7 +14,6 @@ class NewCategoryScreen extends StatefulWidget {
   State<NewCategoryScreen> createState() => _NewCategoryScreenState();
 }
 
-String dropdownValue = 'Platos';
 SingingCharacter? _character = SingingCharacter.disponible;
 
 // Subtitle Forms

@@ -99,7 +99,8 @@ class DetailCategoryScreen extends StatelessWidget {
                 icon: Icons.edit,
                 onPressed: () async {
                   await Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const EditCategoryScreen()));
+                      builder: (context) =>
+                          EditCategoryScreen(category: category)));
                 },
               ),
             ],
