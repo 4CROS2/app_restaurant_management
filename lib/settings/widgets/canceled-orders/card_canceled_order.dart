@@ -10,21 +10,15 @@ class CardOrderCancelled extends StatelessWidget {
   final String typeOrder;
   final String price;
   final String name;
-  final Color colorState;
-  final String labelState;
   final String description;
-  final String statusOrder;
-  const CardOrderCancelled(
-      {Key? key,
-      required this.id,
-      required this.typeOrder,
-      required this.price,
-      required this.name,
-      required this.colorState,
-      required this.labelState,
-      required this.description,
-      required this.statusOrder})
-      : super(key: key);
+  const CardOrderCancelled({
+    Key? key,
+    required this.id,
+    required this.typeOrder,
+    required this.price,
+    required this.name,
+    required this.description,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,28 +27,7 @@ class CardOrderCancelled extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 15),
       decoration: boxShadow,
       child: InkWell(
-        onTap: () {
-          if (statusOrder == 'pending') {
-            Navigator.of(context).push(CupertinoPageRoute(
-                builder: (context) =>
-                    ConfirmOrderScreen(statusOrder: statusOrder)));
-          }
-          if (statusOrder == 'inprogress') {
-            Navigator.of(context).push(CupertinoPageRoute(
-                builder: (context) =>
-                    ConfirmOrderInProgressScreen(statusOrder: statusOrder)));
-          }
-          if (statusOrder == 'send') {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return const ModalOrder(
-                    message: 'Orden #001 entregada',
-                    image: 'assets/img/order-send.svg');
-              },
-            );
-          }
-        },
+        onTap: () {},
         child: Column(
           children: [
             Container(
@@ -108,17 +81,17 @@ class CardOrderCancelled extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Row(
-              children: [
-                Icon(Icons.schedule, size: 22, color: colorState),
-                const SizedBox(width: 5),
-                Text(labelState,
+              children: const [
+                Icon(Icons.schedule, size: 22, color: redColor),
+                SizedBox(width: 5),
+                Text('Cancelado',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         letterSpacing: 0.25,
                         fontFamily: "Poppins",
                         fontWeight: FontWeight.w500,
                         fontSize: fontSizeSmall,
-                        color: colorState))
+                        color: redColor))
               ],
             ),
             const SizedBox(height: 7),

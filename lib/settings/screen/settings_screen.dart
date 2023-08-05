@@ -2,6 +2,7 @@
 import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/settings/screen/business_screen.dart';
+import 'package:app_restaurant_management/settings/screen/canceled%20orders/canceled_orders.dart';
 import 'package:app_restaurant_management/settings/screen/category/category_screen.dart';
 import 'package:app_restaurant_management/settings/screen/employee/employees_screen.dart';
 import 'package:app_restaurant_management/settings/widgets/perfil_section.dart';
@@ -74,7 +75,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               icon: Icons.do_disturb,
               onPressed: () {
                 Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) => const EmployeesScreen()));
+                    builder: (context) => const CanceledOrdersScreen()));
               }),
           const Divider(),
           function(

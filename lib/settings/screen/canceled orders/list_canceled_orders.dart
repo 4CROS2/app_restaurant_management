@@ -23,14 +23,12 @@ class _ListCanceledOrdersScreenState extends State<ListCanceledOrdersScreen> {
           itemCount: 4,
           itemBuilder: (context, index) {
             return const CardOrderCancelled(
-                id: '1',
-                typeOrder: 'typeOrder',
-                price: '12',
-                name: 'Jugo',
-                colorState: Colors.green,
-                labelState: 'Cancelado',
-                description: 'description',
-                statusOrder: 'statusOrder');
+              id: 'Orden #121',
+              typeOrder: 'typeOrder',
+              price: 'Bs. 12',
+              name: 'Cesar Aliaga',
+              description: 'Pollo al espiedo',
+            );
           },
         ),
       ],
