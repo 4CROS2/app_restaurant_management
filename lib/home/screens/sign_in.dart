@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
               alignment: Alignment.topLeft,
               margin: const EdgeInsets.only(right: 5, bottom: 5),
               child: const Text(
-                'Correo Electrónico:',
+                'Contraseña:',
                 style: textStyleSubtitle,
               )),
           TextFormField(
@@ -141,51 +141,54 @@ class _LoginState extends State<Login> {
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 10),
-      child: TextButton(
-        onPressed: () async {
-          // Navigator.pushReplacement(
-          //     context, CupertinoPageRoute(builder: (context) => const Home()));
-          await provider.emailAuth(emailController.text, passController.text);
-          if (provider.isAuth) {
-            if (context.mounted) {
-              Navigator.pushReplacement(context,
-                  CupertinoPageRoute(builder: (context) => const Home()));
-            }
-          } else {
-            // print("Usuario incorrecto");
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text("Correo/contraseña incorrecta")));
-            }
-          }
-        },
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+      child: (provider.loadingAuth)
+          ? const CircularProgressIndicator()
+          : TextButton(
+              onPressed: () async {
+                // Navigator.pushReplacement(
+                //     context, CupertinoPageRoute(builder: (context) => const Home()));
+                await provider.emailAuth(
+                    emailController.text, passController.text);
+                if (provider.isAuth) {
+                  if (context.mounted) {
+                    Navigator.pushReplacement(context,
+                        CupertinoPageRoute(builder: (context) => const Home()));
+                  }
+                } else {
+                  // print("Usuario incorrecto");
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("Correo/contraseña incorrecta")));
+                  }
+                }
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width / 2 * 1.5,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text(text,
+                        style: const TextStyle(
+                          letterSpacing: 0.25,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w700,
+                          fontSize: fontSizeMedium,
+                          color: Colors.white,
+                        )),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-        child: Container(
-          alignment: Alignment.center,
-          width: MediaQuery.of(context).size.width / 2 * 1.5,
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(text,
-                  style: const TextStyle(
-                    letterSpacing: 0.25,
-                    fontFamily: "Poppins",
-                    fontWeight: FontWeight.w700,
-                    fontSize: fontSizeMedium,
-                    color: Colors.white,
-                  )),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

@@ -116,6 +116,7 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
         print(e);
       }
     } catch (e) {
+      loadingAuth = false;
       if (kDebugMode) {
         print(e);
       }
