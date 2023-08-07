@@ -1,5 +1,4 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
-import 'package:app_restaurant_management/settings/widgets/category/card_form_category.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
@@ -44,7 +43,7 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
           Container(
             alignment: Alignment.topLeft,
             padding:
-                const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+                const EdgeInsets.only(top: 5, bottom: 15, left: 10, right: 10),
             margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
             decoration: boxShadow,
             child: Column(

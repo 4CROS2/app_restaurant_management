@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
-import 'package:app_restaurant_management/menu/widgets/card_form_product.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +18,15 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<SettingsProvider>(context, listen: false);
+      provider.getAllCategories();
+    });
+    super.initState();
+  }
+
   /// Funcionalidad camara
   _imgFromCamera() async {
     try {
@@ -177,7 +185,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
           Container(
             alignment: Alignment.topLeft,
             padding:
-                const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+                const EdgeInsets.only(top: 5, bottom: 15, left: 10, right: 10),
             margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
             decoration: boxShadow,
             child: Column(
@@ -215,7 +223,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     photoProduct(),
-                    titleCardForm('Precio'),
                     Column(
                       children: [
                         prize(),
@@ -254,7 +261,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 await provider.addProduct(
                     nameProduct.text,
                     (_character == SingingCharacter.disponible),
-                    '',
+                    'Platos',
                     description.text,
                     double.parse(price.text),
                     '');

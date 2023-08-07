@@ -1,6 +1,7 @@
 // import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:app_restaurant_management/home/screens/sign_in.dart';
+import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:flutter/foundation.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (context) => SignInSocialNetworkInProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider())
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProvider(create: (context) => MenuProvider())
       ],
       child: MaterialApp(
         title: 'App Restaurant Management',
