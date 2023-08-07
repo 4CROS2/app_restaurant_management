@@ -1,5 +1,4 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
-import 'package:app_restaurant_management/settings/widgets/category/card_form_category.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
@@ -16,20 +15,9 @@ class NewCategoryScreen extends StatefulWidget {
 
 SingingCharacter? _character = SingingCharacter.disponible;
 
-// Subtitle Forms
-Container titleCardForm(String text) {
-  return Container(
-    alignment: Alignment.topLeft,
-    margin: const EdgeInsets.only(right: 5, bottom: 5),
-    child: Text(
-      text,
-      style: textStyleSubtitle,
-    ),
-  );
-}
-
 class _NewCategoryScreenState extends State<NewCategoryScreen> {
   final TextEditingController nameCategory = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SettingsProvider>(context);
@@ -55,20 +43,13 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
           Container(
             alignment: Alignment.topLeft,
             padding:
-                const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
+                const EdgeInsets.only(top: 5, bottom: 15, left: 10, right: 10),
             margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
             decoration: boxShadow,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.only(right: 5, bottom: 5),
-                  child: const Text(
-                    'Nombre de la Categoría',
-                    style: textStyleSubtitle,
-                  ),
-                ),
+                titleCardForm('Nombre de la Categoría'),
                 TextFormField(controller: nameCategory),
                 Container(
                   width: MediaQuery.of(context).size.width / 2 * 0.8,

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//options status
+enum SingingCharacter { disponible, nodisponible }
+
 /// Background Color
 const backgroundColor = Color(0xFFF8F8F8);
 const navbarColor = Color(0xFFFCFCFC);
@@ -238,6 +241,17 @@ List<BoxShadow> listBoxShadow = [
     offset: const Offset(0, 1.99), // changes position of shadow
   ),
 ];
+
+Container titleCardForm(String text) {
+  return Container(
+    alignment: Alignment.topLeft,
+    margin: const EdgeInsets.only(right: 5, bottom: 5, top: 10),
+    child: Text(
+      text,
+      style: textStyleSubtitle,
+    ),
+  );
+}
 
 // SpinBox Style
 InputDecoration decorationSpinBox = InputDecoration(

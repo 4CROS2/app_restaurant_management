@@ -20,7 +20,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
       final provider = Provider.of<SettingsProvider>(context, listen: false);
       provider.getAllCategories();
     });
-
     super.initState();
   }
 
