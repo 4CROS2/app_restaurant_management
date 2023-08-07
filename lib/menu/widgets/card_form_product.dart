@@ -21,18 +21,6 @@ class _CardFormProductState extends State<CardFormProduct> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
 
-  /// Subtitle Forms
-  Container titleCardForm(String text) {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: const EdgeInsets.only(right: 5, bottom: 5),
-      child: Text(
-        text,
-        style: textStyleSubtitle,
-      ),
-    );
-  }
-
   /// Nombre del Producto
   Column nameProduct() {
     return Column(
@@ -94,7 +82,6 @@ class _CardFormProductState extends State<CardFormProduct> {
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
             maxLines: 3,
-            keyboardType: TextInputType.number,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),

@@ -1,5 +1,3 @@
-// import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
-import 'package:app_restaurant_management/settings/screen/category/new_category.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -125,19 +123,19 @@ class _MenuScreenState extends State<MenuScreen> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: redColor,
-                    boxShadow: listBoxShadow),
-                child: IconButton(
-                    onPressed: () async {
-                      await Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (context) => const NewCategoryScreen()));
-                    },
-                    icon: const Icon(Icons.add, color: Colors.white, size: 30)),
-              )
+              // Container(
+              //   margin: const EdgeInsets.only(right: 10),
+              //   decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: redColor,
+              //       boxShadow: listBoxShadow),
+              //   child: IconButton(
+              //       onPressed: () async {
+              //         await Navigator.of(context).push(CupertinoPageRoute(
+              //             builder: (context) => const NewCategoryScreen()));
+              //       },
+              //       icon: const Icon(Icons.add, color: Colors.white, size: 30)),
+              // )
             ],
           ),
         ),

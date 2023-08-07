@@ -239,6 +239,17 @@ List<BoxShadow> listBoxShadow = [
   ),
 ];
 
+Container titleCardForm(String text) {
+  return Container(
+    alignment: Alignment.topLeft,
+    margin: const EdgeInsets.only(right: 5, bottom: 5),
+    child: Text(
+      text,
+      style: textStyleSubtitle,
+    ),
+  );
+}
+
 // SpinBox Style
 InputDecoration decorationSpinBox = InputDecoration(
     enabledBorder: OutlineInputBorder(

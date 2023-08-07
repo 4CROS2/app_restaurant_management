@@ -16,20 +16,9 @@ class NewCategoryScreen extends StatefulWidget {
 
 SingingCharacter? _character = SingingCharacter.disponible;
 
-// Subtitle Forms
-Container titleCardForm(String text) {
-  return Container(
-    alignment: Alignment.topLeft,
-    margin: const EdgeInsets.only(right: 5, bottom: 5),
-    child: Text(
-      text,
-      style: textStyleSubtitle,
-    ),
-  );
-}
-
 class _NewCategoryScreenState extends State<NewCategoryScreen> {
   final TextEditingController nameCategory = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SettingsProvider>(context);
@@ -61,14 +50,7 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.only(right: 5, bottom: 5),
-                  child: const Text(
-                    'Nombre de la Categoría',
-                    style: textStyleSubtitle,
-                  ),
-                ),
+                titleCardForm('Nombre de la Categoría'),
                 TextFormField(controller: nameCategory),
                 Container(
                   width: MediaQuery.of(context).size.width / 2 * 0.8,
