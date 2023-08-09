@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
+import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +19,48 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
+  String nameCategory = '';
+  categories(
+      List<CategoryModel> lista, String? selected, SettingsProvider provider) {
+    var listCategories = <DropdownMenuItem<String>>[];
+    listCategories = List<DropdownMenuItem<String>>.generate(
+        lista.length,
+        (index) => DropdownMenuItem<String>(
+              value: lista[index].name,
+              child: Text(lista[index].name),
+            ));
+    return DropdownButtonFormField<String>(
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+      ),
+      style: textStyleItem,
+      hint: const Text(
+        "Seleccionar Categoría",
+        style: TextStyle(color: Colors.grey),
+      ),
+      value: selected!.isNotEmpty ? selected : null,
+      validator: (String? value) {
+        if (value == null) {
+          return "Seleccione una categoria";
+        }
+        return null;
+      },
+      onChanged: (value) {
+        selected = value;
+        setState(() {
+          nameCategory = value!;
+        });
+      },
+      items: listCategories,
+    );
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<SettingsProvider>(context, listen: false);
       provider.getAllCategories();
+      // }
     });
     super.initState();
   }
@@ -163,6 +201,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MenuProvider>(context);
+    final category = Provider.of<SettingsProvider>(context);
     return Scaffold(
       appBar: AppBar(
         foregroundColor: fontBlack,
@@ -194,29 +233,31 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 titleCardForm('Nombre de producto'),
                 TextFormField(controller: nameProduct),
                 titleCardForm('Categoría'),
-                Container(
-                  margin: const EdgeInsets.only(bottom: 10),
-                  child: DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    style: textStyleItem,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                      });
-                    },
-                    items: <String>['Platos', 'Bebidas']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                ),
+                categories(category.listCategory, nameCategory, category),
+                // Container(
+                //   margin: const EdgeInsets.only(bottom: 10),
+                //   child:
+                // DropdownButtonFormField(
+                //   decoration: const InputDecoration(
+                //     border: OutlineInputBorder(),
+                //   ),
+                //   value: dropdownValue,
+                //   icon: const Icon(Icons.arrow_drop_down),
+                //   hint: const Text("Seleccione una categoría"),
+                //   style: textStyleItem,
+                //   onChanged: (String? newValue) {
+                //     setState(() {
+                //       dropdownValue = newValue!;
+                //     });
+                //   },
+                //   items: _listCategories.data.name.map((String value) {
+                //     return DropdownMenuItem(
+                //       value: value,
+                //       child: Text(value),
+                //     );
+                //   }).toList(),
+                // ),
+                // ),
                 titleCardForm('Descripción'),
                 TextFormField(maxLines: 3, controller: description),
                 Row(
@@ -261,7 +302,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 await provider.addProduct(
                     nameProduct.text,
                     (_character == SingingCharacter.disponible),
-                    'Platos',
+                    nameCategory,
                     description.text,
                     double.parse(price.text),
                     '');
