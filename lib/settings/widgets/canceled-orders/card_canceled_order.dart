@@ -1,7 +1,3 @@
-import 'package:app_restaurant_management/home/screens/list_order/confirm_in_progress_order.dart';
-import 'package:app_restaurant_management/home/screens/list_order/confirm_pending_order.dart';
-import 'package:app_restaurant_management/widgets/modal_order.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 

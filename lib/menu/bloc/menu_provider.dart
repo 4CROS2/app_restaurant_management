@@ -7,7 +7,25 @@ import 'package:flutter/material.dart';
 
 class MenuProvider with ChangeNotifier {
   final _db = FirebaseFirestore.instance;
+  // Points to the root reference
   final storageRef = FirebaseStorage.instance.ref();
+
+// // Points to "images"
+// Reference? imagesRef = storageRef.child("images");
+
+// // Points to "images/space.jpg"
+// // Note that you can use variables to create child values
+// final fileName = "space.jpg";
+// final spaceRef = imagesRef.child(fileName);
+
+// // File path is "images/space.jpg"
+// final path = spaceRef.fullPath;
+
+// // File name is "space.jpg"
+// final name = spaceRef.name;
+
+// // Points to "images"
+// imagesRef = spaceRef.parent;
 
   List<ProductModel> _listProduct = [];
 

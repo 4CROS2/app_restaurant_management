@@ -234,30 +234,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 TextFormField(controller: nameProduct),
                 titleCardForm('Categoría'),
                 categories(category.listCategory, nameCategory, category),
-                // Container(
-                //   margin: const EdgeInsets.only(bottom: 10),
-                //   child:
-                // DropdownButtonFormField(
-                //   decoration: const InputDecoration(
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   value: dropdownValue,
-                //   icon: const Icon(Icons.arrow_drop_down),
-                //   hint: const Text("Seleccione una categoría"),
-                //   style: textStyleItem,
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       dropdownValue = newValue!;
-                //     });
-                //   },
-                //   items: _listCategories.data.name.map((String value) {
-                //     return DropdownMenuItem(
-                //       value: value,
-                //       child: Text(value),
-                //     );
-                //   }).toList(),
-                // ),
-                // ),
                 titleCardForm('Descripción'),
                 TextFormField(maxLines: 3, controller: description),
                 Row(
