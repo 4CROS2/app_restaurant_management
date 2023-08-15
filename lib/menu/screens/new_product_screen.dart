@@ -110,7 +110,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
             ),
             child: _image != null
                 ? Image.file(
-                    _image!,
+                    File(_image!.path),
+                    // _image!,
                     fit: BoxFit.cover,
                   )
                 : const Icon(Icons.add_photo_alternate_rounded, size: 50),
@@ -288,6 +289,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 final ref = FirebaseStorage.instance.ref().child(path);
                 print(path);
                 ref.putFile(_image!);
+
                 if (context.mounted) {
                   await showDialog(
                     context: context,
