@@ -6,6 +6,7 @@ import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class NewProductScreen extends StatefulWidget {
 
 class _NewProductScreenState extends State<NewProductScreen> {
   String nameCategory = '';
+  var path = '';
   categories(
       List<CategoryModel> lista, String? selected, SettingsProvider provider) {
     var listCategories = <DropdownMenuItem<String>>[];
@@ -75,6 +77,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
           maxHeight: 720);
       if (image != null) {
         setState(() {
+          path = 'files/${image.path}';
           _image = File(image.path);
         });
         // currentCutProvider.listImage.add(File(image.path));
@@ -107,7 +110,8 @@ class _NewProductScreenState extends State<NewProductScreen> {
             ),
             child: _image != null
                 ? Image.file(
-                    _image!,
+                    File(_image!.path),
+                    // _image!,
                     fit: BoxFit.cover,
                   )
                 : const Icon(Icons.add_photo_alternate_rounded, size: 50),
@@ -234,30 +238,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 TextFormField(controller: nameProduct),
                 titleCardForm('Categoría'),
                 categories(category.listCategory, nameCategory, category),
-                // Container(
-                //   margin: const EdgeInsets.only(bottom: 10),
-                //   child:
-                // DropdownButtonFormField(
-                //   decoration: const InputDecoration(
-                //     border: OutlineInputBorder(),
-                //   ),
-                //   value: dropdownValue,
-                //   icon: const Icon(Icons.arrow_drop_down),
-                //   hint: const Text("Seleccione una categoría"),
-                //   style: textStyleItem,
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       dropdownValue = newValue!;
-                //     });
-                //   },
-                //   items: _listCategories.data.name.map((String value) {
-                //     return DropdownMenuItem(
-                //       value: value,
-                //       child: Text(value),
-                //     );
-                //   }).toList(),
-                // ),
-                // ),
                 titleCardForm('Descripción'),
                 TextFormField(maxLines: 3, controller: description),
                 Row(
@@ -306,6 +286,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     description.text,
                     double.parse(price.text),
                     '');
+                final ref = FirebaseStorage.instance.ref().child(path);
+                print(path);
+                ref.putFile(_image!);
+
                 if (context.mounted) {
                   await showDialog(
                     context: context,
