@@ -6,6 +6,7 @@ import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,8 +21,23 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
+  UploadTask? uploadTask;
+  PlatformFile? pickedFile;
   String nameCategory = '';
-  var path = '';
+  String urlDownload = '';
+
+  Future uploadFile() async {
+    final path = 'files/${pickedFile!.name}';
+    final file = File(pickedFile!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file);
+
+    final snapshot = await uploadTask!.whenComplete(() {});
+    urlDownload = await snapshot.ref.getDownloadURL();
+    print('Download Link: $urlDownload');
+  }
+
   categories(
       List<CategoryModel> lista, String? selected, SettingsProvider provider) {
     var listCategories = <DropdownMenuItem<String>>[];
@@ -68,26 +84,34 @@ class _NewProductScreenState extends State<NewProductScreen> {
   }
 
   /// Funcionalidad camara
-  _imgFromCamera() async {
-    try {
-      var image = await _picker.pickImage(
-          source: ImageSource.camera,
-          imageQuality: 100,
-          maxWidth: 1280,
-          maxHeight: 720);
-      if (image != null) {
-        setState(() {
-          path = 'files/${image.path}';
-          _image = File(image.path);
-        });
-        // currentCutProvider.listImage.add(File(image.path));
-      }
-    } on Exception catch (e) {
-      // ignore: avoid_print
-      print("Fallo al sacar foto");
-      // ignore: avoid_print
-      print(e);
-    }
+  // _imgFromCamera() async {
+  //   try {
+  //     image = await _picker.pickImage(
+  //         source: ImageSource.camera,
+  //         imageQuality: 100,
+  //         maxWidth: 1280,
+  //         maxHeight: 720);
+  //     if (image != null) {
+  //       setState(() {
+  //         path = 'files/${image.path}';
+  //         _image = File(image.path);
+  //       });
+  //       // currentCutProvider.listImage.add(File(image.path));
+  //     }
+  //   } on Exception catch (e) {
+  //     // ignore: avoid_print
+  //     print("Fallo al sacar foto");
+  //     // ignore: avoid_print
+  //     print(e);
+  //   }
+  // }
+  Future selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
   }
 
   /// Foto del Producto
@@ -97,8 +121,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
       children: [
         titleCardForm('Foto del Producto'),
         InkWell(
-          onTap: () async {
-            await _imgFromCamera();
+          onTap: () {
+            selectFile();
+            // await _imgFromCamera();
           },
           child: Container(
             width: MediaQuery.of(context).size.width / 3 * 1.3,
@@ -108,9 +133,10 @@ class _NewProductScreenState extends State<NewProductScreen> {
               // borderRadius: BorderRadius.circular(10),
               border: Border.all(color: secondColor),
             ),
-            child: _image != null
+            child: pickedFile != null
                 ? Image.file(
-                    File(_image!.path),
+                    File(pickedFile!.path!),
+                    width: double.infinity,
                     // _image!,
                     fit: BoxFit.cover,
                   )
@@ -194,10 +220,9 @@ class _NewProductScreenState extends State<NewProductScreen> {
     );
   }
 
-  String dropdownValue = 'Platos';
   SingingCharacter? _character = SingingCharacter.disponible;
-  File? _image;
-  final ImagePicker _picker = ImagePicker();
+  // File? _image;
+  // final ImagePicker _picker = ImagePicker();
   final TextEditingController nameProduct = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController price = TextEditingController();
@@ -279,17 +304,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 },
               );
               if (res != null) {
+                await uploadFile();
                 await provider.addProduct(
                     nameProduct.text,
                     (_character == SingingCharacter.disponible),
                     nameCategory,
                     description.text,
                     double.parse(price.text),
-                    '');
-                final ref = FirebaseStorage.instance.ref().child(path);
-                print(path);
-                ref.putFile(_image!);
-
+                    urlDownload);
                 if (context.mounted) {
                   await showDialog(
                     context: context,
