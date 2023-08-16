@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app_restaurant_management/menu/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,7 +10,16 @@ import 'package:flutter/material.dart';
 class MenuProvider with ChangeNotifier {
   final _db = FirebaseFirestore.instance;
   // Points to the root reference
-  final storageRef = FirebaseStorage.instance.ref();
+  // final storageRef = FirebaseStorage.instance.ref();
+  UploadTask? uploadTask;
+
+  Future uploadFile(var image) async {
+    final path = 'files/${image!.name}';
+    final file = File(image!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file);
+  }
 
 // // Points to "images"
 // Reference? imagesRef = storageRef.child("images");
