@@ -1,8 +1,10 @@
+import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -13,6 +15,15 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<MenuProvider>(context, listen: false);
+      provider.getAllProducts();
+    });
+    super.initState();
+  }
+
   Tab tabBarValue(
       {required String text, required String img, double marginRight = 0}) {
     return Tab(
@@ -69,6 +80,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MenuProvider>(context);
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -141,9 +154,9 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         // ignore: prefer_const_constructors
         body: TabBarView(
-          children: const [
-            ProductsMenuScreen(),
-            ProductsMenuScreen(),
+          children: [
+            ProductsMenuScreen(provider: provider),
+            ProductsMenuScreen(provider: provider),
           ],
         ),
         floatingActionButton: floatButton(),
