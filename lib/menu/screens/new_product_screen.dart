@@ -9,7 +9,7 @@ import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
@@ -35,7 +35,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
 
     final snapshot = await uploadTask!.whenComplete(() {});
     urlDownload = await snapshot.ref.getDownloadURL();
-    print('Download Link: $urlDownload');
+    // print('Download Link: $urlDownload');
   }
 
   categories(
@@ -312,6 +312,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     description.text,
                     double.parse(price.text),
                     urlDownload);
+                provider.listProduct;
                 if (context.mounted) {
                   await showDialog(
                     context: context,
