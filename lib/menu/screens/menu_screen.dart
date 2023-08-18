@@ -1,6 +1,8 @@
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
+import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,17 +17,26 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> {
+  // late TabController _tabController;
+
+  @override
+  void dispose() {
+    // _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<MenuProvider>(context, listen: false);
       provider.getAllProducts();
+      final category = Provider.of<SettingsProvider>(context, listen: false);
+      category.getAllCategories();
     });
     super.initState();
   }
 
-  Tab tabBarValue(
-      {required String text, required String img, double marginRight = 0}) {
+  Tab tabBarValue({required String text, double marginRight = 0}) {
     return Tab(
       child: Container(
         alignment: Alignment.center,
@@ -36,22 +47,28 @@ class _MenuScreenState extends State<MenuScreen> {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: focusColor, width: 1),
         ),
-        child: Row(
-          children: [
-            // Image.asset(img, height: 24, width: 24),
-            // const SizedBox(width: 10),
-            Text(
-              text,
-              style: const TextStyle(
-                  fontFamily: "Work Sans",
-                  fontWeight: FontWeight.w500,
-                  fontSize: fontSizeRegular),
-            ),
-          ],
+        child: Text(
+          text,
+          style: const TextStyle(
+              fontFamily: "Work Sans",
+              fontWeight: FontWeight.w500,
+              fontSize: fontSizeRegular),
         ),
       ),
     );
   }
+
+  //Tabs iterable
+  // tabMaker(SettingsProvider provider) {
+  //   // var listCategories;
+  //   List<Tab> tabs ;
+  //   for (var i = 0; i < provider.listCategory.length; i++) {
+  //     tabs.add(tabBarValue(
+  //       text: provider.listCategory[i].name,
+  //     ));
+  //   }
+  //   return tabs;
+  // }
 
   // Float Button Agregar Producto
   Widget floatButton() => Container(
@@ -81,9 +98,9 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MenuProvider>(context);
-
+    final category = Provider.of<SettingsProvider>(context);
     return DefaultTabController(
-      length: 2,
+      length: category.listCategory.length,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
@@ -124,11 +141,13 @@ class _MenuScreenState extends State<MenuScreen> {
                             borderRadius: BorderRadius.circular(10),
                             color: focusColor,
                           ),
-                          tabs: [
-                            tabBarValue(
-                                text: 'Platos', img: 'assets/img/plate.png'),
-                            tabBarValue(
-                                text: 'Bebidas', img: 'assets/img/cooke.png'),
+                          tabs:
+                              // tabMaker(category)
+                              [
+                            for (var listCategory in category.listCategory)
+                              tabBarValue(text: listCategory.name),
+                            // tabBarValue(text: 'Platos'),
+                            // tabBarValue(text: 'Bebidas'),
                           ],
                         ),
                       ],
@@ -154,9 +173,15 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
         // ignore: prefer_const_constructors
         body: TabBarView(
-          children: [
-            ProductsMenuScreen(provider: provider),
-            ProductsMenuScreen(provider: provider),
+          // controller: _tabController,
+          children:
+              // category.listCategory.map((Tab tab) {
+              //   return ProductsMenuScreen(provider: provider);
+              // }).toList(),
+              [
+            for (var listCategory in category.listCategory)
+              // ProductsMenuScreen(provider: provider),
+              ProductsMenuScreen(provider: provider),
           ],
         ),
         floatingActionButton: floatButton(),
