@@ -93,7 +93,7 @@ class CardProduct extends StatelessWidget {
                         ),
                         // SizedBox(width: sizeW / 6),
                         Text(
-                          (product.price).toStringAsFixed(2),
+                          'Bs ${(product.price).toStringAsFixed(2)}',
                           style: textStylePrizeItem,
                           textAlign: TextAlign.right,
                         )
