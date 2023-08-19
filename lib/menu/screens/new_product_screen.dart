@@ -312,7 +312,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                     description.text,
                     double.parse(price.text),
                     urlDownload);
-                provider.listProduct;
+                await provider.getAllProducts();
                 if (context.mounted) {
                   await showDialog(
                     context: context,

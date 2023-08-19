@@ -2,7 +2,6 @@ import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/menu/screens/new_product_screen.dart';
 import 'package:app_restaurant_management/menu/screens/products_menu_screen.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
-import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -172,18 +171,23 @@ class _MenuScreenState extends State<MenuScreen> {
           ),
         ),
         // ignore: prefer_const_constructors
-        body: TabBarView(
-          // controller: _tabController,
-          children:
-              // category.listCategory.map((Tab tab) {
-              //   return ProductsMenuScreen(provider: provider);
-              // }).toList(),
-              [
-            for (var listCategory in category.listCategory)
-              // ProductsMenuScreen(provider: provider),
-              ProductsMenuScreen(provider: provider),
-          ],
-        ),
+        body: provider.loadingProduct
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : TabBarView(
+                // controller: _tabController,
+                children:
+                    // category.listCategory.map((Tab tab) {
+                    //   return ProductsMenuScreen(provider: provider);
+                    // }).toList(),
+                    [
+                  for (var listCategory in category.listCategory)
+                    // ProductsMenuScreen(provider: provider),
+                    ProductsMenuScreen(
+                        provider: provider, category: listCategory.name),
+                ],
+              ),
         floatingActionButton: floatButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
