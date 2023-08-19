@@ -23,7 +23,7 @@ class CardProduct extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(CupertinoPageRoute(
-              builder: (context) => const DetailProductScreen()));
+              builder: (context) => DetailProductScreen(product: product)));
         },
         child: Row(
           children: [
@@ -93,7 +93,7 @@ class CardProduct extends StatelessWidget {
                         ),
                         // SizedBox(width: sizeW / 6),
                         Text(
-                          'Bs ${(product.price).toStringAsFixed(2)}',
+                          'Bs. ${(product.price).toStringAsFixed(1)}',
                           style: textStylePrizeItem,
                           textAlign: TextAlign.right,
                         )

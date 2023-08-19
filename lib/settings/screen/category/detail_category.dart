@@ -26,20 +26,13 @@ class DetailCategoryScreen extends StatelessWidget {
         backgroundColor: backgroundColor,
         title: const Text(
           "Detalle Categoría",
-          style: TextStyle(
-            letterSpacing: 0.75,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w700,
-            fontSize: fontSizeTitle,
-          ),
+          style: textStyleAppBar,
           textAlign: TextAlign.left,
         ),
       ),
       body: ListView(
         children: [
-          CardDetailCategory(
-            category: category,
-          ),
+          CardDetailCategory(category: category),
           Column(
             children: [
               ButtonCancel(
