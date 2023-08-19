@@ -1,9 +1,12 @@
+import 'package:app_restaurant_management/menu/models/product_model.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
 class CardDetailProduct extends StatefulWidget {
+  final ProductModel product;
   const CardDetailProduct({
     Key? key,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -16,8 +19,8 @@ class _CardDetailProductState extends State<CardDetailProduct> {
     return Container(
       width: MediaQuery.of(context).size.width / 2 * 0.8,
       margin: const EdgeInsets.only(bottom: 10),
-      child: const Text(
-        'Platos',
+      child: Text(
+        widget.product.category,
         style: textStyleLabelOrange,
         textAlign: TextAlign.left,
       ),
@@ -29,9 +32,9 @@ class _CardDetailProductState extends State<CardDetailProduct> {
     return Container(
       width: MediaQuery.of(context).size.width / 2 * 0.8,
       margin: const EdgeInsets.only(bottom: 10),
-      child: const Text(
-        'Disponible',
-        style: textStyleLabelGreen,
+      child: Text(
+        widget.product.status ? 'Disponible' : 'No disponible',
+        style: widget.product.status ? textStyleLabelGreen : textStyleLabelRed,
         textAlign: TextAlign.left,
       ),
     );
@@ -76,8 +79,7 @@ class _CardDetailProductState extends State<CardDetailProduct> {
         imageErrorBuilder: (context, error, stackTrace) {
           return Image.asset("assets/img/background.png");
         },
-        image: const NetworkImage(
-            'https://locosxlaparrilla.com/wp-content/uploads/2015/02/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-churrascos-parrilla-churrascos-parrilla-receta-churrascos-churrascos-2-1.jpg'),
+        image: NetworkImage(widget.product.urlPhoto),
       ),
     );
   }
@@ -87,8 +89,8 @@ class _CardDetailProductState extends State<CardDetailProduct> {
     return Container(
       width: MediaQuery.of(context).size.width / 2 * 0.8,
       margin: const EdgeInsets.only(bottom: 10),
-      child: const Text(
-        'Carne (200g)',
+      child: Text(
+        widget.product.nameProduct,
         style: textStyleSubTitle,
         textAlign: TextAlign.left,
       ),
@@ -99,7 +101,7 @@ class _CardDetailProductState extends State<CardDetailProduct> {
   Container total() {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-      child: const Text("Bs. 144", style: textStyleTotalBs),
+      child: Text("Bs. ${widget.product.price}", style: textStyleTotalBs),
     );
   }
 
@@ -108,8 +110,8 @@ class _CardDetailProductState extends State<CardDetailProduct> {
     return Container(
       width: MediaQuery.of(context).size.width / 2 * 0.9,
       margin: const EdgeInsets.only(bottom: 10),
-      child: const Text(
-        'Carne argentina para la parrillada',
+      child: Text(
+        widget.product.description,
         style: textStyleSubItem,
       ),
     );

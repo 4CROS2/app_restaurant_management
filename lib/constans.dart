@@ -185,6 +185,14 @@ const textStyleMessage = TextStyle(
     fontSize: fontSizeMedium,
     fontWeight: FontWeight.w500);
 
+//Style text AppBar
+const textStyleAppBar = TextStyle(
+  letterSpacing: 0.75,
+  fontFamily: "Poppins",
+  fontWeight: FontWeight.w700,
+  fontSize: fontSizeTitle,
+);
+
 /// Divider
 const divider = Divider(
   color: dividerColor,
