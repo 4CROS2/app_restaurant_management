@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
-enum SingingCharacter { disponible, nodisponible }
-
 class EditCategoryScreen extends StatefulWidget {
   final CategoryModel category;
   const EditCategoryScreen({Key? key, required this.category})
@@ -15,18 +13,6 @@ class EditCategoryScreen extends StatefulWidget {
 
   @override
   State<EditCategoryScreen> createState() => _EditCategoryScreenState();
-}
-
-// Subtitle Forms
-Container titleCardForm(String text) {
-  return Container(
-    alignment: Alignment.topLeft,
-    margin: const EdgeInsets.only(right: 5, bottom: 5),
-    child: Text(
-      text,
-      style: textStyleSubtitle,
-    ),
-  );
 }
 
 class _EditCategoryScreenState extends State<EditCategoryScreen> {
@@ -59,12 +45,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         backgroundColor: backgroundColor,
         title: const Text(
           "Editar Categoría",
-          style: TextStyle(
-            letterSpacing: 0.75,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w700,
-            fontSize: fontSizeTitle,
-          ),
+          style: textStyleAppBar,
           textAlign: TextAlign.left,
         ),
       ),

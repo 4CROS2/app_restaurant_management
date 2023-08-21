@@ -13,30 +13,18 @@ class MenuProvider with ChangeNotifier {
   // final storageRef = FirebaseStorage.instance.ref();
   UploadTask? uploadTask;
 
-  Future uploadFile(var image) async {
-    final path = 'files/${image!.name}';
-    final file = File(image!.path!);
+  Future<String> uploadFile(var pickedFile) async {
+    final path = 'files/${pickedFile!.name}';
+    final file = File(pickedFile!.path!);
 
     final ref = FirebaseStorage.instance.ref().child(path);
     uploadTask = ref.putFile(file);
+
+    final snapshot = await uploadTask!.whenComplete(() {});
+    String urlDownload = await snapshot.ref.getDownloadURL();
+    return urlDownload;
+    // print('Download Link: $urlDownload');
   }
-
-// // Points to "images"
-// Reference? imagesRef = storageRef.child("images");
-
-// // Points to "images/space.jpg"
-// // Note that you can use variables to create child values
-// final fileName = "space.jpg";
-// final spaceRef = imagesRef.child(fileName);
-
-// // File path is "images/space.jpg"
-// final path = spaceRef.fullPath;
-
-// // File name is "space.jpg"
-// final name = spaceRef.name;
-
-// // Points to "images"
-// imagesRef = spaceRef.parent;
 
   List<ProductModel> _listProduct = [];
 
