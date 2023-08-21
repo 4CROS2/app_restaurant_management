@@ -7,7 +7,6 @@ import 'package:app_restaurant_management/settings/models/category_model.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -21,22 +20,32 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
-  UploadTask? uploadTask;
+  // UploadTask? uploadTask;
   PlatformFile? pickedFile;
   String nameCategory = '';
   String urlDownload = '';
 
-  Future uploadFile() async {
-    final path = 'files/${pickedFile!.name}';
-    final file = File(pickedFile!.path!);
-
-    final ref = FirebaseStorage.instance.ref().child(path);
-    uploadTask = ref.putFile(file);
-
-    final snapshot = await uploadTask!.whenComplete(() {});
-    urlDownload = await snapshot.ref.getDownloadURL();
-    // print('Download Link: $urlDownload');
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<SettingsProvider>(context, listen: false);
+      provider.getAllCategories();
+      // }
+    });
+    super.initState();
   }
+
+  // Future uploadFile() async {
+  //   final path = 'files/${pickedFile!.name}';
+  //   final file = File(pickedFile!.path!);
+
+  //   final ref = FirebaseStorage.instance.ref().child(path);
+  //   uploadTask = ref.putFile(file);
+
+  //   final snapshot = await uploadTask!.whenComplete(() {});
+  //   urlDownload = await snapshot.ref.getDownloadURL();
+  //   // print('Download Link: $urlDownload');
+  // }
 
   categories(
       List<CategoryModel> lista, String? selected, SettingsProvider provider) {
@@ -71,16 +80,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
       },
       items: listCategories,
     );
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final provider = Provider.of<SettingsProvider>(context, listen: false);
-      provider.getAllCategories();
-      // }
-    });
-    super.initState();
   }
 
   /// Funcionalidad camara
@@ -238,12 +237,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
         backgroundColor: backgroundColor,
         title: const Text(
           "Nuevo Producto",
-          style: TextStyle(
-            letterSpacing: 0.75,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w700,
-            fontSize: fontSizeTitle,
-          ),
+          style: textStyleAppBar,
           textAlign: TextAlign.left,
         ),
       ),
@@ -304,7 +298,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                 },
               );
               if (res != null) {
-                await uploadFile();
+                urlDownload = await provider.uploadFile(pickedFile);
                 await provider.addProduct(
                     nameProduct.text,
                     (_character == SingingCharacter.disponible),

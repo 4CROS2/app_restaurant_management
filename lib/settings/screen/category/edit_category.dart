@@ -1,12 +1,11 @@
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
+import 'package:app_restaurant_management/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constans.dart';
-
-enum SingingCharacter { disponible, nodisponible }
 
 class EditCategoryScreen extends StatefulWidget {
   final CategoryModel category;
@@ -15,18 +14,6 @@ class EditCategoryScreen extends StatefulWidget {
 
   @override
   State<EditCategoryScreen> createState() => _EditCategoryScreenState();
-}
-
-// Subtitle Forms
-Container titleCardForm(String text) {
-  return Container(
-    alignment: Alignment.topLeft,
-    margin: const EdgeInsets.only(right: 5, bottom: 5),
-    child: Text(
-      text,
-      style: textStyleSubtitle,
-    ),
-  );
 }
 
 class _EditCategoryScreenState extends State<EditCategoryScreen> {
@@ -59,12 +46,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
         backgroundColor: backgroundColor,
         title: const Text(
           "Editar Categoría",
-          style: TextStyle(
-            letterSpacing: 0.75,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w700,
-            fontSize: fontSizeTitle,
-          ),
+          style: textStyleAppBar,
           textAlign: TextAlign.left,
         ),
       ),
@@ -133,37 +115,48 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          ButtonConfirm(
-            width: MediaQuery.of(context).size.width,
-            textButton: 'Guardar cambios',
-            onPressed: () async {
-              await provider.updateCategory(
-                  widget.category.id,
-                  _nameCategory.text,
-                  (_character == SingingCharacter.disponible));
-              await provider.getAllCategories();
-              if (context.mounted) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ButtonCancel(
+                textButton: 'Cancelar',
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              ButtonConfirm(
+                // width: MediaQuery.of(context).size.width,
+                textButton: 'Guardar',
+                onPressed: () async {
+                  await provider.updateCategory(
+                      widget.category.id,
+                      _nameCategory.text,
+                      (_character == SingingCharacter.disponible));
+                  await provider.getAllCategories();
+                  if (context.mounted) {
+                    await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        Future.delayed(
+                          const Duration(seconds: 3),
+                          () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        );
+                        return const ModalOrder(
+                            message: 'Cambios guardados correctamente',
+                            image: 'assets/img/confirm-product.svg');
                       },
                     );
-                    return const ModalOrder(
-                        message: 'Cambios guardados correctamente',
-                        image: 'assets/img/confirm-product.svg');
-                  },
-                );
-              }
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
+                  }
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
           ),
         ],
       ),

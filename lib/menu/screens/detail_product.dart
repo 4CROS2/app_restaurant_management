@@ -91,7 +91,8 @@ class DetailProductScreen extends StatelessWidget {
                 icon: Icons.edit,
                 onPressed: () async {
                   await Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) => const EditProductScreen()));
+                      builder: (context) =>
+                          EditProductScreen(product: product)));
                 },
               ),
             ],
