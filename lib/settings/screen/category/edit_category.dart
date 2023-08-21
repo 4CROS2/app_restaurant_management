@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
+import 'package:app_restaurant_management/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
@@ -114,37 +115,48 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          ButtonConfirm(
-            width: MediaQuery.of(context).size.width,
-            textButton: 'Guardar cambios',
-            onPressed: () async {
-              await provider.updateCategory(
-                  widget.category.id,
-                  _nameCategory.text,
-                  (_character == SingingCharacter.disponible));
-              await provider.getAllCategories();
-              if (context.mounted) {
-                await showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) {
-                    Future.delayed(
-                      const Duration(seconds: 3),
-                      () {
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              ButtonCancel(
+                textButton: 'Cancelar',
+                onPressed: () async {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              ButtonConfirm(
+                // width: MediaQuery.of(context).size.width,
+                textButton: 'Guardar',
+                onPressed: () async {
+                  await provider.updateCategory(
+                      widget.category.id,
+                      _nameCategory.text,
+                      (_character == SingingCharacter.disponible));
+                  await provider.getAllCategories();
+                  if (context.mounted) {
+                    await showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        Future.delayed(
+                          const Duration(seconds: 3),
+                          () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          },
+                        );
+                        return const ModalOrder(
+                            message: 'Cambios guardados correctamente',
+                            image: 'assets/img/confirm-product.svg');
                       },
                     );
-                    return const ModalOrder(
-                        message: 'Cambios guardados correctamente',
-                        image: 'assets/img/confirm-product.svg');
-                  },
-                );
-              }
-              if (context.mounted) {
-                Navigator.of(context).pop();
-              }
-            },
+                  }
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
           ),
         ],
       ),

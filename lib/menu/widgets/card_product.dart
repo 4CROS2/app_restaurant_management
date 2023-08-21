@@ -60,46 +60,58 @@ class CardProduct extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                   ),
+                  // Container(
+                  //   padding:
+                  //       const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  //   alignment: Alignment.topLeft,
+                  //   child: Text(
+                  //     product.description,
+                  //     style: const TextStyle(
+                  //         letterSpacing: 0.75,
+                  //         fontFamily: "Poppins",
+                  //         fontWeight: FontWeight.w400,
+                  //         fontSize: fontSizeRegular,
+                  //         color: fontGris),
+                  //     textAlign: TextAlign.left,
+                  //   ),
+                  // ),
+                  //  Container(
+                  //     padding:
+                  //         const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //       children: [
+
                   Container(
+                    width: MediaQuery.of(context).size.width / 2 * 1.2 - 4,
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 5),
                     alignment: Alignment.topLeft,
                     child: Text(
-                      product.description,
-                      style: const TextStyle(
-                          letterSpacing: 0.75,
-                          fontFamily: "Poppins",
-                          fontWeight: FontWeight.w400,
-                          fontSize: fontSizeRegular,
-                          color: fontGris),
+                      product.status ? 'Disponible' : 'No disponible',
                       textAlign: TextAlign.left,
+                      style: TextStyle(
+                          letterSpacing: 0.25,
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w500,
+                          fontSize: fontSizeSmall,
+                          color: product.status ? greenColor : redColor),
                     ),
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width / 2 * 1.2 - 4,
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          product.status ? 'Disponible' : 'No disponible',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              letterSpacing: 0.25,
-                              fontFamily: "Poppins",
-                              fontWeight: FontWeight.w500,
-                              fontSize: fontSizeSmall,
-                              color: product.status ? greenColor : redColor),
-                        ),
-                        // SizedBox(width: sizeW / 6),
-                        Text(
-                          'Bs. ${(product.price).toStringAsFixed(1)}',
-                          style: textStylePrizeItem,
-                          textAlign: TextAlign.right,
-                        )
-                      ],
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      'Bs. ${(product.price).toStringAsFixed(1)}',
+                      style: textStylePrizeItem,
+                      textAlign: TextAlign.right,
                     ),
                   ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
