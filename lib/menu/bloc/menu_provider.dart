@@ -14,14 +14,14 @@ class MenuProvider with ChangeNotifier {
   UploadTask? uploadTask;
 
   Future<String> uploadFile(var pickedFile) async {
+    loadingProduct = true;
     final path = 'files/${pickedFile!.name}';
     final file = File(pickedFile!.path!);
-
     final ref = FirebaseStorage.instance.ref().child(path);
     uploadTask = ref.putFile(file);
-
     final snapshot = await uploadTask!.whenComplete(() {});
     String urlDownload = await snapshot.ref.getDownloadURL();
+    loadingProduct = false;
     return urlDownload;
     // print('Download Link: $urlDownload');
   }
@@ -47,6 +47,7 @@ class MenuProvider with ChangeNotifier {
       String description, double price, String urlPhoto) async {
     var uuid = DateTime.now().microsecondsSinceEpoch.toString();
     try {
+      loadingProduct = true;
       await _db.collection("Product").doc(uuid).set(ProductModel(
               id: uuid,
               nameProduct: name,
@@ -56,6 +57,7 @@ class MenuProvider with ChangeNotifier {
               price: price,
               urlPhoto: urlPhoto)
           .toJson());
+      loadingProduct = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -88,6 +90,7 @@ class MenuProvider with ChangeNotifier {
       double price,
       String urlPhoto) async {
     try {
+      loadingProduct = true;
       await _db.collection("Product").doc(id).update(ProductModel(
               id: id,
               nameProduct: name,
@@ -97,6 +100,7 @@ class MenuProvider with ChangeNotifier {
               price: price,
               urlPhoto: urlPhoto)
           .toJson());
+      loadingProduct = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -109,6 +113,7 @@ class MenuProvider with ChangeNotifier {
     try {
       loadingProduct = true;
       _db.collection('Product').doc(id).delete();
+      loadingProduct = false;
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);

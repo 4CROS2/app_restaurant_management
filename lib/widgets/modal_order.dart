@@ -1,4 +1,5 @@
 import 'package:app_restaurant_management/constans.dart';
+import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -50,6 +51,15 @@ class ModalOrder extends StatelessWidget {
             ),
           ),
         ),
+        Container(
+          margin: const EdgeInsets.only(bottom: 15),
+          child: ButtonConfirm(
+            textButton: 'Listo',
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        )
       ],
     ));
   }

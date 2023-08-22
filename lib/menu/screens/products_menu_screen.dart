@@ -29,7 +29,8 @@ class _ProductsMenuScreenState extends State<ProductsMenuScreen> {
                 : ListView.builder(
                     // shrinkWrap: true,
                     // physics: const ScrollPhysics(),
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.only(
+                        left: 10, right: 10, top: 10, bottom: 30),
                     itemCount: widget.provider.listProduct.length,
                     itemBuilder: (context, index) {
                       return widget.category ==

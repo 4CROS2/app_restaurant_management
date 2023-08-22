@@ -27,10 +27,12 @@ class SettingsProvider with ChangeNotifier {
   Future<void> addCategory(String name, bool status) async {
     var uuid = DateTime.now().microsecondsSinceEpoch.toString();
     try {
+      loadingCategories = true;
       await _db
           .collection("Categories")
           .doc(uuid)
           .set(CategoryModel(id: uuid, name: name, status: status).toJson());
+      loadingCategories = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -56,10 +58,12 @@ class SettingsProvider with ChangeNotifier {
   //metodo para actualizar una nueva categoria
   Future<void> updateCategory(String id, String name, bool status) async {
     try {
+      loadingCategories = true;
       await _db
           .collection("Categories")
           .doc(id)
           .update(CategoryModel(id: id, name: name, status: status).toJson());
+      loadingCategories = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -72,6 +76,7 @@ class SettingsProvider with ChangeNotifier {
     try {
       loadingCategories = true;
       _db.collection('Categories').doc(id).delete();
+      loadingCategories = false;
     } on Exception catch (e) {
       if (kDebugMode) {
         print(e);

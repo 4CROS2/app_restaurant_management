@@ -34,69 +34,67 @@ class DetailProductScreen extends StatelessWidget {
         padding: const EdgeInsets.only(left: 5, right: 5, bottom: 30),
         children: [
           CardDetailProduct(product: product),
-          Column(
-            children: [
-              ButtonCancel(
-                textButton: "Eliminar",
-                icon: Icons.delete_outline_outlined,
-                onPressed: () async {
-                  var res = await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        child: ModalConfirm(
-                          message:
-                              '¿Seguro que quieres eliminar este producto del menu?',
-                          onPressConfirm: () async {
-                            Navigator.of(context).pop('confirmar');
+          provider.loadingProduct
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    ButtonCancel(
+                      textButton: "Eliminar",
+                      icon: Icons.delete_outline_outlined,
+                      onPressed: () async {
+                        var res = await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              child: ModalConfirm(
+                                message:
+                                    '¿Seguro que quieres eliminar este producto del menú?',
+                                onPressConfirm: () async {
+                                  Navigator.of(context).pop('confirmar');
+                                },
+                                onPressCancel: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            );
                           },
-                          onPressCancel: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
-                  );
-                  if (res != null) {
-                    await provider.deleteProduct(product.id);
-                    await provider.getAllProducts();
-                    if (context.mounted) {
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                            message: 'Se eliminó el producto del Menú',
-                            image: 'assets/img/delete-product.svg',
-                          );
-                        },
-                      );
-                    }
-                    if (context.mounted) {
-                      Navigator.of(context).pop(true);
-                    }
-                  }
-                },
-              ),
-              const SizedBox(height: 15),
-              ButtonConfirm(
-                textButton: "Editar",
-                icon: Icons.edit,
-                onPressed: () async {
-                  await Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) =>
-                          EditProductScreen(product: product)));
-                },
-              ),
-            ],
-          ),
+                        );
+                        if (res != null) {
+                          await provider.deleteProduct(product.id);
+                          await provider.getAllProducts();
+                          if (context.mounted) {
+                            await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const ModalOrder(
+                                  message: 'Se eliminó el producto del Menú',
+                                  image: 'assets/img/delete-product.svg',
+                                );
+                              },
+                            );
+                          }
+                          if (context.mounted) {
+                            Navigator.of(context).pop(true);
+                          }
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    ButtonConfirm(
+                      textButton: "Editar",
+                      icon: Icons.edit,
+                      onPressed: () async {
+                        await Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) =>
+                                EditProductScreen(product: product)));
+                      },
+                    ),
+                  ],
+                ),
         ],
       ),
     );

@@ -33,71 +33,69 @@ class DetailCategoryScreen extends StatelessWidget {
       body: ListView(
         children: [
           CardDetailCategory(category: category),
-          Column(
-            children: [
-              ButtonCancel(
-                textButton: "Eliminar",
-                icon: Icons.delete_outline_outlined,
-                onPressed: () async {
-                  var res = await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        child: ModalConfirm(
-                          message:
-                              '¿Seguro que quieres eliminar esta categoría?',
-                          onPressConfirm: () async {
-                            Navigator.of(context).pop('confirmar');
-                          },
-                          onPressCancel: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
-                  );
-                  if (res != null) {
-                    if (context.mounted) {
-                      await provider.deleteCategory(category.id);
-                      await provider.getAllCategories();
-                      if (context.mounted) {
-                        await showDialog(
+          provider.loadingCategories
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    ButtonCancel(
+                      textButton: "Eliminar",
+                      icon: Icons.delete_outline_outlined,
+                      onPressed: () async {
+                        var res = await showDialog(
                           context: context,
                           barrierDismissible: false,
                           builder: (BuildContext context) {
-                            Future.delayed(
-                              const Duration(seconds: 3),
-                              () {
-                                Navigator.of(context).pop();
-                              },
-                            );
-                            return const ModalOrder(
-                              message: 'Se eliminó la categoría',
-                              image: 'assets/img/delete-product.svg',
+                            return Dialog(
+                              child: ModalConfirm(
+                                message:
+                                    '¿Seguro que quieres eliminar esta categoría?',
+                                onPressConfirm: () async {
+                                  Navigator.of(context).pop('confirmar');
+                                },
+                                onPressCancel: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
                             );
                           },
                         );
-                      }
-                    }
-                    if (context.mounted) {
-                      Navigator.of(context).pop(true);
-                    }
-                  }
-                },
-              ),
-              const SizedBox(height: 15),
-              ButtonConfirm(
-                textButton: "Editar",
-                icon: Icons.edit,
-                onPressed: () async {
-                  await Navigator.of(context).push(CupertinoPageRoute(
-                      builder: (context) =>
-                          EditCategoryScreen(category: category)));
-                },
-              ),
-            ],
-          ),
+                        if (res != null) {
+                          if (context.mounted) {
+                            await provider.deleteCategory(category.id);
+                            await provider.getAllCategories();
+                            if (context.mounted) {
+                              await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const ModalOrder(
+                                    message: 'Se eliminó la categoría',
+                                    image: 'assets/img/delete-product.svg',
+                                  );
+                                },
+                              );
+                            }
+                          }
+                          if (context.mounted) {
+                            Navigator.of(context).pop(true);
+                          }
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    ButtonConfirm(
+                      textButton: "Editar",
+                      icon: Icons.edit,
+                      onPressed: () async {
+                        await Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (context) =>
+                                EditCategoryScreen(category: category)));
+                      },
+                    ),
+                  ],
+                ),
         ],
       ),
     );

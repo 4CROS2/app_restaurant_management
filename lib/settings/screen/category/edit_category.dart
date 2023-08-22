@@ -115,49 +115,47 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ButtonCancel(
-                textButton: 'Cancelar',
-                onPressed: () async {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              ButtonConfirm(
-                // width: MediaQuery.of(context).size.width,
-                textButton: 'Guardar',
-                onPressed: () async {
-                  await provider.updateCategory(
-                      widget.category.id,
-                      _nameCategory.text,
-                      (_character == SingingCharacter.disponible));
-                  await provider.getAllCategories();
-                  if (context.mounted) {
-                    await showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        Future.delayed(
-                          const Duration(seconds: 3),
-                          () {
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                          },
-                        );
-                        return const ModalOrder(
-                            message: 'Cambios guardados correctamente',
-                            image: 'assets/img/confirm-product.svg');
+          provider.loadingCategories
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ButtonCancel(
+                      textButton: 'Cancelar',
+                      onPressed: () async {
+                        Navigator.of(context).pop(true);
                       },
-                    );
-                  }
-                  if (context.mounted) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
-            ],
-          ),
+                    ),
+                    ButtonConfirm(
+                      // width: MediaQuery.of(context).size.width,
+                      textButton: 'Guardar',
+                      onPressed: () async {
+                        await provider.updateCategory(
+                            widget.category.id,
+                            _nameCategory.text,
+                            (_character == SingingCharacter.disponible));
+                        await provider.getAllCategories();
+                        if (context.mounted) {
+                          await showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return const ModalOrder(
+                                  message: 'Cambios guardados correctamente',
+                                  image: 'assets/img/confirm-product.svg');
+                            },
+                          );
+                        }
+                        if (context.mounted) {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    ),
+                  ],
+                ),
         ],
       ),
     );
