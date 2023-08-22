@@ -47,6 +47,7 @@ class MenuProvider with ChangeNotifier {
       String description, double price, String urlPhoto) async {
     var uuid = DateTime.now().microsecondsSinceEpoch.toString();
     try {
+      loadingProduct = true;
       await _db.collection("Product").doc(uuid).set(ProductModel(
               id: uuid,
               nameProduct: name,
@@ -56,6 +57,7 @@ class MenuProvider with ChangeNotifier {
               price: price,
               urlPhoto: urlPhoto)
           .toJson());
+      loadingProduct = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -88,6 +90,7 @@ class MenuProvider with ChangeNotifier {
       double price,
       String urlPhoto) async {
     try {
+      loadingProduct = true;
       await _db.collection("Product").doc(id).update(ProductModel(
               id: id,
               nameProduct: name,
@@ -97,6 +100,7 @@ class MenuProvider with ChangeNotifier {
               price: price,
               urlPhoto: urlPhoto)
           .toJson());
+      loadingProduct = false;
     } catch (e) {
       if (kDebugMode) {
         print(e);

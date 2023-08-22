@@ -276,61 +276,59 @@ class _NewProductScreenState extends State<NewProductScreen> {
           ),
           // const CardFormProduct(),
           const SizedBox(height: 10),
-          ButtonConfirm(
-            width: MediaQuery.of(context).size.width,
-            textButton: 'Agregar',
-            onPressed: () async {
-              var res = await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return Dialog(
-                    child: ModalConfirm(
-                      message: '¿Agregar producto al menú?',
-                      onPressConfirm: () async {
-                        Navigator.of(context).pop('confirmar');
-                      },
-                      onPressCancel: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                },
-              );
-              if (res != null) {
-                urlDownload = await provider.uploadFile(pickedFile);
-                await provider.addProduct(
-                    nameProduct.text,
-                    (_character == SingingCharacter.disponible),
-                    nameCategory,
-                    description.text,
-                    double.parse(price.text),
-                    urlDownload);
-                await provider.getAllProducts();
-                if (context.mounted) {
-                  await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      Future.delayed(
-                        const Duration(seconds: 3),
-                        () {
-                          Navigator.of(context).pop();
+          provider.loadingProduct
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ButtonConfirm(
+                  width: MediaQuery.of(context).size.width,
+                  textButton: 'Agregar',
+                  onPressed: () async {
+                    // var res = await showDialog(
+                    //   context: context,
+                    //   barrierDismissible: false,
+                    //   builder: (BuildContext context) {
+                    //     return Dialog(
+                    //       child: ModalConfirm(
+                    //         message: '¿Agregar producto al menú?',
+                    //         onPressConfirm: () async {
+                    //           Navigator.of(context).pop('confirmar');
+                    //         },
+                    //         onPressCancel: () {
+                    //           Navigator.pop(context);
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // );
+                    // if (res != null) {
+                    urlDownload = await provider.uploadFile(pickedFile);
+                    await provider.addProduct(
+                        nameProduct.text,
+                        (_character == SingingCharacter.disponible),
+                        nameCategory,
+                        description.text,
+                        double.parse(price.text),
+                        urlDownload);
+                    await provider.getAllProducts();
+                    if (context.mounted) {
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return const ModalOrder(
+                              message:
+                                  'Se agrego correctamente a la lista del Menú',
+                              image: 'assets/img/confirm-product.svg');
                         },
                       );
-                      return const ModalOrder(
-                          message:
-                              'Se agrego correctamente a la lista del Menú',
-                          image: 'assets/img/confirm-product.svg');
-                    },
-                  );
-                }
-                if (context.mounted) {
-                  Navigator.of(context).pop(true);
-                }
-              }
-            },
-          ),
+                    }
+                    //   if (context.mounted) {
+                    //     Navigator.of(context).pop(true);
+                    //   }
+                    // }
+                  },
+                ),
         ],
       ),
     );
