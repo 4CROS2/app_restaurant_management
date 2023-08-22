@@ -1,4 +1,3 @@
-import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
@@ -8,7 +7,6 @@ import '../../../../constans.dart';
 
 class NewCategoryScreen extends StatefulWidget {
   const NewCategoryScreen({Key? key}) : super(key: key);
-
   @override
   State<NewCategoryScreen> createState() => _NewCategoryScreenState();
 }
@@ -95,55 +93,33 @@ class _NewCategoryScreenState extends State<NewCategoryScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          ButtonConfirm(
-            width: MediaQuery.of(context).size.width,
-            textButton: 'Agregar',
-            onPressed: () async {
-              var res = await showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) {
-                  return Dialog(
-                    child: ModalConfirm(
-                      message: '¿Agregar categoría al menú?',
-                      onPressConfirm: () async {
-                        Navigator.of(context).pop('confirmar');
-                      },
-                      onPressCancel: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  );
-                },
-              );
-              if (res != null) {
-                await provider.addCategory(nameCategory.text,
-                    (_character == SingingCharacter.disponible));
-                await provider.getAllCategories();
-                if (context.mounted) {
-                  await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      Future.delayed(
-                        const Duration(seconds: 3),
-                        () {
-                          Navigator.of(context).pop();
+          provider.loadingCategories
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : ButtonConfirm(
+                  width: MediaQuery.of(context).size.width,
+                  textButton: 'Agregar',
+                  onPressed: () async {
+                    await provider.addCategory(nameCategory.text,
+                        (_character == SingingCharacter.disponible));
+                    await provider.getAllCategories();
+                    if (context.mounted) {
+                      await showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return const ModalOrder(
+                              message:
+                                  'Se agrego correctamente a la lista del Menú',
+                              image: 'assets/img/confirm-product.svg');
                         },
                       );
-                      return const ModalOrder(
-                          message:
-                              'Se agrego correctamente a la lista del Menú',
-                          image: 'assets/img/confirm-product.svg');
-                    },
-                  );
-                }
-                if (context.mounted) {
-                  Navigator.of(context).pop(true);
-                }
-              }
-            },
-          ),
+                    }
+                    if (context.mounted) {
+                      Navigator.of(context).pop(true);
+                    }
+                  }),
         ],
       ),
     );

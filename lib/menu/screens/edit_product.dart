@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/menu/models/product_model.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
@@ -254,77 +252,53 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ButtonCancel(
-                textButton: 'Cancelar',
-                onPressed: () async {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-              ButtonConfirm(
-                textButton: 'Guardar',
-                onPressed: () async {
-                  var res = await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        child: ModalConfirm(
-                          message:
-                              '¿Seguro qué quiere guardar los cambios realizados?',
-                          textButtonConfirm: 'Guardar',
-                          onPressConfirm: () async {
-                            Navigator.of(context).pop('confirmar');
-                          },
-                          onPressCancel: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
-                  );
-                  if (res != null) {
-                    urlDownload = pickedFile != null
-                        ? await provider.uploadFile(pickedFile)
-                        : urlDownload;
-                    await provider.updateProduct(
-                        widget.product.id,
-                        nameProduct.text,
-                        (_character == SingingCharacter.disponible),
-                        nameCategory.text,
-                        description.text,
-                        double.parse(price.text),
-                        urlDownload);
-                    await provider.getAllProducts();
-                    if (context.mounted) {
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            },
-                          );
-                          return const ModalOrder(
-                            message: 'Cambios guardados exitosamente',
-                            image: 'assets/img/confirm-product.svg',
-                          );
-                        },
-                      );
-                    }
-                    if (context.mounted) {
-                      Navigator.of(context).pop(true);
-                    }
-                  }
-                },
-              ),
-            ],
-          ),
+          provider.loadingProduct
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ButtonCancel(
+                      textButton: 'Cancelar',
+                      onPressed: () async {
+                        Navigator.of(context).pop(true);
+                      },
+                    ),
+                    ButtonConfirm(
+                        textButton: 'Guardar',
+                        onPressed: () async {
+                          urlDownload = pickedFile != null
+                              ? await provider.uploadFile(pickedFile)
+                              : urlDownload;
+                          await provider.updateProduct(
+                              widget.product.id,
+                              nameProduct.text,
+                              (_character == SingingCharacter.disponible),
+                              nameCategory.text,
+                              description.text,
+                              double.parse(price.text),
+                              urlDownload);
+                          await provider.getAllProducts();
+                          if (context.mounted) {
+                            await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return const ModalOrder(
+                                  message: 'Cambios guardados exitosamente',
+                                  image: 'assets/img/confirm-product.svg',
+                                );
+                              },
+                            );
+                          }
+                          if (context.mounted) {
+                            Navigator.of(context).pop(true);
+                            Navigator.of(context).pop(true);
+                          }
+                        }),
+                  ],
+                ),
         ],
       ),
     );

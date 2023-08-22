@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
@@ -14,7 +12,6 @@ import '../../../constans.dart';
 
 class NewProductScreen extends StatefulWidget {
   const NewProductScreen({Key? key}) : super(key: key);
-
   @override
   State<NewProductScreen> createState() => _NewProductScreenState();
 }
@@ -323,12 +320,12 @@ class _NewProductScreenState extends State<NewProductScreen> {
                         },
                       );
                     }
-                    //   if (context.mounted) {
-                    //     Navigator.of(context).pop(true);
-                    //   }
-                    // }
-                  },
-                ),
+                    if (context.mounted) {
+                      Navigator.of(context).pop(true);
+                    }
+                  }
+                  // },
+                  ),
         ],
       ),
     );
