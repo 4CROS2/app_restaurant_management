@@ -17,32 +17,32 @@ class NewProductScreen extends StatefulWidget {
 }
 
 class _NewProductScreenState extends State<NewProductScreen> {
-  // UploadTask? uploadTask;
   PlatformFile? pickedFile;
-  String nameCategory = '';
+  final _nameCategory = TextEditingController();
   String urlDownload = '';
+  SingingCharacter? _character = SingingCharacter.disponible;
+  final _nameProduct = TextEditingController();
+  final _description = TextEditingController();
+  final _price = TextEditingController();
+  final _formProduct = GlobalKey<FormState>();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<SettingsProvider>(context, listen: false);
       provider.getAllCategories();
-      // }
     });
     super.initState();
   }
 
-  // Future uploadFile() async {
-  //   final path = 'files/${pickedFile!.name}';
-  //   final file = File(pickedFile!.path!);
-
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   uploadTask = ref.putFile(file);
-
-  //   final snapshot = await uploadTask!.whenComplete(() {});
-  //   urlDownload = await snapshot.ref.getDownloadURL();
-  //   // print('Download Link: $urlDownload');
-  // }
+  @override
+  void dispose() {
+    _nameProduct.dispose();
+    _nameCategory.dispose();
+    _description.dispose();
+    _price.dispose();
+    super.dispose();
+  }
 
   categories(
       List<CategoryModel> lista, String? selected, SettingsProvider provider) {
@@ -72,35 +72,14 @@ class _NewProductScreenState extends State<NewProductScreen> {
       onChanged: (value) {
         selected = value;
         setState(() {
-          nameCategory = value!;
+          _nameCategory.text = value!;
         });
       },
       items: listCategories,
     );
   }
 
-  /// Funcionalidad camara
-  // _imgFromCamera() async {
-  //   try {
-  //     image = await _picker.pickImage(
-  //         source: ImageSource.camera,
-  //         imageQuality: 100,
-  //         maxWidth: 1280,
-  //         maxHeight: 720);
-  //     if (image != null) {
-  //       setState(() {
-  //         path = 'files/${image.path}';
-  //         _image = File(image.path);
-  //       });
-  //       // currentCutProvider.listImage.add(File(image.path));
-  //     }
-  //   } on Exception catch (e) {
-  //     // ignore: avoid_print
-  //     print("Fallo al sacar foto");
-  //     // ignore: avoid_print
-  //     print(e);
-  //   }
-  // }
+  //Seleccionar archivo
   Future selectFile() async {
     final result = await FilePicker.platform.pickFiles();
     if (result == null) return;
@@ -154,7 +133,13 @@ class _NewProductScreenState extends State<NewProductScreen> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: TextFormField(
-              controller: price,
+              controller: _price,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Coloque un precio';
+                }
+                return null;
+              },
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -216,117 +201,122 @@ class _NewProductScreenState extends State<NewProductScreen> {
     );
   }
 
-  SingingCharacter? _character = SingingCharacter.disponible;
-  // File? _image;
-  // final ImagePicker _picker = ImagePicker();
-  final TextEditingController nameProduct = TextEditingController();
-  final TextEditingController description = TextEditingController();
-  final TextEditingController price = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MenuProvider>(context);
     final category = Provider.of<SettingsProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: fontBlack,
-        elevation: 0,
-        backgroundColor: backgroundColor,
-        title: const Text(
-          "Nuevo Producto",
-          style: textStyleAppBar,
-          textAlign: TextAlign.left,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(false);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: fontBlack,
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          title: const Text(
+            "Nuevo Producto",
+            style: textStyleAppBar,
+            textAlign: TextAlign.left,
+          ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            padding:
-                const EdgeInsets.only(top: 5, bottom: 15, left: 10, right: 10),
-            margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
-            decoration: boxShadow,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Form(
+            key: _formProduct,
+            child: ListView(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
               children: [
-                titleCardForm('Nombre de producto'),
-                TextFormField(controller: nameProduct),
-                titleCardForm('Categoría'),
-                categories(category.listCategory, nameCategory, category),
-                titleCardForm('Descripción'),
-                TextFormField(maxLines: 3, controller: description),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    photoProduct(),
-                    Column(
-                      children: [
-                        prize(),
-                        status(),
-                      ],
-                    ),
-                  ],
-                )
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.only(
+                      top: 5, bottom: 15, left: 10, right: 10),
+                  margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
+                  decoration: boxShadow,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      titleCardForm('Nombre de producto'),
+                      TextFormField(
+                        controller: _nameProduct,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Escriba el nombre de producto';
+                          }
+                          return null;
+                        },
+                      ),
+                      titleCardForm('Categoría'),
+                      categories(
+                          category.listCategory, _nameCategory.text, category),
+                      titleCardForm('Descripción'),
+                      TextFormField(maxLines: 3, controller: _description),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          photoProduct(),
+                          Column(
+                            children: [
+                              prize(),
+                              status(),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                // const CardFormProduct(),
+                const SizedBox(height: 10),
+                provider.loadingProduct
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ButtonConfirm(
+                        width: MediaQuery.of(context).size.width,
+                        textButton: 'Agregar',
+                        onPressed: () async {
+                          FocusScope.of(context).unfocus();
+                          if (_formProduct.currentState!.validate()) {
+                            pickedFile != null
+                                ? urlDownload =
+                                    await provider.uploadFile(pickedFile)
+                                : urlDownload;
+                            await provider.addProduct(
+                                _nameProduct.text,
+                                (_character == SingingCharacter.disponible),
+                                _nameCategory.text,
+                                _description.text,
+                                double.parse(_price.text),
+                                urlDownload);
+                            await provider.getAllProducts();
+                            if (context.mounted) {
+                              await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return const ModalOrder(
+                                      message:
+                                          'Se agrego correctamente a la lista del Menú',
+                                      image: 'assets/img/confirm-product.svg');
+                                },
+                              );
+                            }
+                            if (context.mounted) {
+                              Navigator.of(context).pop(true);
+                            }
+                          }
+                        }),
               ],
             ),
           ),
-          // const CardFormProduct(),
-          const SizedBox(height: 10),
-          provider.loadingProduct
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ButtonConfirm(
-                  width: MediaQuery.of(context).size.width,
-                  textButton: 'Agregar',
-                  onPressed: () async {
-                    // var res = await showDialog(
-                    //   context: context,
-                    //   barrierDismissible: false,
-                    //   builder: (BuildContext context) {
-                    //     return Dialog(
-                    //       child: ModalConfirm(
-                    //         message: '¿Agregar producto al menú?',
-                    //         onPressConfirm: () async {
-                    //           Navigator.of(context).pop('confirmar');
-                    //         },
-                    //         onPressCancel: () {
-                    //           Navigator.pop(context);
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // );
-                    // if (res != null) {
-                    urlDownload = await provider.uploadFile(pickedFile);
-                    await provider.addProduct(
-                        nameProduct.text,
-                        (_character == SingingCharacter.disponible),
-                        nameCategory,
-                        description.text,
-                        double.parse(price.text),
-                        urlDownload);
-                    await provider.getAllProducts();
-                    if (context.mounted) {
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return const ModalOrder(
-                              message:
-                                  'Se agrego correctamente a la lista del Menú',
-                              image: 'assets/img/confirm-product.svg');
-                        },
-                      );
-                    }
-                    if (context.mounted) {
-                      Navigator.of(context).pop(true);
-                    }
-                  }
-                  // },
-                  ),
-        ],
+        ),
       ),
     );
   }

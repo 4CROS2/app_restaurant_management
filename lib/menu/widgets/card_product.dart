@@ -33,13 +33,18 @@ class CardProduct extends StatelessWidget {
                 width: sizeW / 3 - 10,
                 height: (sizeW / 4),
                 fit: BoxFit.cover,
-                placeholder: const AssetImage("assets/img/background.png"),
+                placeholder: const AssetImage("assets/img/loader-food.gif"),
                 image: NetworkImage(
                   product.urlPhoto,
                   // "https://locosxlaparrilla.com/wp-content/uploads/2015/02/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-churrascos-parrilla-churrascos-parrilla-receta-churrascos-churrascos-2-1.jpg"
                 ),
                 imageErrorBuilder: (context, error, stackTrace) {
-                  return Image.asset("assets/img/background.png", width: 50);
+                  return Image.asset(
+                    "assets/img/background.png",
+                    width: sizeW / 3 - 10,
+                    height: (sizeW / 4),
+                    fit: BoxFit.cover,
+                  );
                 },
               ),
             ),

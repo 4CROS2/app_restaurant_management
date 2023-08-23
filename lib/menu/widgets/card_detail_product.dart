@@ -58,7 +58,7 @@ class _CardDetailProductState extends State<CardDetailProduct> {
                 typeProduct(),
                 nameProduct(),
                 total(),
-                description(),
+                if (widget.product.description != '') description(),
                 status(),
               ],
             ),
