@@ -21,28 +21,38 @@ class EditProductScreen extends StatefulWidget {
 
 class _EditProductScreenState extends State<EditProductScreen> {
   PlatformFile? pickedFile;
-  final TextEditingController nameCategory = TextEditingController();
+  final _nameCategory = TextEditingController();
   String urlDownload = '';
   SingingCharacter? _character = SingingCharacter.disponible;
-  final TextEditingController nameProduct = TextEditingController();
-  final TextEditingController description = TextEditingController();
-  final TextEditingController price = TextEditingController();
+  final _nameProduct = TextEditingController();
+  final _description = TextEditingController();
+  final _price = TextEditingController();
+  final _formProduct = GlobalKey<FormState>();
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<SettingsProvider>(context, listen: false);
       provider.getAllCategories();
-      nameCategory.text = widget.product.category;
+      _nameCategory.text = widget.product.category;
       _character = widget.product.status
           ? SingingCharacter.disponible
           : SingingCharacter.nodisponible;
-      nameProduct.text = widget.product.nameProduct;
-      description.text = widget.product.description;
-      price.text = widget.product.price.toString();
+      _nameProduct.text = widget.product.nameProduct;
+      _description.text = widget.product.description;
+      _price.text = widget.product.price.toString();
       urlDownload = widget.product.urlPhoto;
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameProduct.dispose();
+    _nameCategory.dispose();
+    _description.dispose();
+    _price.dispose();
+    super.dispose();
   }
 
   categories(
@@ -73,7 +83,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
       onChanged: (value) {
         selected = value;
         setState(() {
-          nameCategory.text = value!;
+          _nameCategory.text = value!;
         });
       },
       items: listCategories,
@@ -140,7 +150,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
           Container(
             margin: const EdgeInsets.only(bottom: 10),
             child: TextFormField(
-              controller: price,
+              controller: _price,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Coloque un precio';
+                }
+                return null;
+              },
               keyboardType: TextInputType.number,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
@@ -206,100 +222,133 @@ class _EditProductScreenState extends State<EditProductScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<MenuProvider>(context);
     final category = Provider.of<SettingsProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: fontBlack,
-        elevation: 0,
-        backgroundColor: backgroundColor,
-        title: const Text(
-          "Editar Producto",
-          style: textStyleAppBar,
-          textAlign: TextAlign.left,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(false);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: fontBlack,
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          title: const Text(
+            "Editar Producto",
+            style: textStyleAppBar,
+            textAlign: TextAlign.left,
+          ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
-        children: [
-          // const CardEditProduct(),
-          Container(
-            alignment: Alignment.topLeft,
-            padding:
-                const EdgeInsets.only(top: 5, bottom: 15, left: 10, right: 10),
-            margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
-            decoration: boxShadow,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Form(
+            key: _formProduct,
+            child: ListView(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
               children: [
-                titleCardForm('Nombre de producto'),
-                TextFormField(controller: nameProduct),
-                titleCardForm('Categoría'),
-                categories(category.listCategory, nameCategory.text, category),
-                titleCardForm('Descripción'),
-                TextFormField(maxLines: 3, controller: description),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    photoProduct(),
-                    Column(
-                      children: [
-                        prize(),
-                        status(),
-                      ],
-                    ),
-                  ],
-                )
+                // const CardEditProduct(),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: const EdgeInsets.only(
+                      top: 5, bottom: 15, left: 10, right: 10),
+                  margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
+                  decoration: boxShadow,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      titleCardForm('Nombre de producto'),
+                      TextFormField(
+                        controller: _nameProduct,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Escriba el nombre de producto';
+                          }
+                          return null;
+                        },
+                      ),
+                      titleCardForm('Categoría'),
+                      categories(
+                          category.listCategory, _nameCategory.text, category),
+                      titleCardForm('Descripción'),
+                      TextFormField(maxLines: 3, controller: _description),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          photoProduct(),
+                          Column(
+                            children: [
+                              prize(),
+                              status(),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                provider.loadingProduct
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ButtonCancel(
+                            textButton: 'Cancelar',
+                            onPressed: () async {
+                              Navigator.of(context).pop(true);
+                            },
+                          ),
+                          ButtonConfirm(
+                              textButton: 'Guardar',
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
+                                if (_formProduct.currentState!.validate()) {
+                                  pickedFile != null
+                                      ? urlDownload =
+                                          await provider.uploadFile(pickedFile)
+                                      : urlDownload;
+                                  await provider.updateProduct(
+                                      widget.product.id,
+                                      _nameProduct.text,
+                                      (_character ==
+                                          SingingCharacter.disponible),
+                                      _nameCategory.text,
+                                      _description.text,
+                                      double.parse(_price.text),
+                                      urlDownload);
+                                  await provider.getAllProducts();
+                                  if (context.mounted) {
+                                    await showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return const ModalOrder(
+                                          message:
+                                              'Cambios guardados exitosamente',
+                                          image:
+                                              'assets/img/confirm-product.svg',
+                                        );
+                                      },
+                                    );
+                                  }
+                                  if (context.mounted) {
+                                    Navigator.of(context).pop(true);
+                                    Navigator.of(context).pop(true);
+                                  }
+                                }
+                              }),
+                        ],
+                      ),
               ],
             ),
           ),
-          const SizedBox(height: 10),
-          provider.loadingProduct
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ButtonCancel(
-                      textButton: 'Cancelar',
-                      onPressed: () async {
-                        Navigator.of(context).pop(true);
-                      },
-                    ),
-                    ButtonConfirm(
-                        textButton: 'Guardar',
-                        onPressed: () async {
-                          urlDownload = pickedFile != null
-                              ? await provider.uploadFile(pickedFile)
-                              : urlDownload;
-                          await provider.updateProduct(
-                              widget.product.id,
-                              nameProduct.text,
-                              (_character == SingingCharacter.disponible),
-                              nameCategory.text,
-                              description.text,
-                              double.parse(price.text),
-                              urlDownload);
-                          await provider.getAllProducts();
-                          if (context.mounted) {
-                            await showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return const ModalOrder(
-                                  message: 'Cambios guardados exitosamente',
-                                  image: 'assets/img/confirm-product.svg',
-                                );
-                              },
-                            );
-                          }
-                          if (context.mounted) {
-                            Navigator.of(context).pop(true);
-                            Navigator.of(context).pop(true);
-                          }
-                        }),
-                  ],
-                ),
-        ],
+        ),
       ),
     );
   }

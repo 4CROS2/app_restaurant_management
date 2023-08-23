@@ -17,8 +17,9 @@ class EditCategoryScreen extends StatefulWidget {
 }
 
 class _EditCategoryScreenState extends State<EditCategoryScreen> {
-  final TextEditingController _nameCategory = TextEditingController();
+  final _nameCategory = TextEditingController();
   SingingCharacter? _character;
+  final _formCategory = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -38,125 +39,155 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SettingsProvider>(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: fontBlack,
-        elevation: 0,
-        backgroundColor: backgroundColor,
-        title: const Text(
-          "Editar Categoría",
-          style: textStyleAppBar,
-          textAlign: TextAlign.left,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(false);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: fontBlack,
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          title: const Text(
+            "Editar Categoría",
+            style: textStyleAppBar,
+            textAlign: TextAlign.left,
+          ),
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
-        children: [
-          Container(
-            alignment: Alignment.topLeft,
-            padding:
-                const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
-            margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
-            decoration: boxShadow,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Form(
+            key: _formCategory,
+            child: ListView(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  margin: const EdgeInsets.only(right: 5, bottom: 5),
-                  child: const Text(
-                    'Nombre de la Categoría',
-                    style: textStyleSubtitle,
-                  ),
-                ),
-                TextFormField(controller: _nameCategory),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2 * 0.8,
-                  margin: const EdgeInsets.only(bottom: 10, top: 10),
+                  padding: const EdgeInsets.only(
+                      top: 15, bottom: 15, left: 10, right: 10),
+                  margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
+                  decoration: boxShadow,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      titleCardForm('Estado'),
-                      RadioListTile<SingingCharacter>(
-                        contentPadding: const EdgeInsets.all(0),
-                        visualDensity: const VisualDensity(
-                          horizontal: VisualDensity.minimumDensity,
-                          vertical: VisualDensity.minimumDensity,
+                      Container(
+                        alignment: Alignment.topLeft,
+                        margin: const EdgeInsets.only(right: 5, bottom: 5),
+                        child: const Text(
+                          'Nombre de la Categoría',
+                          style: textStyleSubtitle,
                         ),
-                        title: const Text('Disponible'),
-                        value: SingingCharacter.disponible,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
+                      ),
+                      TextFormField(
+                        controller: _nameCategory,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Escriba el nombre de la categoría';
+                          }
+                          return null;
                         },
                       ),
-                      RadioListTile<SingingCharacter>(
-                        contentPadding: const EdgeInsets.all(0),
-                        visualDensity: const VisualDensity(
-                          horizontal: VisualDensity.minimumDensity,
-                          vertical: VisualDensity.minimumDensity,
+                      Container(
+                        width: MediaQuery.of(context).size.width / 2 * 0.8,
+                        margin: const EdgeInsets.only(bottom: 10, top: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            titleCardForm('Estado'),
+                            RadioListTile<SingingCharacter>(
+                              contentPadding: const EdgeInsets.all(0),
+                              visualDensity: const VisualDensity(
+                                horizontal: VisualDensity.minimumDensity,
+                                vertical: VisualDensity.minimumDensity,
+                              ),
+                              title: const Text('Disponible'),
+                              value: SingingCharacter.disponible,
+                              groupValue: _character,
+                              onChanged: (SingingCharacter? value) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              },
+                            ),
+                            RadioListTile<SingingCharacter>(
+                              contentPadding: const EdgeInsets.all(0),
+                              visualDensity: const VisualDensity(
+                                horizontal: VisualDensity.minimumDensity,
+                                vertical: VisualDensity.minimumDensity,
+                              ),
+                              title: const Text('No Disponible'),
+                              value: SingingCharacter.nodisponible,
+                              groupValue: _character,
+                              onChanged: (SingingCharacter? value) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              },
+                            ),
+                          ],
                         ),
-                        title: const Text('No Disponible'),
-                        value: SingingCharacter.nodisponible,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
+                provider.loadingCategories
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ButtonCancel(
+                            textButton: 'Cancelar',
+                            onPressed: () async {
+                              Navigator.of(context).pop(true);
+                            },
+                          ),
+                          ButtonConfirm(
+                            // width: MediaQuery.of(context).size.width,
+                            textButton: 'Guardar',
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              if (_formCategory.currentState!.validate()) {
+                                await provider.updateCategory(
+                                    widget.category.id,
+                                    _nameCategory.text,
+                                    (_character ==
+                                        SingingCharacter.disponible));
+                                await provider.getAllCategories();
+                                if (context.mounted) {
+                                  await showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const ModalOrder(
+                                          message:
+                                              'Cambios guardados correctamente',
+                                          image:
+                                              'assets/img/confirm-product.svg');
+                                    },
+                                  );
+                                }
+                                if (context.mounted) {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      ),
               ],
             ),
           ),
-          const SizedBox(height: 10),
-          provider.loadingCategories
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ButtonCancel(
-                      textButton: 'Cancelar',
-                      onPressed: () async {
-                        Navigator.of(context).pop(true);
-                      },
-                    ),
-                    ButtonConfirm(
-                      // width: MediaQuery.of(context).size.width,
-                      textButton: 'Guardar',
-                      onPressed: () async {
-                        await provider.updateCategory(
-                            widget.category.id,
-                            _nameCategory.text,
-                            (_character == SingingCharacter.disponible));
-                        await provider.getAllCategories();
-                        if (context.mounted) {
-                          await showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return const ModalOrder(
-                                  message: 'Cambios guardados correctamente',
-                                  image: 'assets/img/confirm-product.svg');
-                            },
-                          );
-                        }
-                        if (context.mounted) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    ),
-                  ],
-                ),
-        ],
+        ),
       ),
     );
   }

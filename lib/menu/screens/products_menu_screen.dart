@@ -27,8 +27,6 @@ class _ProductsMenuScreenState extends State<ProductsMenuScreen> {
             child: widget.provider.listProduct.isEmpty
                 ? Container()
                 : ListView.builder(
-                    // shrinkWrap: true,
-                    // physics: const ScrollPhysics(),
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 30),
                     itemCount: widget.provider.listProduct.length,
