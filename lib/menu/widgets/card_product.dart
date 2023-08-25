@@ -43,7 +43,6 @@ class CardProduct extends StatelessWidget {
                     "assets/img/background.png",
                     width: sizeW / 3 - 10,
                     height: (sizeW / 4),
-                    fit: BoxFit.cover,
                   );
                 },
               ),

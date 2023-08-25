@@ -54,9 +54,6 @@ class _NewProductScreenState extends State<NewProductScreen> {
               child: Text(lista[index].name),
             ));
     return DropdownButtonFormField<String>(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-      ),
       style: textStyleItem,
       hint: const Text(
         "Seleccionar Categoría",
@@ -123,7 +120,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
   }
 
   // Precio
-  SizedBox prize() {
+  SizedBox price() {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2 * 0.8,
       child: Column(
@@ -263,7 +260,7 @@ class _NewProductScreenState extends State<NewProductScreen> {
                           photoProduct(),
                           Column(
                             children: [
-                              prize(),
+                              price(),
                               status(),
                             ],
                           ),

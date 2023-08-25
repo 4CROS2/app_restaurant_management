@@ -1,15 +1,14 @@
+import 'package:app_restaurant_management/stock/models/stock_model.dart';
 import 'package:app_restaurant_management/stock/screens/detail_stock.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
 class CardStock extends StatelessWidget {
-  final String total;
-  final String nameSale;
+  final StockModel stock;
   const CardStock({
     Key? key,
-    required this.total,
-    required this.nameSale,
+    required this.stock,
   }) : super(key: key);
 
   @override
@@ -34,8 +33,8 @@ class CardStock extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2 * 1.2 - 15,
                     child: Text(
-                      nameSale,
-                      style: textStyleTitleSecond,
+                      stock.name,
+                      style: textStyleItem,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -43,12 +42,13 @@ class CardStock extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 4,
                     child: Text(
-                      'Bs. $total',
+                      'Bs. ${(stock.price).toStringAsFixed(1)}',
                       style: const TextStyle(
                           fontFamily: "Work Sans",
                           fontWeight: FontWeight.w700,
-                          fontSize: fontSizeTitle,
+                          fontSize: fontSizeSubtitle,
                           color: redColor),
+                      textAlign: TextAlign.right,
                     ),
                   ),
                 ],
