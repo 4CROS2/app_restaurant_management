@@ -57,18 +57,6 @@ class _MenuScreenState extends State<MenuScreen> {
     );
   }
 
-  //Tabs iterable
-  // tabMaker(SettingsProvider provider) {
-  //   // var listCategories;
-  //   List<Tab> tabs ;
-  //   for (var i = 0; i < provider.listCategory.length; i++) {
-  //     tabs.add(tabBarValue(
-  //       text: provider.listCategory[i].name,
-  //     ));
-  //   }
-  //   return tabs;
-  // }
-
   // Float Button Agregar Producto
   Widget floatButton() => Container(
         padding: const EdgeInsets.only(left: 10, right: 10),

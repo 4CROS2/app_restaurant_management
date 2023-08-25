@@ -1,10 +1,10 @@
-// import 'package:app_restaurant_management/home/screens/new_order/new_order_screen.dart';
-import 'package:app_restaurant_management/stock/screens/new_category_stock.dart';
-import 'package:app_restaurant_management/stock/screens/new_product_stock_screen.dart';
-import 'package:app_restaurant_management/stock/screens/products_stock_screen.dart';
+import 'package:app_restaurant_management/stock/bloc/stock_provider.dart';
+import 'package:app_restaurant_management/stock/screens/new_stock_screen.dart';
+import 'package:app_restaurant_management/stock/screens/list_stock_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class StockScreen extends StatefulWidget {
@@ -15,6 +15,31 @@ class StockScreen extends StatefulWidget {
 }
 
 class _StockScreenState extends State<StockScreen> {
+  final List<String> listTypeStock = [
+    'Todo',
+    'Alimentos',
+    'Limpieza',
+    'Alquiler',
+    'Servicios Básicos',
+    'Gastos administrativos',
+    'Publicidad y mercadeo',
+    'Transporte',
+    'Otros',
+  ];
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<StockProvider>(context, listen: false);
+      provider.getAllStocks();
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   //Tab Bar
   Tab tabBarValue({required String text, double marginRight = 0}) {
     return Tab(
@@ -65,8 +90,9 @@ class _StockScreenState extends State<StockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<StockProvider>(context);
     return DefaultTabController(
-      length: 2,
+      length: listTypeStock.length,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
@@ -108,8 +134,9 @@ class _StockScreenState extends State<StockScreen> {
                             color: focusColor,
                           ),
                           tabs: [
-                            tabBarValue(text: 'Alimentos'),
-                            tabBarValue(text: 'Limpieza'),
+                            for (var listType in listTypeStock)
+                              tabBarValue(text: listType),
+                            // tabBarValue(text: 'Limpieza'),
                           ],
                         ),
                       ],
@@ -117,30 +144,35 @@ class _StockScreenState extends State<StockScreen> {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: redColor,
-                    boxShadow: listBoxShadow),
-                child: IconButton(
-                    onPressed: () async {
-                      await Navigator.of(context).push(CupertinoPageRoute(
-                          builder: (context) =>
-                              const NewCategoryStockScreen()));
-                    },
-                    icon: const Icon(Icons.add, color: Colors.white, size: 30)),
-              )
+              // Container(
+              //   margin: const EdgeInsets.only(right: 10),
+              //   decoration: BoxDecoration(
+              //       shape: BoxShape.circle,
+              //       color: redColor,
+              //       boxShadow: listBoxShadow),
+              //   child: IconButton(
+              //       onPressed: () async {
+              //         await Navigator.of(context).push(CupertinoPageRoute(
+              //             builder: (context) =>
+              //                 const NewCategoryStockScreen()));
+              //       },
+              //       icon: const Icon(Icons.add, color: Colors.white, size: 30)),
+              // )
             ],
           ),
         ),
         // ignore: prefer_const_constructors
-        body: TabBarView(
-          children: const [
-            ProductsStockScreen(),
-            ProductsStockScreen(),
-          ],
-        ),
+        body: provider.loadingStock
+            ? const Center(child: CircularProgressIndicator())
+            : TabBarView(
+                children: [
+                  for (var listType in listTypeStock)
+                    ProductsStockScreen(
+                      provider: provider,
+                      type: listType,
+                    ),
+                ],
+              ),
         floatingActionButton: floatButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
