@@ -21,7 +21,9 @@ class CardStock extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
-                  builder: (context) => const DetailStockScreen()),
+                  builder: (context) => DetailStockScreen(
+                        stock: stock,
+                      )),
             );
           },
           child: Column(

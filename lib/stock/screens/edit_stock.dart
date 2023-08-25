@@ -1,104 +1,147 @@
 import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
+import 'package:app_restaurant_management/stock/bloc/stock_provider.dart';
+import 'package:app_restaurant_management/stock/models/stock_model.dart';
 import 'package:app_restaurant_management/stock/widgets/card_edit_stock.dart';
 import 'package:app_restaurant_management/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class EditProductStockScreen extends StatefulWidget {
-  const EditProductStockScreen({Key? key}) : super(key: key);
+  final StockModel stock;
+  const EditProductStockScreen({Key? key, required this.stock})
+      : super(key: key);
 
   @override
   State<EditProductStockScreen> createState() => _EditProductStockScreenState();
 }
 
 class _EditProductStockScreenState extends State<EditProductStockScreen> {
+  final _name = TextEditingController();
+  final _type = TextEditingController();
+  final _description = TextEditingController();
+  final _price = TextEditingController();
+  final _quantity = TextEditingController();
+  final _formStock = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _name.text = widget.stock.name;
+      _type.text = widget.stock.type;
+      _description.text = widget.stock.description;
+      _price.text = widget.stock.price.toString();
+      _quantity.text = widget.stock.quantity.toString();
+      print(_type.text);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _type.dispose();
+    _description.dispose();
+    _price.dispose();
+    _quantity.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        foregroundColor: fontBlack,
-        elevation: 0,
-        backgroundColor: backgroundColor,
-        title: const Text(
-          "Editar Producto",
-          style: TextStyle(
-            letterSpacing: 0.75,
-            fontFamily: "Poppins",
-            fontWeight: FontWeight.w700,
-            fontSize: fontSizeTitle,
+    final provider = Provider.of<StockProvider>(context);
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(false);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: fontBlack,
+          elevation: 0,
+          backgroundColor: backgroundColor,
+          title: const Text(
+            "Editar Producto",
+            style: textStyleAppBar,
+            textAlign: TextAlign.left,
           ),
-          textAlign: TextAlign.left,
         ),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
-        children: [
-          const CardEditStock(),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ///Functionality button cancel
-              ButtonCancel(
-                textButton: 'Cancelar',
-                onPressed: () async {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-
-              ///Functionality button confirm
-              ButtonConfirm(
-                textButton: 'Guardar',
-                onPressed: () async {
-                  var res = await showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return Dialog(
-                        child: ModalConfirm(
-                          message:
-                              '¿Seguro qué quiere guardar los cambios realizados?',
-                          textButtonConfirm: 'Guardar',
-                          onPressConfirm: () async {
-                            Navigator.of(context).pop('confirmar');
-                          },
-                          onPressCancel: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      );
-                    },
-                  );
-                  if (res != null) {
-                    if (context.mounted) {
-                      await showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          Future.delayed(
-                            const Duration(seconds: 3),
-                            () {
-                              Navigator.of(context).pop();
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Form(
+            key: _formStock,
+            child: ListView(
+              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
+              children: [
+                CardEditStock(
+                  nameController: _name,
+                  typeController: _type,
+                  descriptionController: _description,
+                  priceController: _price,
+                  quantityController: _quantity,
+                ),
+                const SizedBox(height: 10),
+                provider.loadingStock
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          ButtonCancel(
+                            textButton: 'Cancelar',
+                            onPressed: () async {
+                              Navigator.of(context).pop(true);
                             },
-                          );
-                          return const ModalOrder(
-                            message: 'Cambios guardados exitosamente',
-                            image: 'assets/img/confirm-product.svg',
-                          );
-                        },
-                      );
-                    }
-                    if (context.mounted) {
-                      Navigator.of(context).pop(true);
-                    }
-                  }
-                },
-              ),
-            ],
+                          ),
+                          ButtonConfirm(
+                            textButton: 'Guardar',
+                            onPressed: () async {
+                              FocusScope.of(context).unfocus();
+                              if (_formStock.currentState!.validate()) {
+                                await provider.updateStock(
+                                    widget.stock.id,
+                                    _name.text,
+                                    _type.text,
+                                    _description.text,
+                                    double.parse(_price.text),
+                                    _quantity.text != ''
+                                        ? int.parse(_quantity.text)
+                                        : 0);
+                                await provider.getAllStocks();
+                                if (context.mounted) {
+                                  await showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return const ModalOrder(
+                                        message:
+                                            'Cambios guardados exitosamente',
+                                        image: 'assets/img/confirm-product.svg',
+                                      );
+                                    },
+                                  );
+                                }
+                                if (context.mounted) {
+                                  Navigator.of(context).pop(true);
+                                  Navigator.of(context).pop(true);
+                                }
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+              ],
+            ),
           ),
-        ],
+        ),
       ),
     );
   }
