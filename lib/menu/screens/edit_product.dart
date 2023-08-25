@@ -65,9 +65,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
               child: Text(lista[index].name),
             ));
     return DropdownButtonFormField<String>(
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-      ),
       style: textStyleItem,
       hint: const Text(
         "Seleccionar Categoría",
@@ -140,7 +137,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   // Precio
-  SizedBox prize() {
+  SizedBox price() {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 2 * 0.8,
       child: Column(
@@ -281,7 +278,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           photoProduct(),
                           Column(
                             children: [
-                              prize(),
+                              price(),
                               status(),
                             ],
                           ),
