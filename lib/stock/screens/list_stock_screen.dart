@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/stock/bloc/stock_provider.dart';
 import 'package:app_restaurant_management/stock/widgets/card_stock.dart';
+import 'package:app_restaurant_management/widgets/empty_content.dart';
 import 'package:flutter/material.dart';
 
 class ProductsStockScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _ProductsStockScreenState extends State<ProductsStockScreen> {
               await widget.provider.getAllStocks();
             },
             child: widget.provider.listStock.isEmpty
-                ? Container()
+                ? const EmptyContent(texto: 'Ningún gasto registrado')
                 : ListView.builder(
                     padding: const EdgeInsets.all(10),
                     itemCount: widget.provider.listStock.length,

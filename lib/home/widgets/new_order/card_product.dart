@@ -70,7 +70,7 @@ class _SectionCardProductState extends State<SectionCardProduct> {
               decoration: decorationSpinBox,
             ),
           ),
-          const Text('Bs. 25', style: textStylePrizeItem),
+          const Text('Bs. 25', style: textStylePriceItem),
         ],
       ),
     );

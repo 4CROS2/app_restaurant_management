@@ -1,4 +1,3 @@
-import 'package:app_restaurant_management/home/widgets/orders/modal_confirm.dart';
 import 'package:app_restaurant_management/stock/bloc/stock_provider.dart';
 import 'package:app_restaurant_management/stock/models/stock_model.dart';
 import 'package:app_restaurant_management/stock/widgets/card_edit_stock.dart';
@@ -34,7 +33,6 @@ class _EditProductStockScreenState extends State<EditProductStockScreen> {
       _description.text = widget.stock.description;
       _price.text = widget.stock.price.toString();
       _quantity.text = widget.stock.quantity.toString();
-      print(_type.text);
     });
     super.initState();
   }

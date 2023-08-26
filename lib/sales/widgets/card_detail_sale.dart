@@ -148,7 +148,7 @@ class _CardDetailSaleState extends State<CardDetailSale> {
           Container(
               width: MediaQuery.of(context).size.width / 4,
               alignment: Alignment.topRight,
-              child: const Text("Bs. 40", style: textStylePrize))
+              child: const Text("Bs. 40", style: textStylePrice))
         ],
       ),
     );

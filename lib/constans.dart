@@ -75,7 +75,7 @@ const textStyleSpinBoxNumber = TextStyle(
   fontSize: fontSizeTitle,
   color: fontBlack,
 );
-const textStylePrizeItem = TextStyle(
+const textStylePriceItem = TextStyle(
   fontFamily: "Work Sans",
   fontWeight: FontWeight.w700,
   fontSize: fontSizeTitle,
@@ -101,7 +101,7 @@ const textStyleSubItem = TextStyle(
   fontWeight: FontWeight.w400,
   fontSize: fontSizeRegular,
 );
-const textStylePrize = TextStyle(
+const textStylePrice = TextStyle(
   letterSpacing: 0.75,
   fontFamily: 'Poppins',
   fontSize: fontSizeMedium,
