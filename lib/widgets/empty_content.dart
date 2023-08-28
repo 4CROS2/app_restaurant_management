@@ -16,7 +16,7 @@ class EmptyContent extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       child: Container(
         height: MediaQuery.of(context).size.height -
-            MediaQuery.of(context).size.height / 9,
+            MediaQuery.of(context).size.height / 3,
         padding: const EdgeInsets.only(left: 10, right: 10),
         alignment: Alignment.center,
         child: Column(

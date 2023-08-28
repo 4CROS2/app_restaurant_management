@@ -35,7 +35,8 @@ class StockProvider with ChangeNotifier {
               type: type,
               description: description,
               quantity: quantity,
-              price: price)
+              price: price,
+              date: DateTime.now())
           .toJson());
       loadingStock = false;
     } catch (e) {

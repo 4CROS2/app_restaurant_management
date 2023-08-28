@@ -16,6 +16,7 @@ class StockModel {
   String description;
   double price;
   int quantity;
+  DateTime? date;
 
   StockModel({
     required this.id,
@@ -24,6 +25,7 @@ class StockModel {
     required this.description,
     required this.price,
     required this.quantity,
+    this.date,
   });
 
   StockModel copyWith({
@@ -33,6 +35,7 @@ class StockModel {
     String? description,
     double? price,
     int? quantity,
+    DateTime? date,
   }) =>
       StockModel(
         id: id ?? this.id,
@@ -41,6 +44,7 @@ class StockModel {
         description: description ?? this.description,
         price: price ?? this.price,
         quantity: quantity ?? this.quantity,
+        date: date ?? this.date,
       );
 
   factory StockModel.fromJson(Map<String, dynamic> json) => StockModel(
@@ -50,6 +54,7 @@ class StockModel {
         description: json["description"],
         price: json["price"]?.toDouble(),
         quantity: json["quantity"],
+        date: DateTime.parse(json["date"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -59,5 +64,6 @@ class StockModel {
         "description": description,
         "price": price,
         "quantity": quantity,
+        "date": date?.toIso8601String(),
       };
 }
