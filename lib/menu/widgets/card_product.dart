@@ -109,7 +109,7 @@ class CardProduct extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: Text(
                       'Bs. ${(product.price).toStringAsFixed(1)}',
-                      style: textStylePrizeItem,
+                      style: textStylePriceItem,
                       textAlign: TextAlign.right,
                     ),
                   ),

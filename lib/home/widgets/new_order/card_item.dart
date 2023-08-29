@@ -56,7 +56,7 @@ class _CardItemState extends State<CardItem> {
         Container(
             width: MediaQuery.of(context).size.width / 4 - 15,
             alignment: Alignment.topRight,
-            child: const Text("Bs. 40", style: textStylePrize))
+            child: const Text("Bs. 40", style: textStylePrice))
       ],
     );
   }

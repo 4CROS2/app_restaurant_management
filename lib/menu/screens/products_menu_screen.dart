@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/menu/widgets/card_product.dart';
+import 'package:app_restaurant_management/widgets/empty_content.dart';
 import 'package:flutter/material.dart';
 
 class ProductsMenuScreen extends StatefulWidget {
@@ -25,7 +26,8 @@ class _ProductsMenuScreenState extends State<ProductsMenuScreen> {
               await widget.provider.getAllProducts();
             },
             child: widget.provider.listProduct.isEmpty
-                ? Container()
+                ? const EmptyContent(
+                    texto: 'Ningún producto agregado a la lista')
                 : ListView.builder(
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 30),
