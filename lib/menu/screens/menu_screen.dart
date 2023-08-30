@@ -133,8 +133,6 @@ class _MenuScreenState extends State<MenuScreen> {
                               [
                             for (var listCategory in category.listCategory)
                               tabBarValue(text: listCategory.name),
-                            // tabBarValue(text: 'Platos'),
-                            // tabBarValue(text: 'Bebidas'),
                           ],
                         ),
                       ],
