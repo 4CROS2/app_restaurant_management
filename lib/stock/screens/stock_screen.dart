@@ -4,6 +4,7 @@ import 'package:app_restaurant_management/stock/screens/list_stock_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
@@ -28,6 +29,7 @@ class _StockScreenState extends State<StockScreen> {
   ];
   @override
   void initState() {
+    initializeDateFormatting();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final provider = Provider.of<StockProvider>(context, listen: false);
       provider.getAllStocks();
@@ -91,91 +93,30 @@ class _StockScreenState extends State<StockScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<StockProvider>(context);
-    return DefaultTabController(
-      length: listTypeStock.length,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize:
-              const Size.fromHeight(120.0), // here the desired height
-          child: Stack(
-            alignment: const Alignment(1, 0.9),
-            children: [
-              AppBar(
-                elevation: 0,
-                backgroundColor: backgroundColor,
-                title: Row(
-                  children: [
-                    SvgPicture.asset('assets/img/inventario.svg'),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'Gastos',
-                      style: textStyleTitle,
-                      textAlign: TextAlign.left,
-                    )
-                  ],
-                ),
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(30),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Column(
-                      children: [
-                        TabBar(
-                          labelPadding:
-                              const EdgeInsets.only(left: 5, right: 5),
-                          isScrollable: true,
-                          padding: const EdgeInsets.only(
-                              bottom: 5, left: 5, right: 5),
-                          unselectedLabelColor: Colors.black,
-                          indicatorWeight: 0,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: focusColor,
-                          ),
-                          tabs: [
-                            for (var listType in listTypeStock)
-                              tabBarValue(text: listType),
-                            // tabBarValue(text: 'Limpieza'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              // Container(
-              //   margin: const EdgeInsets.only(right: 10),
-              //   decoration: BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: redColor,
-              //       boxShadow: listBoxShadow),
-              //   child: IconButton(
-              //       onPressed: () async {
-              //         await Navigator.of(context).push(CupertinoPageRoute(
-              //             builder: (context) =>
-              //                 const NewCategoryStockScreen()));
-              //       },
-              //       icon: const Icon(Icons.add, color: Colors.white, size: 30)),
-              // )
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: backgroundColor,
+        title: Row(
+          children: [
+            SvgPicture.asset('assets/img/inventario.svg'),
+            const SizedBox(width: 10),
+            const Text(
+              'Gastos',
+              style: textStyleTitle,
+              textAlign: TextAlign.left,
+            )
+          ],
         ),
-        // ignore: prefer_const_constructors
-        body: provider.loadingStock
-            ? const Center(child: CircularProgressIndicator())
-            : TabBarView(
-                children: [
-                  for (var listType in listTypeStock)
-                    ProductsStockScreen(
-                      provider: provider,
-                      type: listType,
-                    ),
-                ],
-              ),
-        floatingActionButton: floatButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
+      // ignore: prefer_const_constructors
+      body: provider.loadingStock
+          ? const Center(child: CircularProgressIndicator())
+          : ProductsStockScreen(
+              provider: provider,
+            ),
+      floatingActionButton: floatButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

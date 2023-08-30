@@ -4,20 +4,37 @@ import 'package:app_restaurant_management/stock/widgets/card_stock.dart';
 import 'package:app_restaurant_management/widgets/empty_content.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class ProductsStockScreen extends StatefulWidget {
   final StockProvider provider;
-  final String type;
-  const ProductsStockScreen(
-      {Key? key, required this.provider, required this.type})
-      : super(key: key);
+  const ProductsStockScreen({
+    Key? key,
+    required this.provider,
+  }) : super(key: key);
 
   @override
   State<ProductsStockScreen> createState() => _ProductsStockScreenState();
 }
 
 class _ProductsStockScreenState extends State<ProductsStockScreen> {
+  //Fecha
+  Container tagDate(int index) {
+    DateTime fecha = widget.provider.listStock[index].date!;
+    String date = DateFormat("EEEEE dd MMMM", "es").format(fecha);
+    String today = DateFormat("EEEEE dd MMMM", "es").format(DateTime.now());
+    if (fecha.year < DateTime.now().year) {
+      date = DateFormat("EEEEE dd MMMM yyyy", "es").format(fecha);
+    }
+    return Container(
+      alignment: Alignment.topLeft,
+      margin: const EdgeInsets.all(10),
+      child: Text(
+        date == today ? 'Hoy' : date,
+        style: const TextStyle(fontSize: 16, color: fontGris),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.provider.loadingStock
@@ -31,32 +48,42 @@ class _ProductsStockScreenState extends State<ProductsStockScreen> {
             child: widget.provider.listStock.isEmpty
                 ? const EmptyContent(texto: 'Ningún gasto registrado')
                 : ListView.builder(
+                    reverse: true,
+                    shrinkWrap: true,
                     padding: const EdgeInsets.all(10),
                     itemCount: widget.provider.listStock.length,
                     itemBuilder: (context, index) {
-                      return widget.type ==
-                              widget.provider.listStock[index].type
-                          ? Column(
-                              children: [
-                                Container(
-                                    margin: const EdgeInsets.all(10),
-                                    child: Text(
-                                      DateFormat("EEEEE dd MMMM", "es").format(
-                                          widget
-                                              .provider.listStock[index].date!),
-                                      style: const TextStyle(
-                                          fontSize: 16, color: fontGris),
-                                    )),
-                                CardStock(
-                                  stock: widget.provider.listStock[index],
-                                ),
-                              ],
-                            )
-                          : widget.type == 'Todo'
-                              ? CardStock(
-                                  stock: widget.provider.listStock[index],
-                                )
-                              : Container();
+                      var actual = widget.provider.listStock[index];
+                      var anterior =
+                          widget.provider.listStock[index == 0 ? 0 : index - 1];
+                      String actualDate =
+                          actual.date.toString().substring(0, 10);
+                      String anteriorDate =
+                          anterior.date.toString().substring(0, 10);
+                      if (actualDate == anteriorDate) {
+                        if (index == 0) {
+                          return Column(
+                            children: [
+                              tagDate(index),
+                              CardStock(
+                                stock: widget.provider.listStock[index],
+                              ),
+                            ],
+                          );
+                        }
+                        return CardStock(
+                          stock: widget.provider.listStock[index],
+                        );
+                      } else {
+                        return Column(
+                          children: [
+                            tagDate(index),
+                            CardStock(
+                              stock: widget.provider.listStock[index],
+                            ),
+                          ],
+                        );
+                      }
                     },
                   ),
           );
