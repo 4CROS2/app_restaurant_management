@@ -1,10 +1,13 @@
 import 'package:app_restaurant_management/constans.dart';
+import 'package:app_restaurant_management/menu/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class SectionCardProduct extends StatefulWidget {
+  final ProductModel product;
   const SectionCardProduct({
     Key? key,
+    required this.product,
   }) : super(key: key);
 
   @override
@@ -29,8 +32,8 @@ class _SectionCardProductState extends State<SectionCardProduct> {
           Container(
             alignment: Alignment.center,
             margin: const EdgeInsets.only(top: 5, bottom: 10),
-            child: const Text(
-              'Cuadril (200g)',
+            child: Text(
+              widget.product.nameProduct,
               style: textStyleItem,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -42,12 +45,14 @@ class _SectionCardProductState extends State<SectionCardProduct> {
             child: FadeInImage(
               width: sizeW / 3 * 1.6,
               height: (sizeW / 3) - 3,
-              fit: BoxFit.scaleDown,
-              placeholder: const AssetImage("assets/img/background.png"),
-              image: const NetworkImage(
-                  "https://locosxlaparrilla.com/wp-content/uploads/2015/02/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-churrascos-parrilla-churrascos-parrilla-receta-churrascos-churrascos-2-1.jpg"),
+              fit: BoxFit.cover,
+              placeholder: const AssetImage("assets/img/loader-food.gif"),
+              image: NetworkImage(widget.product.urlPhoto),
               imageErrorBuilder: (context, error, stackTrace) {
-                return Image.asset("assets/img/background.png", width: 50);
+                return Image.asset(
+                    width: sizeW / 3 * 1.6,
+                    height: (sizeW / 3) - 3,
+                    "assets/img/background.png");
               },
             ),
           ),
@@ -70,7 +75,8 @@ class _SectionCardProductState extends State<SectionCardProduct> {
               decoration: decorationSpinBox,
             ),
           ),
-          const Text('Bs. 25', style: textStylePriceItem),
+          Text('Bs. ${(widget.product.price).toStringAsFixed(1)}',
+              style: textStylePriceItem),
         ],
       ),
     );

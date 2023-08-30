@@ -1,7 +1,10 @@
 import 'package:app_restaurant_management/home/screens/new_order/detail_order_screen.dart';
 import 'package:app_restaurant_management/home/screens/new_order/products_screen.dart';
+import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constans.dart';
 
 class NewOrderScreen extends StatefulWidget {
@@ -12,15 +15,27 @@ class NewOrderScreen extends StatefulWidget {
 }
 
 class _NewOrderScreenState extends State<NewOrderScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<MenuProvider>(context, listen: false);
+      provider.getAllProducts();
+      final category = Provider.of<SettingsProvider>(context, listen: false);
+      category.getAllCategories();
+    });
+    super.initState();
+  }
+
   //Tab Bar
   Tab tabBarValue({required String text}) {
     return Tab(
       child: Container(
         alignment: Alignment.center,
-        padding: const EdgeInsets.all(5),
+        padding:
+            const EdgeInsets.only(right: 15, left: 15, top: 10, bottom: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: focusColor),
+          border: Border.all(color: focusColor, width: 1),
         ),
         child: Text(text,
             style: const TextStyle(
@@ -64,44 +79,71 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MenuProvider>(context);
+    final category = Provider.of<SettingsProvider>(context);
     return DefaultTabController(
-      length: 2,
+      length: category.listCategory.length,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize:
               const Size.fromHeight(120.0), // here the desired height
-          child: AppBar(
-            foregroundColor: fontBlack,
-            elevation: 0,
-            backgroundColor: backgroundColor,
-            title: const Text(
-              'Nueva Orden',
-              style: textStyleTitle,
-              textAlign: TextAlign.left,
-            ),
-            bottom: TabBar(
-              indicatorWeight: 0,
-              padding: const EdgeInsets.only(bottom: 5),
-              unselectedLabelColor: Colors.black,
-              indicatorSize: TabBarIndicatorSize.label,
-              indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: focusColor,
+          child: Stack(
+            alignment: const Alignment(1, 0.9),
+            children: [
+              AppBar(
+                foregroundColor: fontBlack,
+                elevation: 0,
+                backgroundColor: backgroundColor,
+                title: const Text(
+                  'Nueva Orden',
+                  style: textStyleTitle,
+                  textAlign: TextAlign.left,
+                ),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(30),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Column(
+                      children: [
+                        TabBar(
+                          labelPadding:
+                              const EdgeInsets.only(left: 5, right: 5),
+                          isScrollable: true,
+                          padding: const EdgeInsets.only(
+                              bottom: 5, left: 5, right: 5),
+                          unselectedLabelColor: Colors.black,
+                          indicatorWeight: 0,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicator: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: focusColor,
+                          ),
+                          tabs: [
+                            for (var listCategory in category.listCategory)
+                              tabBarValue(text: listCategory.name),
+                            // tabBarValue(text: 'Platos'),
+                            // tabBarValue(text: 'Bebidas'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              tabs: [
-                tabBarValue(text: 'Platos'),
-                tabBarValue(text: 'Bebidas'),
-              ],
-            ),
+            ],
           ),
         ),
-        // ignore: prefer_const_constructors
-        body: TabBarView(
-          children: const [
-            ProductsScreen(),
-            ProductsScreen(),
-          ],
-        ),
+        body: provider.loadingProduct
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : TabBarView(
+                children: [
+                  for (var listCategory in category.listCategory)
+                    ProductsScreen(
+                        provider: provider, category: listCategory.name)
+                ],
+              ),
         floatingActionButton: floatButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
