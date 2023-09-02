@@ -11,9 +11,10 @@ String orderModelToJson(OrderModel data) => json.encode(data.toJson());
 
 class OrderModel {
   String id;
+  int idOrder;
   DateTime date;
-  String time;
-  List<Product> products;
+  DateTime time;
+  List<Product>? products;
   double discount;
   String note;
   String status;
@@ -23,27 +24,31 @@ class OrderModel {
   String address;
   String cellphone;
   double total;
+  String noteRejection;
 
   OrderModel({
-    required this.id,
+    this.id = "",
+    this.idOrder = 0,
     required this.date,
     required this.time,
-    required this.products,
-    required this.discount,
-    required this.note,
-    required this.status,
-    required this.client,
-    required this.typeOrder,
-    required this.table,
-    required this.address,
-    required this.cellphone,
-    required this.total,
+    this.products,
+    this.discount = 0,
+    this.note = "",
+    this.status = "",
+    this.client = "",
+    this.typeOrder = "",
+    this.table = 0,
+    this.address = "",
+    this.cellphone = "",
+    this.total = 0,
+    this.noteRejection = "",
   });
 
   OrderModel copyWith({
     String? id,
+    int? idOrder,
     DateTime? date,
-    String? time,
+    DateTime? time,
     List<Product>? products,
     double? discount,
     String? note,
@@ -54,9 +59,11 @@ class OrderModel {
     String? address,
     String? cellphone,
     double? total,
+    String? noteRejection,
   }) =>
       OrderModel(
         id: id ?? this.id,
+        idOrder: idOrder ?? this.idOrder,
         date: date ?? this.date,
         time: time ?? this.time,
         products: products ?? this.products,
@@ -69,31 +76,35 @@ class OrderModel {
         address: address ?? this.address,
         cellphone: cellphone ?? this.cellphone,
         total: total ?? this.total,
+        noteRejection: noteRejection ?? this.noteRejection,
       );
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
         id: json["id"],
+        idOrder: json["idOrder"],
         date: DateTime.parse(json["date"]),
-        time: json["time"],
+        time: DateTime.parse(json["time"]),
         products: List<Product>.from(
             json["products"].map((x) => Product.fromJson(x))),
-        discount: json["discount"]?.toDouble(),
-        note: json["note"],
+        discount: json["discount"]?.toDouble() ?? 0,
+        note: json["note"] ?? "",
         status: json["status"],
         client: json["client"],
         typeOrder: json["typeOrder"],
-        table: json["table"],
-        address: json["address"],
-        cellphone: json["cellphone"],
+        table: json["table"] ?? 0,
+        address: json["address"] ?? "",
+        cellphone: json["cellphone"] ?? "",
         total: json["total"]?.toDouble(),
+        noteRejection: json["noteRejection"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "idOrder": idOrder,
         "date":
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "time": time,
-        "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "products": List<dynamic>.from(products!.map((x) => x.toJson())),
         "discount": discount,
         "note": note,
         "status": status,
@@ -103,46 +114,47 @@ class OrderModel {
         "address": address,
         "cellphone": cellphone,
         "total": total,
+        "noteRejection": noteRejection,
       };
 }
 
 class Product {
   String nameProduct;
   double price;
-  int cantidad;
+  int quantity;
   double total;
 
   Product({
     required this.nameProduct,
     required this.price,
-    required this.cantidad,
+    required this.quantity,
     required this.total,
   });
 
   Product copyWith({
     String? nameProduct,
     double? price,
-    int? cantidad,
+    int? quantity,
     double? total,
   }) =>
       Product(
         nameProduct: nameProduct ?? this.nameProduct,
         price: price ?? this.price,
-        cantidad: cantidad ?? this.cantidad,
+        quantity: quantity ?? this.quantity,
         total: total ?? this.total,
       );
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         nameProduct: json["nameProduct"],
         price: json["price"]?.toDouble(),
-        cantidad: json["cantidad"],
+        quantity: json["quantity"],
         total: json["total"]?.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
         "nameProduct": nameProduct,
         "price": price,
-        "cantidad": cantidad,
+        "quantity": quantity,
         "total": total,
       };
 }
