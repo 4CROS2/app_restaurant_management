@@ -66,6 +66,7 @@ class _SectionCardProductState extends State<SectionCardProduct> {
               max: 100,
               value: 0,
               spacing: 0,
+              // onChanged: (value) => total = value,
               direction: Axis.horizontal,
               textStyle: textStyleSpinBoxNumber,
               incrementIcon:
