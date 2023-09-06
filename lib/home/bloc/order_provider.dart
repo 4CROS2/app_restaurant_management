@@ -10,10 +10,17 @@ class OrderProvider with ChangeNotifier {
   List<OrderModel> _listOrders = [];
 
   bool _loadingOrder = false;
+  double _price = 0.0;
 
   bool get loadingOrder => _loadingOrder;
   set loadingOrder(bool state) {
     _loadingOrder = state;
+    notifyListeners();
+  }
+
+  double get price => _price;
+  set price(double state) {
+    _price = state;
     notifyListeners();
   }
 
