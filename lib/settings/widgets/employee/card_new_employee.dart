@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
 class CardFormNewEmployee extends StatefulWidget {
+  final TextEditingController name;
+  final TextEditingController email;
+  final TextEditingController password;
+  final TextEditingController cellphone;
+  final TextEditingController rol;
+  final TextEditingController status;
+
   const CardFormNewEmployee({
     Key? key,
+    required this.name,
+    required this.email,
+    required this.password,
+    required this.cellphone,
+    required this.rol,
+    required this.status,
   }) : super(key: key);
 
   @override
@@ -15,33 +28,30 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
   String imageLink = 'assets/img/cajero.png';
   bool valueStatus = false;
 
-  /// Subtitle Forms
-  Container titleCardForm(String text) {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: const EdgeInsets.only(right: 5, bottom: 5),
-      child: Text(
-        text,
-        style: textStyleSubtitle,
-      ),
-    );
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      widget.rol.text = dropdownValue;
+    });
+    super.initState();
   }
 
   /// Imagen por defecto empleado
   imgEmployee() {
     return SizedBox(
-        width: MediaQuery.of(context).size.width / 3 * 1.3,
-        height: MediaQuery.of(context).size.width / 3 * 1.3,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: secondColor),
-          ),
-          child: Image(
-            image: AssetImage(imageLink),
-            fit: BoxFit.cover,
-          ),
-        ));
+      width: MediaQuery.of(context).size.width / 3 * 1.3,
+      height: MediaQuery.of(context).size.width / 3 * 1.3,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: secondColor),
+        ),
+        child: Image(
+          image: AssetImage(imageLink),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 
   /// Nombre del empleado
@@ -53,9 +63,13 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.name,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el nombre de empleado';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -71,9 +85,13 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.email,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el correo';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -89,9 +107,13 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.password,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba la contraseña';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -108,9 +130,7 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
             keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.cellphone,
           ),
         ),
       ],
@@ -131,6 +151,7 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
               onChanged: (bool? value) {
                 setState(() {
                   valueStatus = value!;
+                  widget.status.text = value ? 'true' : 'false';
                 });
               },
             ),
@@ -158,6 +179,7 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
             onChanged: (String? newValue) {
               setState(() {
                 dropdownValue = newValue!;
+                widget.rol.text = dropdownValue;
                 imageLink = ('assets/img/$newValue.png').toLowerCase();
               });
             },
