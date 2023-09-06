@@ -1,7 +1,9 @@
 import 'package:app_restaurant_management/constans.dart';
+import 'package:app_restaurant_management/home/bloc/order_provider.dart';
 import 'package:app_restaurant_management/menu/models/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:provider/provider.dart';
 
 class SectionCardProduct extends StatefulWidget {
   final ProductModel product;
@@ -16,12 +18,15 @@ class SectionCardProduct extends StatefulWidget {
 
 class _SectionCardProductState extends State<SectionCardProduct> {
   bool valorChange = false;
-
+  var validator = 0;
+  var before = 0;
   List<int> listItems = [];
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<OrderProvider>(context);
     final double sizeW = MediaQuery.of(context).size.width;
+    before = validator;
     return Container(
       padding: const EdgeInsets.all(15),
       margin: const EdgeInsets.only(bottom: 15),
@@ -66,7 +71,10 @@ class _SectionCardProductState extends State<SectionCardProduct> {
               max: 100,
               value: 0,
               spacing: 0,
-              // onChanged: (value) => total = value,
+              onSubmitted: (value) => validator = value.toInt(),
+              onChanged: (value) => provider.price = before > value
+                  ? provider.price - widget.product.price
+                  : provider.price + widget.product.price,
               direction: Axis.horizontal,
               textStyle: textStyleSpinBoxNumber,
               incrementIcon:

@@ -1,3 +1,4 @@
+import 'package:app_restaurant_management/home/bloc/order_provider.dart';
 import 'package:app_restaurant_management/home/screens/new_order/detail_order_screen.dart';
 import 'package:app_restaurant_management/home/screens/new_order/products_screen.dart';
 import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
@@ -22,6 +23,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
       provider.getAllProducts();
       final category = Provider.of<SettingsProvider>(context, listen: false);
       category.getAllCategories();
+      final order = Provider.of<OrderProvider>(context, listen: false);
+      order.price = 0;
     });
     super.initState();
   }
@@ -47,7 +50,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   }
 
   // Float Button Agregar Orden
-  Widget floatButton() => Container(
+  Widget floatButton(double price) => Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
         width: MediaQuery.of(context).size.width / 1,
         height: 40,
@@ -60,8 +63,8 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
           child: Container(
               alignment: Alignment.center,
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: const Text(
-                "PEDIR ORDEN Bs. 40",
+              child: Text(
+                "PEDIR ORDEN Bs. $price",
                 style: textStyleButton,
                 textAlign: TextAlign.center,
               )),
@@ -81,6 +84,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<MenuProvider>(context);
     final category = Provider.of<SettingsProvider>(context);
+    final order = Provider.of<OrderProvider>(context);
     return DefaultTabController(
       length: category.listCategory.length,
       child: Scaffold(
@@ -144,7 +148,7 @@ class _NewOrderScreenState extends State<NewOrderScreen> {
                         provider: provider, category: listCategory.name)
                 ],
               ),
-        floatingActionButton: floatButton(),
+        floatingActionButton: floatButton(order.price),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
