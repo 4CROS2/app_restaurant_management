@@ -48,7 +48,7 @@ class _ProductsStockScreenState extends State<ProductsStockScreen> {
             child: widget.provider.listStock.isEmpty
                 ? const EmptyContent(texto: 'Ningún gasto registrado')
                 : ListView.builder(
-                    reverse: true,
+                    // reverse: true,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(10),
                     itemCount: widget.provider.listStock.length,

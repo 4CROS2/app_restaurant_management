@@ -1,9 +1,12 @@
+import 'package:app_restaurant_management/settings/models/employee_model.dart';
 import 'package:flutter/material.dart';
 import '../../../constans.dart';
 
 class CardDetailEmployee extends StatefulWidget {
+  final EmployeeModel employee;
   const CardDetailEmployee({
     Key? key,
+    required this.employee,
   }) : super(key: key);
 
   @override
@@ -20,8 +23,9 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
           shape: BoxShape.circle,
           border: Border.all(color: secondColor),
         ),
-        child: const Image(
-          image: AssetImage('assets/img/cajero.png'),
+        child: Image(
+          image:
+              AssetImage('assets/img/${widget.employee.rol.toLowerCase()}.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -30,9 +34,9 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
 
   Container nameEmployee() {
     return Container(
-      margin: const EdgeInsets.only(bottom: 5),
-      child: const Text(
-        'Andrea Cornejo',
+      margin: const EdgeInsets.only(bottom: 5, top: 10),
+      child: Text(
+        widget.employee.name,
         style: textStyleSubTitle,
         textAlign: TextAlign.center,
       ),
@@ -42,8 +46,8 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
   Container typeEmployee() {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      child: const Text(
-        'Cajero',
+      child: Text(
+        widget.employee.rol,
         style: textStyleLabelOrange,
         textAlign: TextAlign.center,
       ),
@@ -54,9 +58,9 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
     return Container(
       alignment: Alignment.topRight,
       margin: const EdgeInsets.only(bottom: 5, right: 15),
-      child: const Text(
-        'Activo',
-        style: textStyleLabelGreen,
+      child: Text(
+        widget.employee.status ? 'Activo' : 'Innactivo',
+        style: widget.employee.status ? textStyleLabelGreen : textStyleLabelRed,
         textAlign: TextAlign.right,
       ),
     );
@@ -65,7 +69,7 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
   Container email() {
     return Container(
       margin: const EdgeInsets.only(bottom: 5),
-      child: const Text("andreacodesign@gmail.com", style: textStyleSubItem),
+      child: Text(widget.employee.email, style: textStyleSubItem),
     );
   }
 
@@ -74,13 +78,13 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
       margin: const EdgeInsets.only(bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(
+        children: [
+          const Icon(
             Icons.call,
             color: greenColor,
           ),
           Text(
-            '73476960',
+            widget.employee.cellphone,
             style: textStyleSubItem,
           ),
         ],
@@ -102,7 +106,7 @@ class _CardDetailEmployeeState extends State<CardDetailEmployee> {
           imageEmployee(),
           nameEmployee(),
           typeEmployee(),
-          cellphone(),
+          if (widget.employee.cellphone != "") cellphone(),
           email(),
         ],
       ),

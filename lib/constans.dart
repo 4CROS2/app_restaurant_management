@@ -110,21 +110,21 @@ const textStylePrice = TextStyle(
 const textStyleLabelRed = TextStyle(
   letterSpacing: 0.25,
   fontFamily: "Poppins",
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
   fontSize: fontSizeSmall,
   color: redColor,
 );
 const textStyleLabelYellow = TextStyle(
   letterSpacing: 0.25,
   fontFamily: "Poppins",
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
   fontSize: fontSizeSmall,
   color: yellowColor,
 );
 const textStyleLabelGreen = TextStyle(
   letterSpacing: 0.25,
   fontFamily: "Poppins",
-  fontWeight: FontWeight.w400,
+  fontWeight: FontWeight.w500,
   fontSize: fontSizeSmall,
   color: greenColor,
 );
