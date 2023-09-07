@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
 class CardFormEditEmployee extends StatefulWidget {
+  final TextEditingController nameContorller;
+  final TextEditingController emailContorller;
+  final TextEditingController passwordContorller;
+  final TextEditingController cellContorller;
+  final TextEditingController rolController;
+  final TextEditingController statusContorller;
   const CardFormEditEmployee({
     Key? key,
+    required this.nameContorller,
+    required this.emailContorller,
+    required this.passwordContorller,
+    required this.cellContorller,
+    required this.rolController,
+    required this.statusContorller,
   }) : super(key: key);
 
   @override
@@ -11,37 +23,35 @@ class CardFormEditEmployee extends StatefulWidget {
 }
 
 class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
-  String dropdownValue = 'Cajero';
-  String imageLink = 'assets/img/cajero.png';
-  bool valueStatus = false;
-
-  /// Subtitle Forms
-  Container titleCardForm(String text) {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: const EdgeInsets.only(right: 5, bottom: 5),
-      child: Text(
-        text,
-        style: textStyleSubtitle,
-      ),
-    );
+  late String imageLink = 'assets/img/cajero.png';
+  late String dropdownValue = 'Cajero';
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        dropdownValue = widget.rolController.text;
+        imageLink = 'assets/img/${widget.rolController.text.toLowerCase()}.png';
+      });
+    });
+    super.initState();
   }
 
   /// Imagen por defecto empleado
   imgEmployee() {
     return SizedBox(
-        width: MediaQuery.of(context).size.width / 3 * 1.3,
-        height: MediaQuery.of(context).size.width / 3 * 1.3,
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(color: secondColor),
-          ),
-          child: Image(
-            image: AssetImage(imageLink),
-            fit: BoxFit.cover,
-          ),
-        ));
+      width: MediaQuery.of(context).size.width / 3 * 1.3,
+      height: MediaQuery.of(context).size.width / 3 * 1.3,
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: secondColor),
+        ),
+        child: Image(
+          image: AssetImage(imageLink),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 
   /// Nombre del empleado
@@ -53,9 +63,13 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.nameContorller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el nombre de empleado';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -71,9 +85,13 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.emailContorller,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el correo';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -89,10 +107,13 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-          ),
+              controller: widget.passwordContorller,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Escriba la contraseña';
+                }
+                return null;
+              }),
         ),
       ],
     );
@@ -107,11 +128,8 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-          ),
+              keyboardType: TextInputType.number,
+              controller: widget.cellContorller),
         ),
       ],
     );
@@ -127,10 +145,11 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
           children: [
             const Text('Activo'),
             Checkbox(
-              value: valueStatus,
+              value: widget.statusContorller.text == 'true' ? true : false,
               onChanged: (bool? value) {
                 setState(() {
-                  valueStatus = value!;
+                  // valueStatus = value!;
+                  widget.statusContorller.text = value! ? 'true' : 'false';
                 });
               },
             ),
@@ -157,7 +176,7 @@ class _CardFormEditEmployeeState extends State<CardFormEditEmployee> {
             style: textStyleItem,
             onChanged: (String? newValue) {
               setState(() {
-                dropdownValue = newValue!;
+                widget.rolController.text = newValue!;
                 imageLink = ('assets/img/$newValue.png').toLowerCase();
               });
             },
