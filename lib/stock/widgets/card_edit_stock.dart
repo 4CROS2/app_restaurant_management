@@ -23,13 +23,17 @@ class CardEditStock extends StatefulWidget {
 }
 
 class _CardEditStockState extends State<CardEditStock> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   setState(() {
+  String type = "Alimentos";
 
-  //   });
-  // }
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        type = widget.typeController.text;
+      });
+    });
+    super.initState();
+  }
 
   final List<String> listTypeStock = [
     'Alimentos',
@@ -77,12 +81,11 @@ class _CardEditStockState extends State<CardEditStock> {
           ),
           icon: const Icon(Icons.arrow_drop_down),
           style: textStyleItem,
-          value: widget.typeController.text.isNotEmpty
-              ? widget.typeController.text
-              : null,
+          value: type,
           onChanged: (String? newValue) {
             setState(() {
-              widget.typeController.text = newValue!;
+              type = newValue!;
+              widget.typeController.text = newValue;
             });
           },
           validator: (String? value) {

@@ -93,7 +93,8 @@ class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
                       icon: Icons.edit,
                       onPressed: () async {
                         await Navigator.of(context).push(CupertinoPageRoute(
-                            builder: (context) => const EditEmployeeScreen()));
+                            builder: (context) =>
+                                EditEmployeeScreen(employee: widget.employee)));
                       },
                     ),
                   ],

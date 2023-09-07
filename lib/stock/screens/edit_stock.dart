@@ -19,6 +19,7 @@ class EditProductStockScreen extends StatefulWidget {
 
 class _EditProductStockScreenState extends State<EditProductStockScreen> {
   final _name = TextEditingController();
+  late DateTime _date;
   final _type = TextEditingController();
   final _description = TextEditingController();
   final _price = TextEditingController();
@@ -33,6 +34,7 @@ class _EditProductStockScreenState extends State<EditProductStockScreen> {
       _description.text = widget.stock.description;
       _price.text = widget.stock.price.toString();
       _quantity.text = widget.stock.quantity.toString();
+      _date = widget.stock.date!;
     });
     super.initState();
   }
@@ -106,6 +108,7 @@ class _EditProductStockScreenState extends State<EditProductStockScreen> {
                               if (_formStock.currentState!.validate()) {
                                 await provider.updateStock(
                                     widget.stock.id,
+                                    _date,
                                     _name.text,
                                     _type.text,
                                     _description.text,

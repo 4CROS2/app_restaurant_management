@@ -62,12 +62,13 @@ class StockProvider with ChangeNotifier {
   }
 
   //metodo para actualizar un gasto
-  Future<void> updateStock(String id, String name, String type,
+  Future<void> updateStock(String id, DateTime date, String name, String type,
       String description, double price, int quantity) async {
     try {
       loadingStock = true;
       await _db.collection("Stock").doc(id).update(StockModel(
               id: id,
+              date: date,
               name: name,
               type: type,
               description: description,
