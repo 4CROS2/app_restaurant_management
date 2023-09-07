@@ -26,12 +26,13 @@ class CardFormNewEmployee extends StatefulWidget {
 class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
   String dropdownValue = 'Cajero';
   String imageLink = 'assets/img/cajero.png';
-  bool valueStatus = false;
+  bool valueStatus = true;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget.rol.text = dropdownValue;
+      widget.status.text = valueStatus ? 'true' : 'false';
     });
     super.initState();
   }

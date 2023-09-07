@@ -1,7 +1,9 @@
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/screen/employee/list_employments.dart';
 import 'package:app_restaurant_management/settings/screen/employee/new_employee.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../../constans.dart';
 
 class EmployeesScreen extends StatefulWidget {
@@ -12,7 +14,16 @@ class EmployeesScreen extends StatefulWidget {
 }
 
 class _EmployeesScreenState extends State<EmployeesScreen> {
-  // Float Button Agregar Producto
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final provider = Provider.of<SettingsProvider>(context, listen: false);
+      provider.getAllEmployees();
+    });
+    super.initState();
+  }
+
+  // Float Button Agregar Empleado
   Widget floatButton() => Container(
         padding: const EdgeInsets.only(left: 10, right: 10),
         width: MediaQuery.of(context).size.width / 1,
@@ -39,6 +50,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SettingsProvider>(context);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -53,7 +65,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
           ),
         ),
         // ignore: prefer_const_constructors
-        body: ListEmploymentsScreen(),
+        body: ListEmploymentsScreen(provider: provider),
         floatingActionButton: floatButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),

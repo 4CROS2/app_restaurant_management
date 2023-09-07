@@ -131,6 +131,29 @@ class SettingsProvider with ChangeNotifier {
     }
   }
 
+  // //metodo para eliminar un usuario en firebase
+  // Future<void> deleteUser(AuthCredential credential) async {
+  //   final userCredential =
+  //       await FirebaseAuth.instance.signInWithCredential(credential);
+  //   final user = userCredential.user;
+  //   print(user?.uid);
+  //   if (user != null) {
+  //     for (final providerProfile in user.providerData) {
+  //       // ID of the provider (google.com, apple.com, etc.)
+  //       final provider = providerProfile.providerId;
+
+  //       // UID specific to the provider
+  //       final uid = providerProfile.uid;
+
+  //       // Name, email address, and profile photo URL
+  //       final name = providerProfile.displayName;
+  //       final emailAddress = providerProfile.email;
+  //       final profilePhoto = providerProfile.photoURL;
+  //     }
+  //   }
+  //   await user?.delete();
+  // }
+
   //metodo para crear un nuevo empleado
   Future<void> addEmployee(String name, String email, String password,
       String cellphone, String rol, bool status) async {

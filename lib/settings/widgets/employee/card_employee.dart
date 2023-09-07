@@ -1,15 +1,14 @@
+import 'package:app_restaurant_management/settings/models/employee_model.dart';
 import 'package:app_restaurant_management/settings/screen/employee/detail_employee.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
 class CardEmployee extends StatelessWidget {
-  final String typeEmployment;
-  final String nameEmployment;
+  final EmployeeModel employee;
   const CardEmployee({
     Key? key,
-    required this.typeEmployment,
-    required this.nameEmployment,
+    required this.employee,
   }) : super(key: key);
 
   @override
@@ -22,7 +21,8 @@ class CardEmployee extends StatelessWidget {
           onTap: () {
             Navigator.of(context).push(
               CupertinoPageRoute(
-                  builder: (context) => const DetailEmployeeScreen()),
+                  builder: (context) =>
+                      DetailEmployeeScreen(employee: employee)),
             );
           },
           child: Column(
@@ -34,21 +34,23 @@ class CardEmployee extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 2 * 1.2 - 15,
                     child: Text(
-                      nameEmployment,
+                      employee.name,
                       style: textStyleItem,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width / 4,
+                    width: MediaQuery.of(context).size.width / 4 + 10,
                     child: Text(
-                      typeEmployment == 'P' ? 'Propietario' : 'Empleado',
+                      employee.rol,
                       style: TextStyle(
                         fontFamily: "Work Sans",
                         fontWeight: FontWeight.w600,
                         fontSize: fontSizeRegular,
-                        color: typeEmployment == 'P' ? greenColor : fontBlack,
+                        color: employee.rol == 'Administrador'
+                            ? greenColor
+                            : fontBlack,
                       ),
                     ),
                   ),
