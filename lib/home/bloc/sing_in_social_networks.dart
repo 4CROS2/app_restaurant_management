@@ -45,7 +45,7 @@ class SignInSocialNetworkInProvider extends ChangeNotifier {
   set userInfo(User user) {}
 
   /// validar estado de token de usuario En firebase
-  void validateToken() async {
+  Future<void> validateToken() async {
     try {
       FirebaseAuth.instance.authStateChanges().listen((user) async {
         if (user != null) {
