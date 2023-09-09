@@ -40,8 +40,8 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
   /// Imagen por defecto empleado
   imgEmployee() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 3 * 1.3,
-      height: MediaQuery.of(context).size.width / 3 * 1.3,
+      width: MediaQuery.of(context).size.width / 4 * 1.3,
+      height: MediaQuery.of(context).size.width / 4 * 1.3,
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
@@ -202,11 +202,10 @@ class _CardFormNewEmployeeState extends State<CardFormNewEmployee> {
     return Column(
       children: [
         imgEmployee(),
-        const SizedBox(height: 10),
         Container(
           padding:
-              const EdgeInsets.only(top: 15, bottom: 15, left: 10, right: 10),
-          margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
+              const EdgeInsets.only(top: 15, bottom: 5, left: 10, right: 10),
+          margin: const EdgeInsets.only(bottom: 10, left: 5, right: 5),
           decoration: boxShadow,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
