@@ -1,4 +1,5 @@
 // import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
+import 'package:app_restaurant_management/home.dart';
 import 'package:app_restaurant_management/home/bloc/order_provider.dart';
 import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:app_restaurant_management/home/screens/sign_in.dart';
@@ -6,10 +7,12 @@ import 'package:app_restaurant_management/menu/bloc/menu_provider.dart';
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/stock/bloc/stock_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/services.dart';
 // import 'package:provider/provider.dart';
 // import 'home.dart';
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => OrderProvider()),
       ],
       child: MaterialApp(
-        title: 'App Restaurant Management',
+        title: 'Restaurant Management',
         theme: ThemeData(
           primarySwatch: Colors.red,
           inputDecorationTheme: InputDecorationTheme(
@@ -73,63 +76,84 @@ class MyApp extends StatelessWidget {
           //   ),
           // ),
         ),
-        home: const Login(),
+        home: const ValidateToken(),
       ),
     );
   }
 }
 
-// class ValidateToken extends StatefulWidget {
-//   const ValidateToken({Key? key}) : super(key: key);
+class ValidateToken extends StatefulWidget {
+  const ValidateToken({Key? key}) : super(key: key);
 
-//   @override
-//   State<ValidateToken> createState() => _ValidateTokenState();
-// }
+  @override
+  State<ValidateToken> createState() => _ValidateTokenState();
+}
 
-// class _ValidateTokenState extends State<ValidateToken> {
-//   @override
-//   void initState() {
-//     _cargarDatos();
+class _ValidateTokenState extends State<ValidateToken> {
+  @override
+  void initState() {
+    _loadingData();
+    super.initState();
+  }
 
-//     super.initState();
-//   }
+  _loadingData() async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      var authProvider =
+          Provider.of<SignInSocialNetworkInProvider>(context, listen: false);
 
-//   _cargarDatos() {
-//     WidgetsBinding.instance!.addPostFrameCallback(
-//       (timeStamp) async {
-//         var authProvider =
-//             Provider.of<SignInSocialNetworkInProvider>(context, listen: false);
-//         // var preferencias = await SharedPreferences.getInstance();
-//         authProvider.loadingValidate = true;
-//         authProvider.loadingValidate = false;
-//         // print("========Termino==============");
-//         if (kDebugMode) {
-//           print(authProvider.loadingValidate);
-//         }
-//       },
-//     );
-//   }
+      authProvider.loadingValidate = true;
+      var preferencias = await SharedPreferences.getInstance();
 
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
+      if (preferencias.getString("uid_user") != null) {
+        await authProvider.validateToken();
+      }
+      authProvider.loadingValidate = false;
+      if (kDebugMode) {
+        print("========Termino========");
+      }
+      if (kDebugMode) {
+        print(authProvider.loadingValidate);
+      }
+    });
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     SystemChrome.setPreferredOrientations([
-//       DeviceOrientation.portraitUp,
-//       DeviceOrientation.portraitDown,
-//     ]);
-//     final authProvider = Provider.of<SignInSocialNetworkInProvider>(context);
-//     if (authProvider.loadingValidate) {
-//       return const CircularProgressIndicator();
-//     } else {
-//       if (!authProvider.isAuth) {
-//         return const Login();
-//       } else {
-//         return const Home();
-//       }
-//     }
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    final authProvider = Provider.of<SignInSocialNetworkInProvider>(context);
+    if (authProvider.loadingValidate) {
+      return _showLoading(context);
+    } else {
+      if (authProvider.isAuth == false) {
+        if (kDebugMode) {
+          print("ir al login-------------------------------");
+        }
+        return const Login();
+      } else {
+        if (kDebugMode) {
+          print("default ---------------");
+        }
+        return const Home();
+      }
+    }
+  }
+
+  Scaffold _showLoading(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Image.asset(
+            "assets/img/logo-app.png",
+            width: MediaQuery.of(context).size.width / 4,
+          ),
+          const SizedBox(height: 20),
+          const Center(
+            child: CircularProgressIndicator(),
+          ),
+        ],
+      ),
+    );
+  }
+}
