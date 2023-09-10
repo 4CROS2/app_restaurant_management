@@ -17,6 +17,9 @@ class ProductsMenuScreen extends StatefulWidget {
 class _ProductsMenuScreenState extends State<ProductsMenuScreen> {
   @override
   Widget build(BuildContext context) {
+    final list = widget.provider.listProduct
+        .where((element) => element.category == widget.category)
+        .toList();
     return widget.provider.loadingProduct
         ? const Center(
             child: CircularProgressIndicator(),
@@ -25,19 +28,15 @@ class _ProductsMenuScreenState extends State<ProductsMenuScreen> {
             onRefresh: () async {
               await widget.provider.getAllProducts();
             },
-            child: widget.provider.listProduct.isEmpty
+            child: list.isEmpty
                 ? const EmptyContent(
                     texto: 'Ningún producto agregado a la lista')
                 : ListView.builder(
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 10, bottom: 30),
-                    itemCount: widget.provider.listProduct.length,
+                    itemCount: list.length,
                     itemBuilder: (context, index) {
-                      return widget.category ==
-                              widget.provider.listProduct[index].category
-                          ? CardProduct(
-                              product: widget.provider.listProduct[index])
-                          : Container();
+                      return CardProduct(product: list[index]);
                     },
                   ),
           );
