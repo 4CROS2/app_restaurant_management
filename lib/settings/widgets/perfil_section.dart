@@ -1,17 +1,26 @@
 import 'package:app_restaurant_management/constans.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PerfilSection extends StatelessWidget {
-  const PerfilSection({Key? key}) : super(key: key);
+  final String email;
+  const PerfilSection({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SettingsProvider>(context);
+    final user = provider.listEmployees
+        .where((element) => element.email == email)
+        .toList();
+    String name = user[0].name;
+    String rol = user[0].rol;
     return Container(
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
+        children: [
           CircleAvatar(
             backgroundColor: Colors.white,
             radius: 45,
@@ -22,49 +31,41 @@ class PerfilSection extends StatelessWidget {
                 width: 150,
                 height: 150,
                 fit: BoxFit.cover,
-                placeholder: AssetImage("assets/img/profile.png"),
-                image: NetworkImage(
-                    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'),
+                placeholder: const AssetImage("assets/img/profile.png"),
+                image: AssetImage("assets/img/${rol.toLowerCase()}.png"),
               ),
-              // : FadeInImage(
-              //     width: 70,
-              //     height: 70,
-              //     fit: BoxFit.cover,
-              //     placeholder: AssetImage("assets/img/digital-doc.gif"),
-              //     image: NetworkImage(signIn.userInfo.photoURL!),
-              //   ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
-            'username',
+            name,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
-            'PROPIETARIO',
+            rol.toUpperCase(),
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, color: primaryColor),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Text(
-            'propietario@gmail.com',
+            email,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ],

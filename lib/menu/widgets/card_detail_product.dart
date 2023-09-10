@@ -77,7 +77,10 @@ class _CardDetailProductState extends State<CardDetailProduct> {
         fit: BoxFit.cover,
         placeholder: const AssetImage("assets/img/background.png"),
         imageErrorBuilder: (context, error, stackTrace) {
-          return Image.asset("assets/img/background.png");
+          return Image.asset(
+              width: MediaQuery.of(context).size.width / 2 * 0.8,
+              height: 150,
+              "assets/img/background.png");
         },
         image: NetworkImage(widget.product.urlPhoto),
       ),

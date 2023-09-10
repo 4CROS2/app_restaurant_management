@@ -17,6 +17,9 @@ class ProductsScreen extends StatefulWidget {
 class _ProductsScreenState extends State<ProductsScreen> {
   @override
   Widget build(BuildContext context) {
+    final list = widget.provider.listProduct
+        .where((element) => element.category == widget.category)
+        .toList();
     final double sw = MediaQuery.of(context).size.width;
     return widget.provider.loadingProduct
         ? const Center(
@@ -26,7 +29,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
             onRefresh: () async {
               await widget.provider.getAllProducts();
             },
-            child: widget.provider.listProduct.isEmpty
+            child: list.isEmpty
                 ? const EmptyContent(
                     texto: 'Ningún producto agregado a la lista')
                 : ListView(
@@ -47,10 +50,10 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             crossAxisCount: 2,
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 3),
-                        itemCount: widget.provider.listProduct.length,
+                        itemCount: list.length,
                         itemBuilder: (BuildContext context, int index) {
                           return SectionCardProduct(
-                            product: widget.provider.listProduct[index],
+                            product: list[index],
                           );
                         },
                       ),
