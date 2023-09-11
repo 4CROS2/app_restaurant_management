@@ -45,8 +45,11 @@ class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
               : Column(
                   children: [
                     ButtonCancel(
-                      textButton: "Eliminar",
-                      icon: Icons.delete_outline_outlined,
+                      textButton:
+                          widget.employee.status ? "Deshabilitar" : "Habilitar",
+                      icon: widget.employee.status
+                          ? Icons.cancel
+                          : Icons.check_circle,
                       onPressed: () async {
                         var res = await showDialog(
                           context: context,
@@ -55,7 +58,7 @@ class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
                             return Dialog(
                               child: ModalConfirm(
                                 message:
-                                    '¿Seguro que quieres eliminar este empleado?',
+                                    '¿Seguro que quieres ${widget.employee.status ? 'deshabilitar' : 'habilitar'} este empleado?',
                                 onPressConfirm: () async {
                                   Navigator.of(context).pop('confirmar');
                                 },
@@ -67,16 +70,24 @@ class _DetailEmployeeScreenState extends State<DetailEmployeeScreen> {
                           },
                         );
                         if (res != null) {
-                          await provider.deleteEmployee(widget.employee.id);
+                          await provider.changeStatusEmployee(
+                              widget.employee.id,
+                              widget.employee.name,
+                              widget.employee.email,
+                              widget.employee.password,
+                              widget.employee.cellphone,
+                              widget.employee.rol,
+                              !widget.employee.status);
                           await provider.getAllEmployees();
                           if (context.mounted) {
                             await showDialog(
                               context: context,
                               barrierDismissible: false,
                               builder: (BuildContext context) {
-                                return const ModalOrder(
-                                  message: 'Se eliminó el empleado',
-                                  image: 'assets/img/delete-product.svg',
+                                return ModalOrder(
+                                  message:
+                                      'Se ${widget.employee.status ? 'deshabilito' : 'habilito'} el empleado',
+                                  // image: 'assets/img/delete-product.svg',
                                 );
                               },
                             );

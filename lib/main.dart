@@ -90,8 +90,21 @@ class ValidateToken extends StatefulWidget {
 }
 
 class _ValidateTokenState extends State<ValidateToken> {
+  // bool status = true;
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // final provider = Provider.of<SettingsProvider>(context, listen: false);
+      // final user = FirebaseAuth.instance.currentUser;
+      // if (user != null) {
+      //   provider.getAllEmployees();
+      //   final list = provider.listEmployees;
+      //   final id =
+      //       list.where((element) => element.email == user.email).toList();
+      // status = id[0].status;
+      // }
+    });
     _loadingData();
     super.initState();
   }
@@ -109,7 +122,7 @@ class _ValidateTokenState extends State<ValidateToken> {
       }
       authProvider.loadingValidate = false;
       if (kDebugMode) {
-        print("========Termino========");
+        print("========Termino=======");
       }
       if (kDebugMode) {
         print(authProvider.loadingValidate);
@@ -124,15 +137,13 @@ class _ValidateTokenState extends State<ValidateToken> {
       return _showLoading(context);
     } else {
       if (authProvider.isAuth == false) {
-        if (kDebugMode) {
-          print("ir al login-------------------------------");
-        }
         return const Login();
       } else {
-        if (kDebugMode) {
-          print("default ---------------");
-        }
+        // if (status) {
         return const Home();
+        // } else {
+        // return const Login();
+        // }
       }
     }
   }

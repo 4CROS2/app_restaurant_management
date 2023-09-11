@@ -91,8 +91,27 @@ class SettingsProvider with ChangeNotifier {
   // EMPLEADO
 
   List<EmployeeModel> _listEmployees = [];
-
+  String _name = '';
+  String _rol = '';
   bool _loadingEmployees = false;
+
+  List<EmployeeModel> get listEmployees => _listEmployees;
+  set listEmployees(List<EmployeeModel> list) {
+    _listEmployees = list;
+    notifyListeners();
+  }
+
+  String get name => _name;
+  set name(String state) {
+    _name = state;
+    notifyListeners();
+  }
+
+  String get rol => _rol;
+  set rol(String state) {
+    _rol = state;
+    notifyListeners();
+  }
 
   bool get loadingEmployees => _loadingEmployees;
   set loadingEmployees(bool state) {
@@ -100,10 +119,15 @@ class SettingsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<EmployeeModel> get listEmployees => _listEmployees;
-  set listEmployees(List<EmployeeModel> list) {
-    _listEmployees = list;
-    notifyListeners();
+  //metodo para obtener datos del usuario
+  Future<void> userData(String email) async {
+    loadingEmployees = true;
+    await getAllEmployees();
+    final user =
+        listEmployees.where((element) => element.email == email).toList();
+    name = user[0].name;
+    rol = user[0].rol;
+    loadingEmployees = false;
   }
 
   //metodo para crear usuario autentificado en firebase
@@ -197,6 +221,28 @@ class SettingsProvider with ChangeNotifier {
 
   //metodo para actualizar un empleado
   Future<void> updateEmployee(String id, String name, String email,
+      String password, String cellphone, String rol, bool status) async {
+    try {
+      loadingEmployees = true;
+      await _db.collection("Employees").doc(id).update(EmployeeModel(
+              id: id,
+              name: name,
+              email: email,
+              password: password,
+              cellphone: cellphone,
+              rol: rol,
+              status: status)
+          .toJson());
+      loadingEmployees = false;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  //metodo para deshabilitar/habilitar el acceso a un empleado
+  Future<void> changeStatusEmployee(String id, String name, String email,
       String password, String cellphone, String rol, bool status) async {
     try {
       loadingEmployees = true;

@@ -34,8 +34,16 @@ class _CardFormProductState extends State<CardFormProduct> {
 
   @override
   void initState() {
-    widget.statusController.text =
-        _character == SingingCharacter.disponible ? 'true' : 'false';
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.statusController.text.isNotEmpty) {
+        _character = widget.statusController.text == "true"
+            ? SingingCharacter.disponible
+            : SingingCharacter.nodisponible;
+      } else {
+        widget.statusController.text =
+            _character == SingingCharacter.disponible ? 'true' : 'false';
+      }
+    });
     super.initState();
   }
 
@@ -107,47 +115,6 @@ class _CardFormProductState extends State<CardFormProduct> {
       ],
     );
   }
-
-  // //Seleccionar archivo
-  // Future selectFile() async {
-  //   final result = await FilePicker.platform.pickFiles();
-  //   if (result == null) return;
-  //   setState(() {
-  //     pickedFile = result.files.first;
-  //     // widget.photoController = pickedFile;
-  //   });
-  // }
-
-  // /// Foto del Producto
-  // photoProduct() {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       titleCardForm('Foto del Producto'),
-  //       InkWell(
-  //         onTap: () {
-  //           widget.function;
-  //         },
-  //         child: Container(
-  //           width: MediaQuery.of(context).size.width / 3 * 1.3,
-  //           height: MediaQuery.of(context).size.width / 3 * 1.4,
-  //           margin: const EdgeInsets.only(bottom: 10),
-  //           decoration: BoxDecoration(
-  //             border: Border.all(color: secondColor),
-  //           ),
-  //           child: pickedFile != null
-  //               ? Image.file(
-  //                   File(pickedFile!.path!),
-  //                   width: double.infinity,
-  //                   // _image!,
-  //                   fit: BoxFit.cover,
-  //                 )
-  //               : const Icon(Icons.add_photo_alternate_rounded, size: 50),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   /// Precio
   SizedBox price() {
