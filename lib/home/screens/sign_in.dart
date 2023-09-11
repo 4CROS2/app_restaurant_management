@@ -1,13 +1,11 @@
 import 'package:app_restaurant_management/constans.dart';
 import 'package:app_restaurant_management/home.dart';
 import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
+import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:app_restaurant_management/home.dart';
-// import 'package:app_restaurant_management/home/bloc/sing_in_social_networks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-// import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,31 +18,54 @@ class _LoginState extends State<Login> {
   bool loading = false;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
-
+  final _formLogin = GlobalKey<FormState>();
   bool _passwordVisible = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<SignInSocialNetworkInProvider>(context);
+    final employee = Provider.of<SettingsProvider>(context);
     return SafeArea(
       child: Scaffold(
-        body: ListView(
-          // padding: const EdgeInsets.only(, right: 20, bottom: 10),
-          children: [
-            topImage(context),
-            message(),
-            image(context),
-            if (loading)
-              const Center(
-                child: CircularProgressIndicator(),
-              ),
-            emailForm(),
-            passwordForm(),
-            buttonSignIn(
-              auth,
-              'Ingresar',
-            )
-          ],
+        body: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus) {
+              currentFocus.unfocus();
+            }
+          },
+          child: Form(
+            key: _formLogin,
+            child: ListView(
+              children: [
+                topImage(context),
+                message(),
+                image(context),
+                if (loading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                emailForm(),
+                passwordForm(),
+                ButtonSignIn(
+                  formLogin: _formLogin,
+                  emailController: emailController,
+                  passController: passController,
+                  provider: auth,
+                  text: 'Ingresar',
+                  employee: employee,
+                  context: context,
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -64,7 +85,12 @@ class _LoginState extends State<Login> {
               )),
           TextFormField(
             controller: emailController,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el correo';
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -88,7 +114,6 @@ class _LoginState extends State<Login> {
             obscureText: !_passwordVisible,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
-              border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 icon: Icon(
                   _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -101,6 +126,12 @@ class _LoginState extends State<Login> {
                 },
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba la contraseña';
+              }
+              return null;
+            },
           ),
         ],
       ),
@@ -133,11 +164,30 @@ class _LoginState extends State<Login> {
       "assets/img/welcome.svg",
     );
   }
+}
 
-  Widget buttonSignIn(
-    SignInSocialNetworkInProvider provider,
-    String text,
-  ) {
+class ButtonSignIn extends StatelessWidget {
+  const ButtonSignIn({
+    super.key,
+    required this.context,
+    required GlobalKey<FormState> formLogin,
+    required this.emailController,
+    required this.passController,
+    required this.provider,
+    required this.text,
+    required this.employee,
+  }) : _formLogin = formLogin;
+
+  final BuildContext context;
+  final GlobalKey<FormState> _formLogin;
+  final TextEditingController emailController;
+  final TextEditingController passController;
+  final SignInSocialNetworkInProvider provider;
+  final String text;
+  final SettingsProvider employee;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.only(top: 10),
@@ -145,20 +195,38 @@ class _LoginState extends State<Login> {
           ? const CircularProgressIndicator()
           : TextButton(
               onPressed: () async {
-                // Navigator.pushReplacement(
-                //     context, CupertinoPageRoute(builder: (context) => const Home()));
-                await provider.emailAuth(
-                    emailController.text, passController.text);
-                if (provider.isAuth) {
-                  if (context.mounted) {
-                    Navigator.pushReplacement(context,
-                        CupertinoPageRoute(builder: (context) => const Home()));
-                  }
-                } else {
-                  // print("Usuario incorrecto");
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Correo/contraseña incorrecta")));
+                FocusScope.of(context).unfocus();
+                if (_formLogin.currentState!.validate()) {
+                  await provider.emailAuth(
+                      emailController.text, passController.text);
+                  if (provider.isAuth) {
+                    await employee.getAllEmployees();
+                    if (employee.listEmployees
+                        .where(
+                            (element) => element.email == emailController.text)
+                        .toList()[0]
+                        .status) {
+                      if (context.mounted) {
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (context) => const Home()));
+                      }
+                    } else {
+                      // print("Usuario incorrecto");
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                "Correo/contraseña incorrecta o usuario deshabilitado")));
+                      }
+                    }
+                  } else {
+                    // print("Usuario incorrecto");
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                              "Correo/contraseña incorrecta o usuario deshabilitado")));
+                    }
                   }
                 }
               },

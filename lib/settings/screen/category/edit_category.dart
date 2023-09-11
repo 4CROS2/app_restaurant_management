@@ -1,5 +1,6 @@
 import 'package:app_restaurant_management/settings/bloc/setting_provider.dart';
 import 'package:app_restaurant_management/settings/models/category_model.dart';
+import 'package:app_restaurant_management/settings/widgets/category/card_form_category.dart';
 import 'package:app_restaurant_management/widgets/button_cancel.dart';
 import 'package:app_restaurant_management/widgets/button_confirm.dart';
 import 'package:app_restaurant_management/widgets/modal_order.dart';
@@ -18,21 +19,22 @@ class EditCategoryScreen extends StatefulWidget {
 
 class _EditCategoryScreenState extends State<EditCategoryScreen> {
   final _nameCategory = TextEditingController();
-  SingingCharacter? _character;
+  final _status = TextEditingController();
   final _formCategory = GlobalKey<FormState>();
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _nameCategory.text = widget.category.name;
+      _status.text = widget.category.status ? 'true' : 'false';
+    });
     super.initState();
-    _nameCategory.text = widget.category.name;
-    _character = widget.category.status
-        ? SingingCharacter.disponible
-        : SingingCharacter.nodisponible;
   }
 
   @override
   void dispose() {
     _nameCategory.dispose();
+    _status.dispose();
     super.dispose();
   }
 
@@ -67,75 +69,8 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
             child: ListView(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 30),
               children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.only(
-                      top: 15, bottom: 15, left: 10, right: 10),
-                  margin: const EdgeInsets.only(bottom: 25, left: 5, right: 5),
-                  decoration: boxShadow,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.only(right: 5, bottom: 5),
-                        child: const Text(
-                          'Nombre de la Categoría',
-                          style: textStyleSubtitle,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: _nameCategory,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Escriba el nombre de la categoría';
-                          }
-                          return null;
-                        },
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 2 * 0.8,
-                        margin: const EdgeInsets.only(bottom: 10, top: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            titleCardForm('Estado'),
-                            RadioListTile<SingingCharacter>(
-                              contentPadding: const EdgeInsets.all(0),
-                              visualDensity: const VisualDensity(
-                                horizontal: VisualDensity.minimumDensity,
-                                vertical: VisualDensity.minimumDensity,
-                              ),
-                              title: const Text('Disponible'),
-                              value: SingingCharacter.disponible,
-                              groupValue: _character,
-                              onChanged: (SingingCharacter? value) {
-                                setState(() {
-                                  _character = value;
-                                });
-                              },
-                            ),
-                            RadioListTile<SingingCharacter>(
-                              contentPadding: const EdgeInsets.all(0),
-                              visualDensity: const VisualDensity(
-                                horizontal: VisualDensity.minimumDensity,
-                                vertical: VisualDensity.minimumDensity,
-                              ),
-                              title: const Text('No Disponible'),
-                              value: SingingCharacter.nodisponible,
-                              groupValue: _character,
-                              onChanged: (SingingCharacter? value) {
-                                setState(() {
-                                  _character = value;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                CardFormCategory(
+                    nameController: _nameCategory, statusController: _status),
                 const SizedBox(height: 10),
                 provider.loadingCategories
                     ? const Center(
@@ -151,7 +86,6 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                             },
                           ),
                           ButtonConfirm(
-                            // width: MediaQuery.of(context).size.width,
                             textButton: 'Guardar',
                             onPressed: () async {
                               FocusScope.of(context).unfocus();
@@ -159,8 +93,7 @@ class _EditCategoryScreenState extends State<EditCategoryScreen> {
                                 await provider.updateCategory(
                                     widget.category.id,
                                     _nameCategory.text,
-                                    (_character ==
-                                        SingingCharacter.disponible));
+                                    _status.text == 'true');
                                 await provider.getAllCategories();
                                 if (context.mounted) {
                                   await showDialog(

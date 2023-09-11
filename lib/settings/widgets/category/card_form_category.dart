@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../../constans.dart';
 
-enum SingingCharacter { disponible, nodisponible }
-
 class CardFormCategory extends StatefulWidget {
-  final TextEditingController nameCategory;
+  final TextEditingController nameController;
+  final TextEditingController statusController;
   const CardFormCategory({
     Key? key,
-    required this.nameCategory,
+    required this.nameController,
+    required this.statusController,
   }) : super(key: key);
 
   @override
@@ -17,16 +17,22 @@ class CardFormCategory extends StatefulWidget {
 class _CardFormCategoryState extends State<CardFormCategory> {
   SingingCharacter? _character = SingingCharacter.disponible;
 
-  /// Subtitle Forms
-  Container titleCardForm(String text) {
-    return Container(
-      alignment: Alignment.topLeft,
-      margin: const EdgeInsets.only(right: 5, bottom: 5),
-      child: Text(
-        text,
-        style: textStyleSubtitle,
-      ),
-    );
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      print(widget.statusController.text);
+      if (widget.statusController.text.isNotEmpty) {
+        _character = widget.statusController.text == "true"
+            ? SingingCharacter.disponible
+            : SingingCharacter.nodisponible;
+      } else {
+        widget.statusController.text =
+            _character == SingingCharacter.disponible ? 'true' : 'false';
+      }
+      print('\n********************************');
+      print(_character);
+    });
+    super.initState();
   }
 
   /// Nombre de la Categoría
@@ -38,10 +44,13 @@ class _CardFormCategoryState extends State<CardFormCategory> {
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: TextFormField(
-            controller: widget.nameCategory,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            controller: widget.nameController,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Escriba el nombre de la categoría';
+              }
+              return null;
+            },
           ),
         ),
       ],
@@ -69,6 +78,8 @@ class _CardFormCategoryState extends State<CardFormCategory> {
             onChanged: (SingingCharacter? value) {
               setState(() {
                 _character = value;
+                widget.statusController.text =
+                    value == SingingCharacter.disponible ? 'true' : 'false';
               });
             },
           ),
@@ -84,6 +95,8 @@ class _CardFormCategoryState extends State<CardFormCategory> {
             onChanged: (SingingCharacter? value) {
               setState(() {
                 _character = value;
+                widget.statusController.text =
+                    value == SingingCharacter.disponible ? 'true' : 'false';
               });
             },
           ),

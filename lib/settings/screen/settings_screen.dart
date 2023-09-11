@@ -23,9 +23,9 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final provider = Provider.of<SettingsProvider>(context, listen: false);
-      provider.getAllEmployees();
+      await provider.getAllEmployees();
     });
     super.initState();
   }
@@ -51,7 +51,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
       ),
-      // ignore: prefer_const_constructors
       body: provider.loadingEmployees
           ? const Center(
               child: CircularProgressIndicator(),
