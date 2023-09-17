@@ -60,8 +60,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           : ListView(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 20),
               children: [
-                profile(
-                  email: user!.email,
+                PerfilSection(
+                  email: user?.email ?? '',
                 ),
                 const SizedBox(height: 40),
                 // function(
@@ -125,12 +125,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
-    );
-  }
-
-  PerfilSection profile({String? email}) {
-    return PerfilSection(
-      email: email! ,
     );
   }
 

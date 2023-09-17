@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
             create: (context) => SignInSocialNetworkInProvider()),
-        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider()..getAllEmployees()),
         ChangeNotifierProvider(create: (context) => MenuProvider()),
         ChangeNotifierProvider(create: (context) => StockProvider()),
         ChangeNotifierProvider(create: (context) => OrderProvider()),
