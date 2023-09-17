@@ -27,15 +27,6 @@ class _StockScreenState extends State<StockScreen> {
     'Transporte',
     'Otros',
   ];
-  @override
-  void initState() {
-    initializeDateFormatting();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final provider = Provider.of<StockProvider>(context, listen: false);
-      provider.getAllStocks();
-    });
-    super.initState();
-  }
 
   @override
   void dispose() {
