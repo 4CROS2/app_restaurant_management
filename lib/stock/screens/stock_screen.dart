@@ -32,7 +32,11 @@ class _StockScreenState extends State<StockScreen> {
   void dispose() {
     super.dispose();
   }
-
+@override
+  void initState() {
+    initializeDateFormatting();
+    super.initState();
+  }
   //Tab Bar
   Tab tabBarValue({required String text, double marginRight = 0}) {
     return Tab(
